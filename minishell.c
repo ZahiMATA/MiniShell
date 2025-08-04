@@ -5,24 +5,27 @@ int	minishell(char **env)
 	t_minishell *m;
 	char *line;
 
-	exec_init_minishell(&m, env);
+	m = NULL;
+	(void)env;
 	while (1)
 	{
-		ft_putstr_fd("minishell$", STDOUT_FILENO);
+		exec_init_minishell(&m);
+		ft_putstr_fd(PROMPT, STDOUT_FILENO);
 		line = read_input(m, STDIN_FILENO);
 		if (line == NULL)
 			continue;
-		//newline = strchr(line, '\n');
 		if (*line == '\0')
 		{
 			free(line);
 			continue;
 		}
+		// lex
+		// parse qui renvoie la liste des cmds
+		// exec_feed_pipex(...); ou buildin ou redirection
 		ft_putstr_fd("Texte entré : ", STDOUT_FILENO);
-		ft_putstr(line);
+		ft_putstr_fd(line, STDERR_FILENO);
 		free(line);
 	}
-
 }
 
 int	main(int argc, char *argv[], char *env[])
