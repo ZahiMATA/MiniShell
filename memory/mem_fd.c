@@ -10,7 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-void	px_close_fds(t_pipex *p)
+#include "minishell.h"
+
+void	mem_close_fds(t_minishell *p)
 {
 	int	i;
 

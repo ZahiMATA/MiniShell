@@ -10,70 +10,73 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
-#include <unistd.h>
-#include <stddef.h>
-#include <sys/wait.h>
-#include <stdlib.h>
-#include <stdio.h>
+#include "minishell.h"
 
-void	launch_process_begin(t_pipex *p, int n)
+void	launch_process_begin(t_minishell *m, int n)
 {
-	if (p->cmds[n].path == NULL)
-		return (perror(ERROR_EXECVE), ft_exit_status(ERROR_EXECVE, p, 127));
-	px_show_processes(p, "PID", p->cmds[n].path, n);
-	if (dup2(p->fd_in, STDIN_FILENO) == -1)
-		ft_exit(ERROR_DUP2, p);
-	if (dup2(p->cmds[n].fd_pipe[1], STDOUT_FILENO) == -1)
-		ft_exit(ERROR_DUP2, p);
-	px_close_fds(p);
-	if (p->fd_in == -1)
-		return (px_show_error("LPB"));
-	execve(p->cmds[n].path, p->cmds[n].args, p->env);
-	ft_exit(ERROR_EXECVE, p);
+	char	**env_tab;
+
+	if (m->cmds[n].path == NULL)
+		ft_exit_with_status(m, ERROR_NOT_FOUND, 127);
+	debug_show_processes(m, "PID", m->cmds[n].path, n);
+	if (dup2(m->fd_in, STDIN_FILENO) == -1)
+		ft_exit_fail(m, ERROR_DUP2);
+	if (dup2(m->cmds[n].fd_pipe[1], STDOUT_FILENO) == -1)
+		ft_exit_fail(m, ERROR_DUP2);
+	mem_close_fds(m);
+	if (m->fd_in == -1)
+		return (debug_show_error("LPB"));
+	env_tab = env_list_to_tab(m, m->env_list);
+	execve(m->cmds[n].path, m->cmds[n].args, env_tab);
+	mem_free_array(env_tab);
+	ft_exit_error(m, m->cmds[n].path);
 }
 
-void	launch_process_end(t_pipex *p, int n)
+void	launch_process_end(t_minishell *m, int n)
 {
-	if (p->cmds[n].path == NULL)
-		return (perror(ERROR_EXECVE), ft_exit_status(ERROR_EXECVE, p, 127));
-	px_show_processes(p, "PID_END", p->cmds[n].path, n);
-	if (dup2(p->cmds[0].fd_pipe[0], STDIN_FILENO) == -1)
-		ft_exit(ERROR_DUP2, p);
-	if (dup2(p->fd_out, STDOUT_FILENO) == -1)
-		ft_exit(ERROR_DUP2, p);
-	px_close_fds(p);
-	if (p->fd_out == -1)
-		return (px_show_error("LBE"));
-	execve(p->cmds[n].path, p->cmds[n].args, p->env);
-	ft_exit(ERROR_EXECVE, p);
+	char	**env_tab;
+
+	if (m->cmds[n].path == NULL)
+		ft_exit_with_status(m, ERROR_NOT_FOUND, 127);
+	debug_show_processes(m, "PID_END", m->cmds[n].path, n);
+	if (dup2(m->cmds[0].fd_pipe[0], STDIN_FILENO) == -1)
+		ft_exit_fail(m, ERROR_DUP2);
+	if (dup2(m->fd_out, STDOUT_FILENO) == -1)
+		ft_exit_fail(m, ERROR_DUP2);
+	mem_close_fds(m);
+	if (m->fd_out == -1)
+		return (debug_show_error("LBE"));
+	env_tab = env_list_to_tab(m, m->env_list);
+	execve(m->cmds[n].path, m->cmds[n].args, env_tab);
+	mem_free_array(env_tab);
+	ft_exit_error(m, m->cmds[n].path);
 }
 
-void	px_execve(t_pipex *p)
+void	px_execve(t_minishell *m)
 {
-	if (pipe(p->cmds[0].fd_pipe) == -1)
-		ft_exit(ERROR_PIPE, p);
-	p->cmds[0].pid = fork();
-	if (p->cmds[0].pid == -1)
-		ft_exit(ERROR_FORK, p);
-	if (p->cmds[0].pid == 0)
-		launch_process_begin(p, 0);
-	p->cmds[1].pid = fork();
-	if (p->cmds[1].pid == -1)
-		ft_exit(ERROR_FORK, p);
-	if (p->cmds[1].pid == 0)
-		launch_process_end(p, 1);
-	px_close_fds(p);
-	waitpid(p->cmds[0].pid, &p->cmds[0].status, 0);
-	waitpid(p->cmds[1].pid, &p->cmds[1].status, 0);
-	px_show_processes(p, "PARENT", NULL, -1);
+	if (pipe(m->cmds[0].fd_pipe) == -1)
+		ft_exit_fail(m, ERROR_PIPE);
+	m->cmds[0].pid = fork();
+	if (m->cmds[0].pid == -1)
+		ft_exit_fail(m, ERROR_FORK);
+	if (m->cmds[0].pid == 0)
+		launch_process_begin(m, 0);
+	m->cmds[1].pid = fork();
+	if (m->cmds[1].pid == -1)
+		ft_exit_fail(m, ERROR_FORK);
+	if (m->cmds[1].pid == 0)
+		launch_process_end(m, 1);
+	mem_close_fds(m);
+	waitpid(m->cmds[0].pid, &m->cmds[0].status, 0);
+	waitpid(m->cmds[1].pid, &m->cmds[1].status, 0);
+	debug_show_processes(m, "PARENT", NULL, -1);
 }
 
-int	px_get_last_status(t_pipex*p)
+int	px_get_last_status(t_minishell *m)
 {
 	int	status;
 
-	status = p->cmds[p->nb_cmd - 1].status;
+	status = m->cmds[m->nb_cmd - 1].status;
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	else if (WIFSIGNALED(status))

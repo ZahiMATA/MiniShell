@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 11:50:06 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/07/04 11:59:59 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/04 19:27:03 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,35 @@
  * -> ft_strjoin_with_char(char const *s1, char c, char const *s2)
  */
 
-#include "pipex.h"
-#include "stdlib.h"
+#include "minishell.h"
+
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	char	*zone;
+	size_t	len1;
+	size_t	len2;
+	size_t	i;
+
+	len1 = ft_strlen(s1);
+	len2 = ft_strlen(s2);
+	zone = malloc((len1 + len2 + 1) * sizeof(char));
+	if (zone == NULL)
+		return (NULL);
+	i = 0;
+	while (i < len1)
+	{
+		zone[i] = s1[i];
+		i++;
+	}
+	i = 0;
+	while (i < len2)
+	{
+		zone[i + len1] = s2[i];
+		i++;
+	}
+	zone[len1 + len2] = '\0';
+	return (zone);
+}
 
 char	*ft_strjoin_with_char(char const *s1, char c, char const *s2)
 {

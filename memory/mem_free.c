@@ -10,12 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
-#include <stddef.h>
-#include <stdlib.h>
-#include <unistd.h>
+#include "minishell.h"
 
-void	px_free_null(char	**ptr)
+void	mem_free_null(char	**ptr)
 {
 	if (ptr == NULL || *ptr == NULL)
 		return ;
@@ -23,7 +20,7 @@ void	px_free_null(char	**ptr)
 	*ptr = NULL;
 }
 
-static void	px_free_array(char	**tab)
+void	mem_free_array(char	**tab)
 {
 	int	i;
 
@@ -31,12 +28,12 @@ static void	px_free_array(char	**tab)
 	if (tab == NULL)
 		return ;
 	while (tab[i])
-		px_free_null(&tab[i++]);
+		mem_free_null(&tab[i++]);
 	free(tab);
 	tab = NULL;
 }
 
-static void	px_free_cmds(t_pipex **p)
+static void	mem_free_cmds(t_minishell **p)
 {
 	int	i;
 
@@ -45,22 +42,22 @@ static void	px_free_cmds(t_pipex **p)
 		return ;
 	while (i < (*p)->nb_cmd)
 	{
-		px_free_array((*p)->cmds[i].args);
-		px_free_null(&(*p)->cmds[i].path);
+		mem_free_array((*p)->cmds[i].args);
+		mem_free_null(&(*p)->cmds[i].path);
 		i++;
 	}
 	free((*p)->cmds);
 	(*p)->cmds = NULL;
 }
 
-void	px_free_all(t_pipex *p)
+void	mem_free_all(t_minishell *m)
 {
-	if (p == NULL)
+	if (m == NULL)
 		return ;
-	px_close_fds(p);
-	px_free_cmds(&p);
-	px_free_null(&p->limiter);
-	px_free_array(p->path);
-	free(p);
-	p = NULL;
+	mem_close_fds(m);
+	mem_free_cmds(&m);
+	mem_free_null(&m->limiter);
+	mem_free_array(m->path);
+	free(m);
+	m = NULL;
 }

@@ -20,20 +20,21 @@
  *
  */
 
-#include "pipex.h"
+#include "minishell.h"
 #include <unistd.h>
 
+/*
 int	exec(char **args, int nbcom, char **env)
 {
-	t_pipex	*p;
+	t_minishell	*m;
 	int		ret;
 
-	px_init_pipex(&p, args, nbcom, env);
-	px_execve(p);
-	ret = px_get_last_status(p);
-	px_free_all(p);
+	exec_init_minishell(&m, args, nbcom, env);
+	px_execve(m);
+	ret = px_get_last_status(m);
+	px_free_all(m);
 	return (ret);
-}
+}*/
 /*
 int	main(int argc, char *argv[], char *env[])
 {

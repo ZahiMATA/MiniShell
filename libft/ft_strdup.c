@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 12:50:31 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/07/02 14:43:04 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/04 19:32:53 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@
  * @OUT "abc
  */
 
-#include "pipex.h"
-#include <stdlib.h>
+#include "minishell.h"
 
 char	*ft_strdup(const char *s)
 {
