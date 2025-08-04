@@ -6,7 +6,7 @@
 #    By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/28 10:35:37 by ybouroga          #+#    #+#              #
-#    Updated: 2025/07/07 21:00:55 by ybouroga         ###   ########.fr        #
+#    Updated: 2025/08/04 19:36:21 by ybouroga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,22 +14,26 @@ NAME = minishell
 
 SRCS = \
 	minishell.c \
-	debug\debug_display.c \
-	exec\exec.c \
-	exec\exec_init.c \
-	exec\exec_redir.c \
-	exec\exec_run.c \
-	input\input.c \
-	libft\ft_split.c \
-	libft\ft_print.c \
-	libft\ft_strlen.c \
-	libft\ft_strncmp.c \
-	libft\ft_exit.c \
-	libft\ft_strdup.c \
-	libft\ft_strjoin.c \
-	memory\mem_free.c \
-	memory\mem_fd.c \
-	
+	debug/debug_display.c \
+	exec/exec.c \
+	exec/exec_init_1.c \
+	exec/exec_init_2.c \
+	exec/exec_redir.c \
+	exec/exec_run.c \
+	input/input.c \
+	libft/ft_split.c \
+	libft/ft_print.c \
+	libft/ft_strlen.c \
+	libft/ft_strncmp.c \
+	libft/ft_exit.c \
+	libft/ft_return.c \
+	libft/ft_strdup.c \
+	libft/ft_strjoin.c \
+	libft/ft_strchr.c \
+	memory/mem_free.c \
+	memory/mem_fd.c \
+	env/env_make_tab.c \
+
 
 HEADER = \
 	minishell.h
@@ -38,27 +42,29 @@ REP_OUT = OBJ
 
 OBJS = $(SRCS:%.c=$(REP_OUT)/%.o)
 
+DIRS = $(sort $(dir $(OBJS)))
+
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -I.
 
 RM = rm -rf
 
-all: $(REP_OUT) $(NAME)
+all: $(DIRS) $(NAME)
+
+$(DIRS):
+	mkdir -p $@
 
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
-
-$(REP_OUT):
-	mkdir -p $(REP_OUT)
 
 $(REP_OUT)/%.o: %.c $(HEADER)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	$(RM) $(OBJS) $(OBJS_BONUS) $(REP_OUT)
+	$(RM) $(OBJS) $(REP_OUT)
 
 fclean: clean
-	$(RM) $(NAME) $(NAME_BONUS)
+	$(RM) $(NAME)
 
 re: fclean all
 
@@ -73,7 +79,5 @@ vg: all
 
 print-%:
 	@echo $* = $($*)
-
-$(OBJS): | $(REP_OUT)
 
 .PHONY: all clean fclean re print obj
