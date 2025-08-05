@@ -46,8 +46,8 @@ void	test1(char **env)
 		}
 		ft_putstr_fd("Texte entré : ", STDOUT_FILENO);
 		ft_putstr_fd(line, STDERR_FILENO);
-		char *args[] = { ".a.out", "Makefile", "tr av Av", "tr b B", "ficout", NULL };
-		exec_feed_minishell(&m, args, 2, env);
+		char *args[] = { ".a.out", "Makefile", "tr ac AC", "tr b B", "tr xy XY", "ficout", NULL };
+		exec_feed_minishell(&m, args, 3, env);
 		exec_execve(m);
 		free(line);
 		debug_show_args(m);
