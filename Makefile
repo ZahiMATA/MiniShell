@@ -6,7 +6,7 @@
 #    By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/28 10:35:37 by ybouroga          #+#    #+#              #
-#    Updated: 2025/08/05 12:34:06 by ybouroga         ###   ########.fr        #
+#    Updated: 2025/08/05 14:42:15 by ybouroga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ SRCS = \
 	libft/ft_lstnew.c \
 	libft/ft_lstadd_back.c \
 	libft/ft_lstclear.c \
+	libft/ft_lstiter.c \
 	memory/mem_free.c \
 	memory/mem_fd.c \
 	env/env_make_tab.c \

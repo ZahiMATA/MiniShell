@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/05 12:41:02 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/05 14:44:43 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <fcntl.h>
 
 # ifndef DEBUG
-#  define DEBUG 0
+#  define DEBUG 1
 # endif
 # define BUFFER_SIZE 1024
 # define KO 0
@@ -107,18 +107,18 @@ typedef struct s_minishell
 void	mem_free_all(t_minishell *m);
 void	mem_free_array(char	**tab);
 void 	exec_init_minishell(t_minishell **m);
-void	exec_feed_pipex(t_minishell **m, char **args, int nbcom, char **env);
+void	exec_feed_minishell(t_minishell **m, char **args, int nbcom, char **env);
 void	exec_init_path(t_minishell **p, char **env);
 void	exec_init_cmds_and_cmd_args(t_minishell **p, char **cmd, int nbcom);
 void	exec_init_cmd_path(t_minishell **p, int nbcom);
 char	*exec_find_command(t_minishell *m, char *cmd);
-void	px_execve(t_minishell *m);
+void	exec_execve(t_minishell *m);
 void	debug_show_args(t_minishell *m);
 void	debug_show_processes(t_minishell *m, char *message, char *cmd, int i);
 void	debug_show_error(char *message);
 void	mem_free_null(char	**ptr);
 void	mem_close_fds(t_minishell *m);
-int		px_get_last_status(t_minishell *m);
+int		exec_get_last_status(t_minishell *m);
 void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd( char *s, int fd);
 void	ft_putstr(char *s);
@@ -133,6 +133,7 @@ int		ft_strlen(const char *str);
 t_env	*ft_lstnew(void *key, void *val);
 void	ft_lstadd_back(t_env **lst, t_env *new);
 void	ft_lstclear(t_env **lst, void (*del)(void *));
+void	ft_lstiter(t_env *lst, void (*f)(void *, void *));
 void	del_env_content(void *ptr);
 void	ft_return_error(t_minishell *m, char *message, int status);
 void	ft_exit_fail(t_minishell *m, char *message);
