@@ -1,3 +1,14 @@
+/*
+	TODO
+		revoir doc et verif la correction
+		finir built in
+		parsing relire sujet et lexer
+		finir exec
+		dispatcheur built in ou exec et redirection
+		faire historique commande
+		signaux
+
+*/
 #include "minishell.h"
 
 void	test0(char **env)
