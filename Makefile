@@ -6,7 +6,7 @@
 #    By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/28 10:35:37 by ybouroga          #+#    #+#              #
-#    Updated: 2025/08/05 14:42:15 by ybouroga         ###   ########.fr        #
+#    Updated: 2025/08/05 15:59:32 by ybouroga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -83,5 +83,8 @@ vg: all
 
 print-%:
 	@echo $* = $($*)
+
+git:
+	git add **/*.c *.h Makefile
 
 .PHONY: all clean fclean re print obj

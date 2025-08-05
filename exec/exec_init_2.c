@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 12:50:08 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/05 13:17:06 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/05 15:44:50 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ void	exec_init_cmds_and_cmd_args(t_minishell **m, char **cmd, int nbcom)
 		(*m)->cmds[i].args = ft_split_multi(cmd[i + OFST_FIRST_CMD], "  ");
 		if ((*m)->cmds[i].args == NULL)
 			ft_exit_fail_status(*m, NULL, EXIT_ALLOC_ERROR);
-		(*m)->cmds[i].fd_pipe[0] = -1;
-		(*m)->cmds[i].fd_pipe[1] = -1;
+		//(*m)->cmds[i].fd_pipe[0] = -1;
+		//(*m)->cmds[i].fd_pipe[1] = -1;
 		(*m)->cmds[i].pid = -1;
 		(*m)->cmds[i].status = -1;
 		(*m)->fd_in = -1;

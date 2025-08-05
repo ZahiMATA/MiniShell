@@ -17,14 +17,14 @@ void	mem_close_fds(t_minishell *p)
 	int	i;
 
 	i = 0;
-	while (i < p->nb_cmd)
+	/*while (i < p->nb_cmd)
 	{
 		if (p->cmds[i].fd_pipe[0] != -1)
 			close(p->cmds[i].fd_pipe[0]);
 		if (p->cmds[i].fd_pipe[1] != -1)
 			close(p->cmds[i].fd_pipe[1]);
 		i++;
-	}
+	}*/
 	if (p->fd_in != -1)
 		close(p->fd_in);
 	if (p->fd_out != -1)

@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/05 14:44:43 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/05 15:44:33 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ typedef struct s_cmd
 	char	*file_in; // gerer le free
 	char	*file_out; // gerer le free
 	int		status;
-	int		fd_pipe[2];
+	//int		fd_pipe[2];
 	int		pid;
 }	t_cmd;
 
