@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/04 21:07:06 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/05 12:41:02 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,15 @@ typedef struct s_cmd
 {
 	char	**args;
 	char	*path;
+	char	*file_in; // gerer le free
+	char	*file_out; // gerer le free
 	int		status;
 	int		fd_pipe[2];
 	int		pid;
 }	t_cmd;
 
 // TODO QUI remplacera s_cmd qui est une liste chainee
+// le tableau sera plus simple car on connait le nb de commandes
 typedef struct _s_cmd
 {
 	char	**args;
@@ -105,7 +108,6 @@ void	mem_free_all(t_minishell *m);
 void	mem_free_array(char	**tab);
 void 	exec_init_minishell(t_minishell **m);
 void	exec_feed_pipex(t_minishell **m, char **args, int nbcom, char **env);
-void	exec_init_pipex(t_minishell **m, char **args, int nbcom, char **env);
 void	exec_init_path(t_minishell **p, char **env);
 void	exec_init_cmds_and_cmd_args(t_minishell **p, char **cmd, int nbcom);
 void	exec_init_cmd_path(t_minishell **p, int nbcom);
@@ -124,10 +126,14 @@ void	ft_putnbr_fd(int n, int fd);
 void	ft_print_array(char **tab);
 int		ft_strncmp(const char *s1, const char *s2, int n);
 char	**ft_split_multi(char const *s, char c[2]);
+char	**ft_split(char const *s, char c);
 int		ft_gerer_zone(char **split, char *zone, int *n);
 char	*ft_strchr(const char *s, int c);
 int		ft_strlen(const char *str);
-void	ft_return(t_minishell *m, char *message);
+t_env	*ft_lstnew(void *key, void *val);
+void	ft_lstadd_back(t_env **lst, t_env *new);
+void	ft_lstclear(t_env **lst, void (*del)(void *));
+void	del_env_content(void *ptr);
 void	ft_return_error(t_minishell *m, char *message, int status);
 void	ft_exit_fail(t_minishell *m, char *message);
 void	ft_exit_fail_status(t_minishell *m, char *message, int status);

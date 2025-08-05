@@ -25,6 +25,7 @@ int	minishell(char **env)
 		ft_putstr_fd("Texte entré : ", STDOUT_FILENO);
 		ft_putstr_fd(line, STDERR_FILENO);
 		free(line);
+		debug_show_args(m);
 	}
 }
 
