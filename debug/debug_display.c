@@ -6,11 +6,16 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 17:16:20 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/04 16:15:38 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/05 14:55:43 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	ft_print_list(void *s1, void *s2)
+{
+	printf("Env.key=%s val=%s\n", (char *) s1, (char *) s2);
+}
 
 void	debug_show_args(t_minishell *m)
 {
@@ -18,13 +23,16 @@ void	debug_show_args(t_minishell *m)
 
 	if (DEBUG)
 	{
+		ft_putstr("DEBUG:");
+		ft_putstr("CMDS:");
 		i = 0;
-		while (m->cmds[i].args)
+		while (m->cmds && m->cmds[i].args)
 		{
-			ft_putstr(m->cmds[i].path);
+			printf("cmd%d=%s\n", i, m->cmds[i].path);
 			ft_print_array(m->cmds[i].args);
 			i++;
 		}
+		ft_lstiter(m->env_list, ft_print_list);
 	}
 }
 

@@ -33,21 +33,21 @@ void	mem_free_array(char	**tab)
 	tab = NULL;
 }
 
-static void	mem_free_cmds(t_minishell **p)
+static void	mem_free_cmds(t_minishell **m)
 {
 	int	i;
 
 	i = 0;
-	if (p == NULL || *p == NULL || (*p)->cmds == NULL)
+	if (m == NULL || *m == NULL || (*m)->cmds == NULL)
 		return ;
-	while (i < (*p)->nb_cmd)
+	while (i < (*m)->nb_cmd)
 	{
-		mem_free_array((*p)->cmds[i].args);
-		mem_free_null(&(*p)->cmds[i].path);
+		mem_free_array((*m)->cmds[i].args);
+		mem_free_null(&(*m)->cmds[i].path);
 		i++;
 	}
-	free((*p)->cmds);
-	(*p)->cmds = NULL;
+	free((*m)->cmds);
+	(*m)->cmds = NULL;
 }
 
 void	mem_free_all(t_minishell *m)
@@ -58,6 +58,6 @@ void	mem_free_all(t_minishell *m)
 	mem_free_cmds(&m);
 	mem_free_null(&m->limiter);
 	mem_free_array(m->path);
+	ft_lstclear(&m->env_list, del_env_content);
 	free(m);
-	m = NULL;
 }

@@ -52,7 +52,7 @@ void	launch_process_end(t_minishell *m, int n)
 	ft_exit_error(m, m->cmds[n].path);
 }
 
-void	px_execve(t_minishell *m)
+void	exec_execve(t_minishell *m)
 {
 	if (pipe(m->cmds[0].fd_pipe) == -1)
 		ft_exit_fail(m, ERROR_PIPE);
@@ -72,7 +72,7 @@ void	px_execve(t_minishell *m)
 	debug_show_processes(m, "PARENT", NULL, -1);
 }
 
-int	px_get_last_status(t_minishell *m)
+int	exec_get_last_status(t_minishell *m)
 {
 	int	status;
 
