@@ -18,20 +18,16 @@ static void	launch_process(t_minishell *m, int n, int pipes[][2])
 	int		i;
 
 	if (n == 0)
-	{
-		if (dup2(m->fd_in, STDIN_FILENO) == -1)
+		if ((m->fd_in != -1) && (dup2(m->fd_in, STDIN_FILENO) == -1))
 			ft_exit_fail(m, ERROR_DUP2);
-	}
-	if (n == m->nb_cmd - 1)
-	{
-		if (dup2(m->fd_out, STDOUT_FILENO) == -1)
-			ft_exit_fail(m, ERROR_DUP2);
-	}
 	if (n > 0)
 		if (dup2(pipes[n - 1][0] , STDIN_FILENO) == -1)
 			ft_exit_fail(m, ERROR_DUP2);
 	if (n < m->nb_cmd - 1)
 		if (dup2(pipes[n][1], STDOUT_FILENO) == -1)
+			ft_exit_fail(m, ERROR_DUP2);
+	if ((m->fd_out != -1) && (n == m->nb_cmd - 1))
+		if (dup2(m->fd_out, STDOUT_FILENO) == -1)
 			ft_exit_fail(m, ERROR_DUP2);
 	i = 0;
 	while (i < m->nb_cmd - 1)

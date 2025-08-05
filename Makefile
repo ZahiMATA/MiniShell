@@ -6,7 +6,7 @@
 #    By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/28 10:35:37 by ybouroga          #+#    #+#              #
-#    Updated: 2025/08/05 16:01:40 by ybouroga         ###   ########.fr        #
+#    Updated: 2025/08/05 17:56:39 by ybouroga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -85,6 +85,6 @@ print-%:
 	@echo $* = $($*)
 
 gitadd:
-	git add **/*.c *.c *.h Makefile
+	git pull && git add **/*.c *.c *.h Makefile && git commit -m 'gitadd' && git push
 
 .PHONY: all clean fclean re print obj
