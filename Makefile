@@ -6,7 +6,7 @@
 #    By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/28 10:35:37 by ybouroga          #+#    #+#              #
-#    Updated: 2025/08/06 12:13:54 by ybouroga         ###   ########.fr        #
+#    Updated: 2025/08/06 13:35:42 by ybouroga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,13 +33,18 @@ SRCS = \
 	libft/ft_lstadd_back.c \
 	libft/ft_lstclear.c \
 	libft/ft_lstiter.c \
+	libft/ft_ctype.c \
 	memory/mem_free.c \
 	memory/mem_fd.c \
 	env/env_make_tab.c \
+	lexer/lex_lstnew.c \
+	lexer/lex_lstadd_back.c \
+	lexer/lexer.c \
 
 
 HEADER = \
-	includes/minishell.h
+	includes/minishell.h \
+	includes/lexer.h \
 
 REP_OUT = OBJ
 
