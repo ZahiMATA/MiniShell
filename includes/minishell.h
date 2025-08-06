@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/06 19:29:56 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/06 19:54:10 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,7 @@ void	ft_lstclear(t_env **lst, void (*del)(void *));
 void	ft_lstiter(t_env *lst, void (*f)(void *, void *));
 void	del_env_content(void *ptr);
 void	ft_return_error(t_minishell *m, char *message, int status);
+void	ft_return_perror(t_minishell *m, char *message, int status);
 void	ft_exit_fail(t_minishell *m, char *message);
 void	ft_exit_fail_status(t_minishell *m, char *message, int status);
 void	ft_exit_error(t_minishell *m, char *message);

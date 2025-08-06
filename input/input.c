@@ -16,7 +16,7 @@ char	*read_input(t_minishell *m, int fd)
 		n = read(fd, buffer, BUFFER_SIZE);
 		if (n < 0)
 		{
-			ft_return_error(m, NULL, EXIT_FAILURE);
+			ft_return_perror(m, NULL, EXIT_FAILURE);
 			return (NULL);
 		}
 		else if (n == 0)
