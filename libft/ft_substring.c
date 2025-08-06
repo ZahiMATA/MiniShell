@@ -1,31 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lex_lstadd_back.c                                  :+:      :+:    :+:   */
+/*   ft_substring.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/06 12:32:59 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/06 17:57:14 by ybouroga         ###   ########.fr       */
+/*   Created: 2025/08/06 16:31:02 by ybouroga          #+#    #+#             */
+/*   Updated: 2025/08/06 17:50:07 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "lexer.h"
 
-void	lex_lstadd_back(t_token_list **lst, t_token_list *new)
+char *ft_substring(const char *s, int start, int len)
 {
-	t_token_list	*p;
+	char	*ret;
+	int		i;
 
-	if (lst == NULL || new == NULL)
-		return ;
-	if (*lst == NULL)
+	ret = malloc(len + 1);
+	if (ret == NULL)
+		return (NULL);
+	i = 0;
+	while (i < len)
 	{
-		*lst = new;
-		return ;
+		ret[i] = s[start + i];
+		i++;
 	}
-	p = *lst;
-	while (p && p -> next)
-		p = p -> next;
-	p -> next = new;
+	ret[i] = '\0';
+	return (ret);
 }

@@ -1,31 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lex_lstadd_back.c                                  :+:      :+:    :+:   */
+/*   ft_typel.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/06 12:32:59 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/06 17:57:14 by ybouroga         ###   ########.fr       */
+/*   Created: 2025/08/06 18:29:42 by ybouroga          #+#    #+#             */
+/*   Updated: 2025/08/06 18:39:42 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "lexer.h"
 
-void	lex_lstadd_back(t_token_list **lst, t_token_list *new)
+int	ft_islexer(int c)
 {
-	t_token_list	*p;
-
-	if (lst == NULL || new == NULL)
-		return ;
-	if (*lst == NULL)
-	{
-		*lst = new;
-		return ;
-	}
-	p = *lst;
-	while (p && p -> next)
-		p = p -> next;
-	p -> next = new;
+	return (ft_isspace(c) || (c == '|') || (c == '<') || (c == '>')
+		|| (c == '"') || (c == '\''));
 }

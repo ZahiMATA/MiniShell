@@ -1,31 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lex_lstadd_back.c                                  :+:      :+:    :+:   */
+/*   ft_ctype.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/06 12:32:59 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/06 17:57:14 by ybouroga         ###   ########.fr       */
+/*   Created: 2025/08/06 13:09:34 by ybouroga          #+#    #+#             */
+/*   Updated: 2025/08/06 18:28:08 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "lexer.h"
-
-void	lex_lstadd_back(t_token_list **lst, t_token_list *new)
+int	ft_isalnum(int c)
 {
-	t_token_list	*p;
+	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')
+		|| (c >= '0' && c <= '9'));
+}
 
-	if (lst == NULL || new == NULL)
-		return ;
-	if (*lst == NULL)
-	{
-		*lst = new;
-		return ;
-	}
-	p = *lst;
-	while (p && p -> next)
-		p = p -> next;
-	p -> next = new;
+int	ft_isalpha(int c)
+{
+	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
+}
+
+int	ft_isdigit(int c)
+{
+	return (c >= '0' && c <= '9');
+}
+
+int	ft_isspace(int c)
+{
+	return ((c == '\f') || (c == '\n') || (c == '\r')
+		|| (c == '\t') || (c == '\v') || (c == ' '));
 }

@@ -60,6 +60,10 @@ void	test1(char **env)
 		char *args[] = { ".a.out", "Makefile", "tr ac AC", "tr b B", "tr xy XY", "ficout", NULL };
 		exec_feed_minishell(&m, args, 3, env);
 		exec_execve(m);
+
+		lexer(m, line);
+		debug_show_tokens(m);
+
 		free(line);
 		debug_show_args(m);
 	}

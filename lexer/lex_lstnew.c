@@ -6,12 +6,12 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 12:41:06 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/06 14:29:39 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/06 17:56:58 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
 #include "minishell.h"
+#include "lexer.h"
 
 t_token_list	*lex_lstnew(t_token token, char *val)
 {

@@ -6,13 +6,14 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/06 13:17:00 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/06 19:02:05 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include "lexer.h"
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -22,7 +23,7 @@
 # include <fcntl.h>
 
 # ifndef DEBUG
-#  define DEBUG 1
+#  define DEBUG 0
 # endif
 # define BUFFER_SIZE 1024
 # define KO 0
@@ -92,17 +93,16 @@ typedef struct s_env
 // *env_list is our modifiable env
 typedef struct s_minishell
 {
-	int		fd_in;
-	int		fd_out;
-	t_cmd	*cmds;
-	char	**token;
-	int		nb_cmd;
-	int		is_here_doc;
-	char	*limiter;
-	char	**path;
-	//char	**env; // a eventuellent enlever car sera dans envlist
-	t_env	*env_list; //gere le free
-	int		last_status; // pour echo $?
+	int				fd_in;
+	int				fd_out;
+	t_cmd			*cmds;
+	t_token_list	*token_list;
+	int				nb_cmd;
+	int				is_here_doc;
+	char			*limiter;
+	char			**path;
+	t_env			*env_list; //gere le free
+	int				last_status; // pour echo $?
 }	t_minishell;
 
 void	mem_free_all(t_minishell *m);
@@ -148,6 +148,7 @@ int		ft_isalnum(int c);
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);
 int		ft_isspace(int c);
+char 	*ft_substring(const char *s, int start, int len);
 char	*read_input(t_minishell *m, int fd);
 char	**env_list_to_tab(t_minishell *m, t_env *env);
 

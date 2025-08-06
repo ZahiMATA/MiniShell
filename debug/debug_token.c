@@ -1,31 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lex_lstadd_back.c                                  :+:      :+:    :+:   */
+/*   debug_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/06 12:32:59 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/06 17:57:14 by ybouroga         ###   ########.fr       */
+/*   Created: 2025/08/06 18:53:47 by ybouroga          #+#    #+#             */
+/*   Updated: 2025/08/06 19:06:24 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "lexer.h"
 
-void	lex_lstadd_back(t_token_list **lst, t_token_list *new)
+void	debug_show_tokens(t_minishell *m)
 {
-	t_token_list	*p;
-
-	if (lst == NULL || new == NULL)
-		return ;
-	if (*lst == NULL)
+	if (DEBUG_LEX)
 	{
-		*lst = new;
-		return ;
+		while (m->token_list)
+		{
+			printf("Token/Val[%d][%s]\n",
+				m->token_list->token, m->token_list->val);
+			m->token_list = m->token_list->next;
+		}
 	}
-	p = *lst;
-	while (p && p -> next)
-		p = p -> next;
-	p -> next = new;
 }

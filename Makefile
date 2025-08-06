@@ -6,7 +6,7 @@
 #    By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/28 10:35:37 by ybouroga          #+#    #+#              #
-#    Updated: 2025/08/06 13:35:42 by ybouroga         ###   ########.fr        #
+#    Updated: 2025/08/06 19:09:40 by ybouroga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ NAME = minishell
 SRCS = \
 	src/minishell.c \
 	debug/debug_display.c \
+	debug/debug_token.c \
 	exec/exec_init_1.c \
 	exec/exec_init_2.c \
 	exec/exec_redir.c \
@@ -33,12 +34,15 @@ SRCS = \
 	libft/ft_lstadd_back.c \
 	libft/ft_lstclear.c \
 	libft/ft_lstiter.c \
-	libft/ft_ctype.c \
+	libft/ft_typec.c \
+	libft/ft_typel.c \
+	libft/ft_substring.c \
 	memory/mem_free.c \
 	memory/mem_fd.c \
 	env/env_make_tab.c \
 	lexer/lex_lstnew.c \
 	lexer/lex_lstadd_back.c \
+	lexer/lex_lstclear.c \
 	lexer/lexer.c \
 
 
@@ -56,6 +60,8 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -Iincludes
 
 RM = rm -rf
+
+GIT_MSG ?= gitadd
 
 all: $(DIRS) $(NAME)
 
@@ -89,6 +95,6 @@ print-%:
 	@echo $* = $($*)
 
 gitadd:
-	git pull && git add **/*.c **/*.h Makefile .gitignore && git commit -m 'gitadd' && git push
+	git pull && git add **/*.c **/*.h Makefile .gitignore && git commit -m "$(GIT_MSG)" && git push
 
 .PHONY: all clean fclean re print obj
