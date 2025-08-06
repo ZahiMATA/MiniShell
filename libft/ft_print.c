@@ -6,11 +6,10 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 12:00:00 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/04 15:38:49 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/06 20:45:35 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include <unistd.h>
 
 void	ft_putchar_fd(char c, int fd)

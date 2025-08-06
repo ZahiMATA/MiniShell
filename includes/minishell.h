@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/06 19:54:10 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/06 20:57:12 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,15 +71,15 @@ typedef struct s_cmd
 // TODO QUI remplacera s_cmd qui est une liste chainee
 // le tableau sera plus simple car on connait le nb de commandes
 // on revient a la liste car le paseur genere une liste
-typedef struct _s_cmd
+typedef struct s_cmd2
 {
-	char	**args;
+	char	*cmd;
 	char	*file_in; // gerer le free
 	char	*file_out; // gerer le free
 	int		append_mode;
 	int		heredoc_mode;
 	struct	s_cmd	*next;
-}	_t_cmd;
+}	t_cmd2;
 
 // TODO implementer init et l access et le free et le update data
 typedef struct s_env
@@ -96,6 +96,7 @@ typedef struct s_minishell
 	int				fd_in;
 	int				fd_out;
 	t_cmd			*cmds;
+	t_cmd2			*cmds2; // TODO temporaire
 	t_token_list	*token_list;
 	int				nb_cmd;
 	int				is_here_doc;
@@ -131,10 +132,10 @@ char	**ft_split(char const *s, char c);
 int		ft_gerer_zone(char **split, char *zone, int *n);
 char	*ft_strchr(const char *s, int c);
 int		ft_strlen(const char *str);
-t_env	*ft_lstnew(void *key, void *val);
-void	ft_lstadd_back(t_env **lst, t_env *new);
-void	ft_lstclear(t_env **lst, void (*del)(void *));
-void	ft_lstiter(t_env *lst, void (*f)(void *, void *));
+t_env	*ft_lstnew_env(void *key, void *val);
+void	ft_lstadd_back_env(t_env **lst, t_env *new);
+void	ft_lstclear_env(t_env **lst, void (*del)(void *));
+void	ft_lstiter_env(t_env *lst, void (*f)(void *, void *));
 void	del_env_content(void *ptr);
 void	ft_return_error(t_minishell *m, char *message, int status);
 void	ft_return_perror(t_minishell *m, char *message, int status);

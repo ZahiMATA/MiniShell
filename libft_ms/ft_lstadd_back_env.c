@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 13:50:39 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/05 11:17:59 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/06 20:35:10 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 #include "minishell.h"
 
-void	ft_lstadd_back(t_env **lst, t_env *new)
+void	ft_lstadd_back_env(t_env **lst, t_env *new)
 {
 	t_env	*p;
 

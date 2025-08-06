@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 11:50:06 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/04 19:27:03 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/06 21:01:33 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@
  * -> ft_strjoin_with_char(char const *s1, char c, char const *s2)
  */
 
-#include "minishell.h"
+#include "libft.h"
+#include <stddef.h>
+#include <stdlib.h>
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {

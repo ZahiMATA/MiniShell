@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 17:41:20 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/05 14:49:00 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/06 20:33:39 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 #include "minishell.h"
 
-void	ft_lstiter(t_env *lst, void (*f)(void *, void *))
+void	ft_lstiter_env(t_env *lst, void (*f)(void *, void *))
 {
 	while (lst)
 	{

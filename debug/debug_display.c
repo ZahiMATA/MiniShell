@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 17:16:20 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/06 18:56:13 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/06 20:57:54 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	debug_show_args(t_minishell *m)
 			ft_print_array(m->cmds[i].args);
 			i++;
 		}
-		ft_lstiter(m->env_list, ft_print_list);
+		ft_lstiter_env(m->env_list, ft_print_list);
 	}
 }
 

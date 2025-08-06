@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 15:28:03 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/06 19:36:21 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/06 20:58:47 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@
 		split = ft_split(env[i], '=');
 		if (split == NULL)
 			ft_exit_fail_status(*m, NULL, EXIT_ALLOC_ERROR);
-		tmp = ft_lstnew(split[0], split[1]);
+		tmp = ft_lstnew_env(split[0], split[1]);
 		if (tmp == NULL)
 			ft_exit_fail_status(*m, NULL, EXIT_ALLOC_ERROR);
-		ft_lstadd_back(&(*m)->env_list, tmp);
+		ft_lstadd_back_env(&(*m)->env_list, tmp);
 		i++;
 	}
 }

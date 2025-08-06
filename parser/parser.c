@@ -24,3 +24,11 @@ typedef struct _s_cmd
 
 
 */
+
+#include "minishell.h"
+
+// void	*parser(t_minishell *m)
+// {
+// 	m->cmds2 = ft_call
+
+// }

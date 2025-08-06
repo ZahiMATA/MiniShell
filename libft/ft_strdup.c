@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 12:50:31 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/04 19:32:53 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/06 21:01:21 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@
  * @OUT "abc
  */
 
-#include "minishell.h"
+#include "libft.h"
+#include <stddef.h>
+#include <stdlib.h>
 
 char	*ft_strdup(const char *s)
 {

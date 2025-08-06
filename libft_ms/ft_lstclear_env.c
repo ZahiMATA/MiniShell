@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstclear.c                                      :+:      :+:    :+:   */
+/*   ft_lstclear_env.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 17:04:11 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/05 12:34:53 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/06 21:07:56 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 #include "minishell.h"
 
-void	ft_lstdelone(t_env *env, void (*del)(void *))
+void	ft_lstdelone_env(t_env *env, void (*del)(void *))
 {
 	if (env == NULL || del == NULL)
 		return;
@@ -29,7 +29,7 @@ void	ft_lstdelone(t_env *env, void (*del)(void *))
 	free(env);
 }
 
-void	ft_lstclear(t_env **lst, void (*del)(void *))
+void	ft_lstclear_env(t_env **lst, void (*del)(void *))
 {
 	t_env	*p;
 
@@ -38,7 +38,7 @@ void	ft_lstclear(t_env **lst, void (*del)(void *))
 	while (*lst)
 	{
 		p = (*lst)->next;
-		ft_lstdelone(*lst, del);
+		ft_lstdelone_env(*lst, del);
 		*lst = p;
 	}
 }
