@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 11:23:17 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/06 18:49:50 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/06 19:18:19 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ static void	add_token(t_param *_, t_token token, char *val, int len)
 	if (tmp == NULL)
 		ft_exit_fail_status(_->m, NULL, EXIT_ALLOC_ERROR);
 	lex_lstadd_back(&_->m->token_list, tmp);
-	//_->i += ft_strlen(val);
 	_->i += len;
 }
 
@@ -51,10 +50,9 @@ static void lexer_string(t_param *_)
 	s = ft_substring(_->line, start, len);
 	if (s == NULL)
 		ft_exit_fail_status(_->m, NULL, EXIT_ALLOC_ERROR);
-	add_token(_, T_STRING, s, 0); // TODO ajout 2 fois de i a corriger
-	//_->i++;
+	add_token(_, T_STRING, s, 0);
+	_->i++;
 	free(s);
-	// _->m->last_status = EXIT_SUCCESS;
 }
 
 static void lexer_word(t_param *_)
@@ -73,7 +71,7 @@ static void lexer_word(t_param *_)
 	s = ft_substring(_->line, start, len);
 	if (s == NULL)
 		ft_exit_fail_status(_->m, NULL, EXIT_ALLOC_ERROR);
-	add_token(_, T_WORD, s, 0); // TODO ajout 2 fois de i a corriger
+	add_token(_, T_WORD, s, 0);
 	free(s);
 }
 
@@ -81,7 +79,6 @@ void	lexer(t_minishell *m, char *line)
 {
 	t_param	_;
 
-	//m->token_list = NULL; normalement a null
 	_.m = m;
 	_.i = 0;
 	_.line = line;
@@ -108,5 +105,4 @@ void	lexer(t_minishell *m, char *line)
 		else
 		 	lexer_word(&_);
 	}
-	//return (_.token_list);
 }

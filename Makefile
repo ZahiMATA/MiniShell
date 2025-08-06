@@ -6,7 +6,7 @@
 #    By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/28 10:35:37 by ybouroga          #+#    #+#              #
-#    Updated: 2025/08/06 19:09:40 by ybouroga         ###   ########.fr        #
+#    Updated: 2025/08/06 19:19:07 by ybouroga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,7 +61,7 @@ CFLAGS = -Wall -Wextra -Werror -Iincludes
 
 RM = rm -rf
 
-GIT_MSG ?= gitadd
+msg ?= gitadd
 
 all: $(DIRS) $(NAME)
 
@@ -95,6 +95,6 @@ print-%:
 	@echo $* = $($*)
 
 gitadd:
-	git pull && git add **/*.c **/*.h Makefile .gitignore && git commit -m "$(GIT_MSG)" && git push
+	git pull && git add **/*.c **/*.h Makefile .gitignore && git commit -m "$(msg)" && git push
 
 .PHONY: all clean fclean re print obj
