@@ -6,14 +6,14 @@
 #    By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/28 10:35:37 by ybouroga          #+#    #+#              #
-#    Updated: 2025/08/05 17:56:39 by ybouroga         ###   ########.fr        #
+#    Updated: 2025/08/06 12:06:25 by ybouroga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
 SRCS = \
-	minishell.c \
+	src/minishell.c \
 	debug/debug_display.c \
 	exec/exec.c \
 	exec/exec_init_1.c \
@@ -40,7 +40,7 @@ SRCS = \
 
 
 HEADER = \
-	minishell.h
+	includes/minishell.h
 
 REP_OUT = OBJ
 
@@ -49,7 +49,7 @@ OBJS = $(SRCS:%.c=$(REP_OUT)/%.o)
 DIRS = $(sort $(dir $(OBJS)))
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -I.
+CFLAGS = -Wall -Wextra -Werror -Iincludes
 
 RM = rm -rf
 
@@ -85,6 +85,6 @@ print-%:
 	@echo $* = $($*)
 
 gitadd:
-	git pull && git add **/*.c *.c *.h Makefile && git commit -m 'gitadd' && git push
+	git pull && git add **/*.c **/*.h Makefile .gitignore && git commit -m 'gitadd' && git push
 
 .PHONY: all clean fclean re print obj
