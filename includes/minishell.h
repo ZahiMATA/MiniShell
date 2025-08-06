@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/05 15:44:33 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/06 11:24:29 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ typedef struct s_cmd
 
 // TODO QUI remplacera s_cmd qui est une liste chainee
 // le tableau sera plus simple car on connait le nb de commandes
+// on revient a la liste car le paseur genere une liste
 typedef struct _s_cmd
 {
 	char	**args;
