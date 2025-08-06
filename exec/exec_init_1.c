@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 15:28:03 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/06 17:53:45 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/06 19:36:21 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	exec_feed_minishell(t_minishell **m, char **args, int nbcom, char **env)
 		perror(args[nbcom + OFST_FIRST_CMD]);
 }
 
-void exec_init_minishell(t_minishell **m)
+void exec_init_minishell(t_minishell **m, int status)
 {
 	*m = malloc(sizeof(t_minishell));
 	if (*m == NULL)
@@ -68,7 +68,7 @@ void exec_init_minishell(t_minishell **m)
 	(*m)->limiter = NULL;
 	(*m)->path = NULL;
 	(*m)->env_list = NULL;
-	(*m)->last_status = 0;
+	(*m)->last_status = status;
 	//exec_feed_pipex(m, NULL, 0, env); //TODO
 }
 

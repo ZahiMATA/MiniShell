@@ -20,7 +20,7 @@ void	test0(char **env)
 	(void)env;
 	while (1)
 	{
-		exec_init_minishell(&m);
+		exec_init_minishell(&m, 0);
 		ft_putstr_fd(PROMPT, STDOUT_FILENO);
 		line = read_input(m, STDIN_FILENO);
 		if (line == NULL)
@@ -39,13 +39,15 @@ void	test0(char **env)
 void	test1(char **env)
 {
 	t_minishell *m;
-	char *line;
+	char 		*line;
+	int			last_status;
 
 	m = NULL;
+	last_status = 0;
 	(void)env;
 	while (1)
 	{
-		exec_init_minishell(&m);
+		exec_init_minishell(&m, last_status * 0);
 		ft_putstr_fd(PROMPT, STDOUT_FILENO);
 		line = read_input(m, STDIN_FILENO);
 		if (line == NULL)
@@ -63,8 +65,9 @@ void	test1(char **env)
 
 		lexer(m, line);
 		debug_show_tokens(m);
-
+		last_status = m->last_status;
 		free(line);
+		mem_free_all(m);
 		debug_show_args(m);
 	}
 }

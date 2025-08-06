@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 18:53:47 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/06 19:06:24 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/06 19:23:51 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,6 @@ void	debug_show_tokens(t_minishell *m)
 				m->token_list->token, m->token_list->val);
 			m->token_list = m->token_list->next;
 		}
+		printf("Last Status=[%d]\n", m->last_status);
 	}
 }
