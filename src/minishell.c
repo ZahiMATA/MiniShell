@@ -61,6 +61,7 @@ void	test1(char **env)
 		ft_putstr_fd(line, STDERR_FILENO);
 		char *args[] = { ".a.out", "Makefile", "tr ac AC", "tr b B", "tr xy XY", "ficout", NULL };
 		exec_feed_minishell(&m, args, 3, env);
+		debug_show_args(m);
 		exec_execve(m);
 
 		lexer(m, line);
@@ -72,7 +73,6 @@ void	test1(char **env)
 		last_status = m->last_status;
 		free(line);
 		mem_free_all(m);
-		debug_show_args(m);
 	}
 }
 

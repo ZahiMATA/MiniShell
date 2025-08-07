@@ -6,7 +6,7 @@
 #    By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/28 10:35:37 by ybouroga          #+#    #+#              #
-#    Updated: 2025/08/07 11:24:19 by ybouroga         ###   ########.fr        #
+#    Updated: 2025/08/07 11:43:11 by ybouroga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRCS = \
 	exec/exec_run.c \
 	input/input.c \
 	libft/ft_split.c \
+	libft/ft_split_multi.c \
 	libft/ft_print.c \
 	libft/ft_strlen.c \
 	libft/ft_strncmp.c \

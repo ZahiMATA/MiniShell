@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split.c                                         :+:      :+:    :+:   */
+/*   ft_split_multi.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:55:43 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/07 11:46:49 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/07 11:43:35 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,115 @@
  *  -> char	**ft_split_multi(char const *s, char c[2]) pour 2 caracteres
  */
 
-#include <libft.h>
+#include <stdlib.h>
 
-char	**ft_split(char const *s, char c)
+static char	*alloc_word(char const *s, char c[2], int index, int *len)
 {
-	char	tab[2];
+	int		i;
+	char	*zone;
 
-	tab[0] = c;
-	tab[1] = c;
-	return (ft_split_multi(s, tab));
+	*len = 0;
+	while (s[*len + index]
+		&& (s[*len + index] != c[0] && s[*len + index] != c[1]))
+		(*len)++;
+	zone = malloc((*len + 1) * sizeof(char));
+	if (zone == NULL)
+		return (NULL);
+	i = 0;
+	while (i < *len)
+	{
+		zone[i] = s[i + index];
+		i++;
+	}
+	zone[*len] = '\0';
+	return (zone);
+}
+
+static int	count_words(char const *s, char c[2])
+{
+	int	i;
+	int	n;
+
+	i = 0;
+	n = 0;
+	while (s[i])
+	{
+		while (s[i] && (s[i] == c[0] || s[i] == c[1]))
+			i++;
+		if (s[i])
+		{
+			n++;
+			while (s[i] && (s[i] != c[0] && s[i] != c[1]))
+				i++;
+		}
+	}
+	return (n);
+}
+
+int	ft_gerer_zone(char **split, char *zone, int *n)
+{
+	int	i;
+
+	if (n)
+	{
+		if (zone == NULL)
+		{
+			while (*n > 0)
+				free(split[--(*n)]);
+			free(split);
+			return (-1);
+		}
+		return (0);
+	}
+	else
+	{
+		i = 0;
+		while (split[i])
+			free(split[i++]);
+		free(split);
+		return (0);
+	}
+}
+
+static int	do_split(char const *s, char c[2], char **split)
+{
+	int		next;
+	int		n;
+	int		i;
+	int		len;
+	char	*zone;
+
+	n = 0;
+	i = 0;
+	len = count_words(s, c);
+	while (s[i] && len != 0)
+	{
+		while (s[i] && (s[i] == c[0] || s[i] == c[1]))
+			i++;
+		zone = alloc_word(s, c, i, &next);
+		if (ft_gerer_zone(split, zone, &n) == -1)
+			return (-1);
+		split[n++] = zone;
+		i += next;
+		while (s[i] && (s[i] == c[0] || s[i] == c[1]))
+			i++;
+	}
+	split[len] = NULL;
+	return (0);
+}
+
+char	**ft_split_multi(char const *s, char c[2])
+{
+	int		len;
+	char	**split;
+
+	len = count_words(s, c);
+	split = malloc((len + 1) * sizeof(char *));
+	if (split == NULL)
+		return (NULL);
+	if (do_split(s, c, split) == -1)
+		return (NULL);
+	return (split);
 }
 /*
 #include <stdio.h>
