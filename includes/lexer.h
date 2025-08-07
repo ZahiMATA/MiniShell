@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 12:18:08 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/07 13:56:00 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/07 18:29:01 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@
 # define ERROR_NL "Syntax error near unexpected token `newline'"
 # define RETURN_NL 2
 
-typedef struct s_minishell t_minishell;
+typedef struct s_minishell	t_minishell;
+typedef struct s_cmd2		t_cmd2;
 
 typedef enum e_token
 {
@@ -35,6 +36,16 @@ typedef enum e_token
 	T_STRING,
 	T_WORD,
 } t_token;
+
+// [input <] [output >] [heredoc <<] [append >>]
+typedef enum e_redirect
+{
+	T_NONE,
+	T_INPUT,
+	T_OUTPUT,
+	T_HEREDOC,
+	T_APPEND,
+} t_redirect;
 
 typedef struct s_token_list
 {
@@ -61,6 +72,10 @@ void		 	lexer(t_minishell *m, char *line);
 int				ft_islexer(int c);
 void			parser(t_minishell *m);
 int 			ft_is_stringword(t_minishell *m);
+void			prs_lstadd_back(t_cmd2  **lst, t_cmd2 *new);
+void			prs_lstclear(t_cmd2 **lst);
+t_cmd2			*prs_lstnew(t_cmd2 cmd);
+
 
 
 #endif

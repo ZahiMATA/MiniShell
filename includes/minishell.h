@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/07 12:51:55 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/07 18:32:18 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,11 @@ typedef struct s_cmd
 // on revient a la liste car le paseur genere une liste
 typedef struct s_cmd2
 {
-	char	*cmd;
-	char	*file_in; // gerer le free
-	char	*file_out; // gerer le free
-	int		append_mode;
-	int		heredoc_mode;
+	char			*cmd;
+	char			*file_in; // gerer le free
+	char			*file_out; // gerer le free
+	t_redirect		mode_in;
+	t_redirect		mode_out;
 	struct	s_cmd2	*next;
 }	t_cmd2;
 
@@ -144,7 +144,6 @@ void	ft_exit_fail(t_minishell *m, char *message);
 void	ft_exit_fail_status(t_minishell *m, char *message, int status);
 void	ft_exit_error(t_minishell *m, char *message);
 void	ft_exit_with_status(t_minishell *m, char *message, int status);
-int 	ft_is_not_stringword(t_minishell *m);
 char 	*ft_substring(const char *s, int start, int len);
 char	*read_input(t_minishell *m, int fd);
 char	**env_list_to_tab(t_minishell *m, t_env *env);

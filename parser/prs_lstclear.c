@@ -1,30 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   debug_cmd.c                                        :+:      :+:    :+:   */
+/*   prs_lstclear.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/07 11:16:14 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/07 18:46:38 by ybouroga         ###   ########.fr       */
+/*   Created: 2025/08/06 16:53:46 by ybouroga          #+#    #+#             */
+/*   Updated: 2025/08/07 15:45:49 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "lexer.h"
 
-void	debug_show_cmds(t_minishell *m)
+void	prs_lstclear(t_cmd2 **lst)
 {
-	t_cmd2	*l;
+	t_cmd2	*p;
 
-	l = m->cmds2;
-	if (DEBUG_LEX)
+	if (lst == NULL)
+		return ;
+	while (*lst)
 	{
-		ft_putstr("\033[0;31mCmd\033[0m");
-		while (l)
-		{
-			printf("cmd/in/out/mode=[%s][%s][%s][%d][%d]\n",
-				l->cmd, l->file_in, l->file_out, l->mode_in, l->mode_out);
-				l = l->next;
-		}
+		p = (*lst)->next;
+		free((*lst)->cmd);
+		free((*lst)->file_in);
+		free((*lst)->file_out);
+		free(*lst);
+		*lst = p;
 	}
 }

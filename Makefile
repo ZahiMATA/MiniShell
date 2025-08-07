@@ -6,7 +6,7 @@
 #    By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/28 10:35:37 by ybouroga          #+#    #+#              #
-#    Updated: 2025/08/07 11:43:11 by ybouroga         ###   ########.fr        #
+#    Updated: 2025/08/07 19:02:20 by ybouroga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,6 +49,9 @@ SRCS = \
 	lexer/lex_lstclear.c \
 	lexer/lexer.c \
 	parser/parser.c \
+	parser/prs_lstadd_back.c \
+	parser/prs_lstclear.c \
+	parser/prs_lstnew.c \
 
 
 HEADER = \
@@ -67,7 +70,7 @@ CFLAGS = -Wall -Wextra -Werror -Iincludes
 
 RM = rm -rf
 
-msg ?= gitadd
+m ?= gitadd
 
 all: $(DIRS) $(NAME)
 
@@ -101,6 +104,6 @@ print-%:
 	@echo $* = $($*)
 
 gitadd:
-	git pull && git add **/*.c **/*.h Makefile .gitignore && git commit -m "$(msg)" && git push
+	git pull && git add **/*.c **/*.h Makefile .gitignore && git commit -m "$(m)" && git push
 
 .PHONY: all clean fclean re print obj

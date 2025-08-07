@@ -1,6 +1,13 @@
 /*
 tests1: < Makefile  grep a | wc
 
+test2.0
+< Makefile cat > ficout -> OK
+< Makefile cat | wc > ficout -> KO
+
+
+cat < Makefile << FIN > outfile >> ficout
+
 test2:
 < Makefile tr a A | tr b B > ficout
 ->
@@ -29,64 +36,57 @@ typedef struct _s_cmd
 */
 
 #include "minishell.h"
-// #include "lexer.h"
 
 static void	check_token(t_minishell *m)
-{//printf("t=%d\n", m->token_list->token);
+{
+	t_cmd2 cmd;
+	t_cmd2 *cmd2;
+
+	cmd.cmd = NULL;
+	cmd.file_in  = NULL;
+	cmd.file_out  = NULL;
+	cmd.mode_in = T_NONE;
+	cmd.mode_out = T_NONE;
+	cmd.next = NULL;
 	while (m->token_list && m->token_list->token != T_PIPE)
-	{	//printf("t=%d\n", m->token_list->token);
+	{
+
 		if(ft_is_stringword(m))
-		{
-			m->cmds2->cmd = ft_strdup(m->token_list->val);
-			if (m->cmds2->cmd == NULL)
-				ft_exit_fail_status(m, NULL, EXIT_ALLOC_ERROR);
-		}
+			cmd.cmd = m->token_list->val;
 		else if(m->token_list->token == T_REDIRECT_LEFT)
 		{
 			m->token_list = m->token_list->next;
-			if (!m->token_list || !ft_is_stringword(m))
+			if (m->token_list == NULL || ft_is_stringword(m) == 0)
 				return (ft_return_error(m, ERROR_NL, RETURN_NL));
-			m->cmds2->file_in = ft_strdup(m->token_list->val);
-			if (m->cmds2->file_in  == NULL)
-				ft_exit_fail_status(m, NULL, EXIT_ALLOC_ERROR);
+			cmd.file_in = m->token_list->val;
+			cmd.mode_in = T_INPUT;
 		}
 		else if(m->token_list->token == T_REDIRECT_RIGHT)
 		{
 			m->token_list = m->token_list->next;
-			if (!m->token_list || !ft_is_stringword(m))
+			if (m->token_list == NULL || ft_is_stringword(m) == 0)
 				return (ft_return_error(m, ERROR_NL, RETURN_NL));
-			m->cmds2->file_out = ft_strdup(m->token_list->val);
-			if (m->cmds2->file_out == NULL)
-				ft_exit_fail_status(m, NULL, EXIT_ALLOC_ERROR);
+			cmd.file_out = m->token_list->val;
+			cmd.mode_out = T_OUTPUT;
 		}
 		m->token_list = m->token_list->next;
 	}
+	cmd2 = prs_lstnew(cmd);
+	if (cmd2 == NULL)
+		ft_exit_fail_status(m, NULL, EXIT_ALLOC_ERROR);
+	prs_lstadd_back(&m->cmds2, cmd2);
 }
 
 void	parser(t_minishell *m)
 {
-	t_cmd2	*head;
-	t_cmd2	*current;
-
-	head = NULL;
-	current = NULL;
 	printf("t=%d\n", m->token_list->token);
 	while (m->token_list)
 	{
-		m->cmds2 = ft_calloc(1, sizeof(t_cmd2));
-		if (m->cmds2 == NULL)
-			ft_exit_fail_status(m, NULL, EXIT_ALLOC_ERROR);
 		check_token(m);
 		if (m->last_status)
 			return ;
 		if (m->token_list && m->token_list->token == T_PIPE)
 			m->token_list = m->token_list->next;
-		if (head == NULL)
-			head = m->cmds2;
-		else
-			current->next = m->cmds2;
-		current = m->cmds2;
 	}
-	m->cmds2 = head;
 }
 

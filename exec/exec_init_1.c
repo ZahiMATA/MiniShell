@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 15:28:03 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/07 11:12:09 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/07 18:54:03 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void exec_init_minishell(t_minishell **m)
 	(*m)->fd_in = -1;
 	(*m)->fd_out = -1;
 	(*m)->cmds = NULL;
+	(*m)->cmds2 = NULL;
 	(*m)->token_list = NULL;
 	(*m)->nb_cmd = 0;
 	(*m)->is_here_doc = 0;
