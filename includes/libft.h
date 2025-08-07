@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 18:47:45 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/07 11:46:28 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/07 12:52:57 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,7 @@ void	ft_putnbr_fd(int n, int fd);
 //void	ft_lstclear(t_list **lst, void (*del)(void *));
 //void	ft_lstiter(t_list *lst, void (*f)(void *));
 //t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
+char	*ft_strjoin_with_char(char const *s1, char c, char const *s2);
+int		ft_isspace(int c);
 
 #endif

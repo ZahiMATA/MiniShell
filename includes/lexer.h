@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 12:18:08 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/07 11:25:40 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/07 12:54:02 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 #  define DEBUG_LEX 1
 # endif
 # define ERROR_NOTCLOSEDSTRING "Syntax error: String must be closed"
+# define ERROR_NL "Syntax error near unexpected token `newline'"
+# define RETURN_NL 2
 
 typedef struct s_minishell t_minishell;
 
@@ -58,6 +60,7 @@ void			lex_lstclear(t_token_list **lst);
 void		 	lexer(t_minishell *m, char *line);
 int				ft_islexer(int c);
 void			parser(t_minishell *m);
+int 			ft_is_not_stringword(t_minishell *m);
 
 
 #endif

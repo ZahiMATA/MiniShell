@@ -1,4 +1,6 @@
 /*
+< Makefile tr a A | tr b B > ficout
+->
 [<][makefile][tr a A][|][tr b B][>][ficout]
 ->
 typedef struct _s_cmd
@@ -21,16 +23,15 @@ typedef struct _s_cmd
 	int		heredoc_mode;
 	struct	s_cmd	*next; ->NULL
 }	t_cmd;
-
-
 */
 
 #include "minishell.h"
+// #include "lexer.h"
 
 static void	check_token(t_minishell *m)
-{
+{//printf("t=%d\n", m->token_list->token);
 	while (m->token_list && m->token_list->token != T_PIPE)
-	{	printf("t=%d\n", m->token_list->token);
+	{	//printf("t=%d\n", m->token_list->token);
 		if(m->token_list->token == T_STRING || m->token_list->token == T_WORD)
 		{
 			m->cmds2->cmd = ft_strdup(m->token_list->val);
@@ -40,6 +41,8 @@ static void	check_token(t_minishell *m)
 		else if(m->token_list->token == T_REDIRECT_LEFT)
 		{
 			m->token_list = m->token_list->next;
+			if (ft_is_not_stringword(m))
+				return (ft_return_error(m, ERROR_NL, RETURN_NL));
 			m->cmds2->file_in = ft_strdup(m->token_list->val);
 			if (m->cmds2->file_in  == NULL)
 				ft_exit_fail_status(m, NULL, EXIT_ALLOC_ERROR);
@@ -47,6 +50,8 @@ static void	check_token(t_minishell *m)
 		else if(m->token_list->token == T_REDIRECT_RIGHT)
 		{
 			m->token_list = m->token_list->next;
+			if (ft_is_not_stringword(m))
+				return (ft_return_error(m, ERROR_NL, RETURN_NL));
 			m->cmds2->file_out = ft_strdup(m->token_list->val);
 			if (m->cmds2->file_out == NULL)
 				ft_exit_fail_status(m, NULL, EXIT_ALLOC_ERROR);
@@ -62,12 +67,15 @@ void	parser(t_minishell *m)
 
 	head = NULL;
 	current = NULL;
+	printf("t=%d\n", m->token_list->token);
 	while (m->token_list)
 	{
 		m->cmds2 = ft_calloc(1, sizeof(t_cmd2));
 		if (m->cmds2 == NULL)
 			ft_exit_fail_status(m, NULL, EXIT_ALLOC_ERROR);
 		check_token(m);
+		if (m->last_status)
+			return ;
 		if (m->token_list && m->token_list->token == T_PIPE)
 			m->token_list = m->token_list->next;
 		if (head == NULL)
