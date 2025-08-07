@@ -6,7 +6,7 @@
 #    By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/28 10:35:37 by ybouroga          #+#    #+#              #
-#    Updated: 2025/08/06 20:52:30 by ybouroga         ###   ########.fr        #
+#    Updated: 2025/08/07 11:24:19 by ybouroga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ SRCS = \
 	src/minishell.c \
 	debug/debug_display.c \
 	debug/debug_token.c \
+	debug/debug_cmd.c \
 	exec/exec_init_1.c \
 	exec/exec_init_2.c \
 	exec/exec_redir.c \

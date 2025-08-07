@@ -27,6 +27,34 @@ typedef struct _s_cmd
 
 #include "minishell.h"
 
+static void	check_token(t_minishell *m)
+{
+	while (m->token_list && m->token_list->token != T_PIPE)
+	{
+		if(m->token_list->token == T_STRING || m->token_list->token == T_WORD)
+		{
+			m->cmds2->cmd = ft_strdup(m->token_list->val);
+			if (m->cmds2->cmd == NULL)
+				ft_exit_fail_status(m, NULL, EXIT_ALLOC_ERROR);
+		}
+		else if(m->token_list->token == T_REDIRECT_LEFT)
+		{
+			m->token_list = m->token_list->next;
+			m->cmds2->file_in = ft_strdup(m->token_list->val);
+			if (m->cmds2->file_in  == NULL)
+				ft_exit_fail_status(m, NULL, EXIT_ALLOC_ERROR);
+		}
+		else if(m->token_list->token == T_REDIRECT_RIGHT)
+		{
+			m->token_list = m->token_list->next;
+			m->cmds2->file_out = ft_strdup(m->token_list->val);
+			if (m->cmds2->file_out == NULL)
+				ft_exit_fail_status(m, NULL, EXIT_ALLOC_ERROR);
+		}
+		m->token_list = m->token_list->next;
+	}
+}
+
 void	parser(t_minishell *m)
 {
 	t_cmd2	*head;
@@ -39,30 +67,7 @@ void	parser(t_minishell *m)
 		m->cmds2 = ft_calloc(1, sizeof(t_cmd2));
 		if (m->cmds2 == NULL)
 			ft_exit_fail_status(m, NULL, EXIT_ALLOC_ERROR);
-		while (m->token_list && m->token_list->token != T_PIPE)
-		{
-			if(m->token_list->token == T_STRING || m->token_list->token == T_WORD)
-			{
-				m->cmds2->cmd = ft_strdup(m->token_list->val);
-				if (m->cmds2->cmd == NULL)
-					ft_exit_fail_status(m, NULL, EXIT_ALLOC_ERROR);
-			}
-			else if(m->token_list->token == T_REDIRECT_LEFT)
-			{
-				m->token_list = m->token_list->next;
-				m->cmds2->file_in = ft_strdup(m->token_list->val);
-				if (m->cmds2->file_in  == NULL)
-					ft_exit_fail_status(m, NULL, EXIT_ALLOC_ERROR);
-			}
-			else if(m->token_list->token == T_REDIRECT_RIGHT)
-			{
-				m->token_list = m->token_list->next;
-				m->cmds2->file_out = ft_strdup(m->token_list->val);
-				if (m->cmds2->file_out == NULL)
-					ft_exit_fail_status(m, NULL, EXIT_ALLOC_ERROR);
-			}
-			m->token_list = m->token_list->next;
-		}
+		check_token(m);
 		if (m->token_list && m->token_list->token == T_PIPE)
 			m->token_list = m->token_list->next;
 		if (head == NULL)

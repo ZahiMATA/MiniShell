@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 12:18:08 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/06 19:02:31 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/07 11:25:40 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,13 @@ typedef struct s_param
 } t_param;
 
 void			debug_show_tokens(t_minishell *m);
+void			debug_show_cmds(t_minishell *m);
 t_token_list	*lex_lstnew(t_token token, char *val);
 void			lex_lstadd_back(t_token_list **lst, t_token_list *new);
 void			lex_lstclear(t_token_list **lst);
 void		 	lexer(t_minishell *m, char *line);
 int				ft_islexer(int c);
+void			parser(t_minishell *m);
+
 
 #endif

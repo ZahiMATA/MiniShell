@@ -20,7 +20,7 @@ void	test0(char **env)
 	(void)env;
 	while (1)
 	{
-		exec_init_minishell(&m, 0);
+		exec_init_minishell(&m);
 		ft_putstr_fd(PROMPT, STDOUT_FILENO);
 		line = read_input(m, STDIN_FILENO);
 		if (line == NULL)
@@ -47,7 +47,7 @@ void	test1(char **env)
 	(void)env;
 	while (1)
 	{
-		exec_init_minishell(&m, last_status * 0); // initialiser a 0, plus simple
+		exec_init_minishell(&m);
 		ft_putstr_fd(PROMPT, STDOUT_FILENO);
 		line = read_input(m, STDIN_FILENO);
 		if (line == NULL)
@@ -57,7 +57,7 @@ void	test1(char **env)
 			free(line);
 			continue;
 		}
-		ft_putstr_fd("Texte entré : ", STDOUT_FILENO);
+		ft_putstr_fd("Texte entré[1] : ", STDOUT_FILENO);
 		ft_putstr_fd(line, STDERR_FILENO);
 		char *args[] = { ".a.out", "Makefile", "tr ac AC", "tr b B", "tr xy XY", "ficout", NULL };
 		exec_feed_minishell(&m, args, 3, env);
@@ -65,6 +65,10 @@ void	test1(char **env)
 
 		lexer(m, line);
 		debug_show_tokens(m);
+
+		parser(m);
+		debug_show_cmds(m);
+
 		last_status = m->last_status;
 		free(line);
 		mem_free_all(m);
