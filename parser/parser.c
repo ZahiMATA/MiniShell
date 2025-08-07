@@ -30,7 +30,7 @@ typedef struct _s_cmd
 static void	check_token(t_minishell *m)
 {
 	while (m->token_list && m->token_list->token != T_PIPE)
-	{
+	{	printf("t=%d\n", m->token_list->token);
 		if(m->token_list->token == T_STRING || m->token_list->token == T_WORD)
 		{
 			m->cmds2->cmd = ft_strdup(m->token_list->val);
