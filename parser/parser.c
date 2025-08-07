@@ -1,4 +1,7 @@
 /*
+tests1: < Makefile  grep a | wc
+
+test2:
 < Makefile tr a A | tr b B > ficout
 ->
 [<][makefile][tr a A][|][tr b B][>][ficout]
@@ -32,7 +35,7 @@ static void	check_token(t_minishell *m)
 {//printf("t=%d\n", m->token_list->token);
 	while (m->token_list && m->token_list->token != T_PIPE)
 	{	//printf("t=%d\n", m->token_list->token);
-		if(m->token_list->token == T_STRING || m->token_list->token == T_WORD)
+		if(ft_is_stringword(m))
 		{
 			m->cmds2->cmd = ft_strdup(m->token_list->val);
 			if (m->cmds2->cmd == NULL)
@@ -41,7 +44,7 @@ static void	check_token(t_minishell *m)
 		else if(m->token_list->token == T_REDIRECT_LEFT)
 		{
 			m->token_list = m->token_list->next;
-			if (ft_is_not_stringword(m))
+			if (!m->token_list || !ft_is_stringword(m))
 				return (ft_return_error(m, ERROR_NL, RETURN_NL));
 			m->cmds2->file_in = ft_strdup(m->token_list->val);
 			if (m->cmds2->file_in  == NULL)
@@ -50,7 +53,7 @@ static void	check_token(t_minishell *m)
 		else if(m->token_list->token == T_REDIRECT_RIGHT)
 		{
 			m->token_list = m->token_list->next;
-			if (ft_is_not_stringword(m))
+			if (!m->token_list || !ft_is_stringword(m))
 				return (ft_return_error(m, ERROR_NL, RETURN_NL));
 			m->cmds2->file_out = ft_strdup(m->token_list->val);
 			if (m->cmds2->file_out == NULL)
