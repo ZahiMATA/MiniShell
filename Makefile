@@ -6,7 +6,7 @@
 #    By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/28 10:35:37 by ybouroga          #+#    #+#              #
-#    Updated: 2025/08/08 16:30:12 by ybouroga         ###   ########.fr        #
+#    Updated: 2025/08/08 20:36:59 by ybouroga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,6 +59,7 @@ SRCS = \
 HEADER = \
 	includes/minishell.h \
 	includes/lexer.h \
+	includes/parser.h \
 	includes/libft.h \
 
 REP_OUT = OBJ

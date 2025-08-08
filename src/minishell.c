@@ -71,7 +71,7 @@ void	test1(char **env)
 		debug_show_cmds(m);
 
 		exec_feed_minishell(&m, env);
-		exec_execve(m);
+		//exec_execve(m);
 
 		last_status = m->last_status;
 		free(line);

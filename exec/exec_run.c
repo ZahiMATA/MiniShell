@@ -38,50 +38,17 @@ static void	launch_process(t_minishell *m, int n, int pipes[][2])
 	}
 	env_tab = env_list_to_tab(m, m->env_list);
 //	execve(m->cmds[n].path, m->cmds[n].args, env_tab);
-	execve(prs_lstget(m, n)->cmd_abs, /*prs_lstget(m, n)->cmd*/env_tab, env_tab); // TODO Metre le tab
+	char *tab[3];
+	tab[0] = "tr";
+	tab[1] = "a";
+	tab[2] = "b";
+	execve(prs_lstget(m, n)->cmd_abs, /*prs_lstget(m, n)->cmd*/tab, env_tab); // TODO Metre le tab
 	mem_free_array(env_tab);
 	ft_exit_error(m, prs_lstget(m, n)->cmd_abs);
 }
 
 void	exec_execve(t_minishell *m)
 {
-	/*
-	int	pipes[m->nb_cmd - 1][2];
-	int	i;
-
-	i = 0;
-	while (i < m->nb_cmd - 1)
-	{
-		if (pipe(pipes[i]) == -1)
-			ft_exit_fail(m, ERROR_PIPE);
-		i++;
-	}
-	i = 0;
-	while (i < m->nb_cmd)
-	{
-
-		prs_lstget(m, i)->pid = fork();
-		if (prs_lstget(m, i)->pid == -1)
-			ft_exit_fail(m, ERROR_FORK);
-		if (prs_lstget(m, i)->pid == 0)
-			launch_process(m, i, pipes);
-		i++;
-	}
-	i = 0;
-	while (i < m->nb_cmd - 1)
-	{
-		close(pipes[i][0]);
-		close(pipes[i][1]);
-		i++;
-	}
-	i = 0;
-	while (i < m->nb_cmd)
-	{
-		waitpid(prs_lstget(m, i)->pid, &prs_lstget(m, i)->status, 0);
-		i++;
-	}
-	debug_show_processes(m, "PARENT");*/
-
 	int		pipes[m->nb_cmd - 1][2];
 	int		i;
 	t_cmd2	*l;

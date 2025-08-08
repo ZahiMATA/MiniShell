@@ -6,14 +6,13 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 11:23:17 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/06 19:55:01 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/08 19:50:36 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 //  < makefile "tr a A" | "tr b B" > ficout
 // -> **token  [<][makefile][tr a A][|][tr b B][>][ficout]
 #include "minishell.h"
-#include "lexer.h"
 
 static void	add_token(t_param *_, t_token token, char *val, int len)
 {

@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 12:18:08 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/08 15:22:04 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/08 20:39:29 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,5 @@ void		 	lexer(t_minishell *m, char *line);
 int				ft_islexer(int c);
 void			parser(t_minishell *m);
 int 			ft_is_stringword(t_minishell *m);
-void			prs_lstadd_back(t_cmd2  **lst, t_cmd2 *new);
-void			prs_lstclear(t_cmd2 **lst);
-t_cmd2			*prs_lstnew(t_cmd2 cmd);
-t_cmd2			*prs_lstget(t_minishell *m, int n);
-char			*prs_getcmd(t_minishell *m, char *s);
-int				prs_lstget_nb(t_minishell *m);
 
 #endif

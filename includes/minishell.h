@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/08 15:33:07 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/08 18:45:09 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 # include "lexer.h"
+# include "parser.h"
 # include "libft.h"
 # include <unistd.h>
 # include <stdio.h>

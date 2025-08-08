@@ -1,7 +1,12 @@
-/*
-tests1: < Makefile  grep a | wc
+/*< Makefile  grep a | wc
+tests1:
 
 test2.0
+< Makefile "tr a A" | "tr b B" > ficout -> doit err
+< Makefile tr "a b0" "A^B|" |  tr "a b|" "A^B1" > ficout
+< Makefile tr a A | tr b B > ficout
+< Makefile tr aa AA | tr bb BB > ficout
+
 < Makefile cat > ficout -> OK
 < Makefile cat | wc > ficout -> KO
 
@@ -36,6 +41,7 @@ typedef struct _s_cmd
 */
 
 #include "minishell.h"
+#include "parser.h"
 
 static void	check_token(t_minishell *m)
 {

@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "parser.h"
 
 void	mem_free_null(char	**ptr)
 {
