@@ -42,12 +42,14 @@ static void	check_token(t_minishell *m)
 	t_cmd2 cmd;
 	t_cmd2 *cmd2;
 
-	cmd.cmd = NULL;
+	/*cmd.cmd = NULL;
 	cmd.file_in  = NULL;
 	cmd.file_out  = NULL;
 	cmd.mode_in = T_NONE;
 	cmd.mode_out = T_NONE;
-	cmd.next = NULL;
+	cmd.next = NULL;*/
+	ft_bzero(&cmd, sizeof(t_cmd2));
+	cmd2 = NULL;
 	while (m->token_list && m->token_list->token != T_PIPE)
 	{
 
@@ -57,7 +59,7 @@ static void	check_token(t_minishell *m)
 		{
 			m->token_list = m->token_list->next;
 			if (m->token_list == NULL || ft_is_stringword(m) == 0)
-				return (ft_return_error(m, ERROR_NL, RETURN_NL));
+				return (ft_return_error(m, ERROR_NL, RETURN_NL)); // TODO ajouter free cmd
 			cmd.file_in = m->token_list->val;
 			cmd.mode_in = T_INPUT;
 		}
@@ -79,7 +81,6 @@ static void	check_token(t_minishell *m)
 
 void	parser(t_minishell *m)
 {
-	printf("t=%d\n", m->token_list->token);
 	while (m->token_list)
 	{
 		check_token(m);

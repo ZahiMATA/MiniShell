@@ -6,7 +6,7 @@
 #    By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/28 10:35:37 by ybouroga          #+#    #+#              #
-#    Updated: 2025/08/07 19:02:20 by ybouroga         ###   ########.fr        #
+#    Updated: 2025/08/08 16:30:12 by ybouroga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,6 +52,8 @@ SRCS = \
 	parser/prs_lstadd_back.c \
 	parser/prs_lstclear.c \
 	parser/prs_lstnew.c \
+	parser/prs_lstget.c \
+	parser/prs_getcmd.c \
 
 
 HEADER = \

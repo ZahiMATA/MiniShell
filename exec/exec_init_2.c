@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 12:50:08 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/05 15:44:50 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/08 14:58:34 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	exec_init_path(t_minishell **m, char **env)
 	if ((*m)->path == NULL)
 		ft_exit_fail_status(*m, NULL, EXIT_ALLOC_ERROR);
 }
-
+/*
 void	exec_init_cmds_and_cmd_args(t_minishell **m, char **cmd, int nbcom)
 {
 	int	i;
@@ -55,8 +55,7 @@ void	exec_init_cmds_and_cmd_args(t_minishell **m, char **cmd, int nbcom)
 		(*m)->cmds[i].args = ft_split_multi(cmd[i + OFST_FIRST_CMD], "  ");
 		if ((*m)->cmds[i].args == NULL)
 			ft_exit_fail_status(*m, NULL, EXIT_ALLOC_ERROR);
-		//(*m)->cmds[i].fd_pipe[0] = -1;
-		//(*m)->cmds[i].fd_pipe[1] = -1;
+
 		(*m)->cmds[i].pid = -1;
 		(*m)->cmds[i].status = -1;
 		(*m)->fd_in = -1;
@@ -64,18 +63,23 @@ void	exec_init_cmds_and_cmd_args(t_minishell **m, char **cmd, int nbcom)
 		i++;
 	}
 	(*m)->cmds[i].args = NULL;
-}
+}*/
 
 char	*exec_find_command(t_minishell *m, char *cmd)
 {
-	char	*cmd_abs;
+	/*char	*cmd_abs;
 	int		i;
 
 	if (cmd == NULL)
 		return (NULL);
 	cmd_abs = NULL;
 	if (access(cmd, X_OK) == 0)
-		return (ft_strdup(cmd));
+	{
+		cmd_abs = ft_strdup(cmd);
+		if (cmd_abs == NULL)
+        	ft_exit_fail_status(m, NULL, EXIT_ALLOC_ERROR);
+		return (cmd_abs);
+	}
 	i = 0;
 	while (m->path && m->path[i])
 	{
@@ -87,13 +91,38 @@ char	*exec_find_command(t_minishell *m, char *cmd)
 		mem_free_null(&cmd_abs);
 		i++;
 	}
-	if (cmd_abs == NULL)
-		perror(ERROR_ACCESS);
+	return (cmd_abs);
+*/
+	char	*cmd_abs;
+	int		i;
+
+	if (cmd == NULL)
+		return (NULL);
+	cmd_abs = NULL;
+	if (access(cmd, X_OK) == 0)
+	{
+		cmd_abs = ft_strdup(cmd);
+		if (cmd_abs == NULL)
+        	ft_exit_fail_status(m, NULL, EXIT_ALLOC_ERROR);
+		return (cmd_abs);
+	}
+	i = 0;
+	while (m->path && m->path[i])
+	{
+		cmd_abs = ft_strjoin_with_char(m->path[i], '/', cmd);
+		if (cmd_abs == NULL)
+			ft_exit_fail_status(m, NULL, EXIT_ALLOC_ERROR);
+		if (access(cmd_abs, X_OK) == 0)
+			break ;
+		mem_free_null(&cmd_abs);
+		i++;
+	}
 	return (cmd_abs);
 }
 
-void	exec_init_cmd_path(t_minishell **m, int nbcom)
+void	exec_init_cmd_path(t_minishell **m/*, int nbcom*/)
 {
+	/*
 	int	i;
 
 	i = 0;
@@ -101,6 +130,19 @@ void	exec_init_cmd_path(t_minishell **m, int nbcom)
 	{
 		(*m)->cmds[i].path = exec_find_command(*m, (*m)->cmds[i].args[0]);
 		i++;
+	}
+*/
+	t_cmd2	*l;
+	char	*cmd_abs;
+
+	l = (*m)->cmds2;
+
+	while (l)
+	{
+		cmd_abs = exec_find_command(*m, prs_getcmd(*m, l->cmd));
+		if (cmd_abs)
+			l->cmd_abs = cmd_abs;
+		l = l->next;
 	}
 }
 

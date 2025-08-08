@@ -32,7 +32,7 @@ void	mem_free_array(char	**tab)
 	free(tab);
 	tab = NULL;
 }
-
+/*
 static void	mem_free_cmds(t_minishell **m)
 {
 	int	i;
@@ -48,14 +48,15 @@ static void	mem_free_cmds(t_minishell **m)
 	}
 	free((*m)->cmds);
 	(*m)->cmds = NULL;
-}
+}*/
 
 void	mem_free_all(t_minishell *m)
 {
 	if (m == NULL)
 		return ;
 	mem_close_fds(m);
-	mem_free_cmds(&m);
+	//mem_free_cmds(&m);
+	prs_lstclear(&m->cmds2);
 	mem_free_null(&m->limiter);
 	mem_free_array(m->path);
 	ft_lstclear_env(&m->env_list, del_env_content);

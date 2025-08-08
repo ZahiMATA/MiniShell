@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 18:47:45 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/07 12:52:57 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/08 13:44:24 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ char	*ft_strchr(const char *s, int c);
 //int		ft_atoi(const char *nptr);
 void	*ft_calloc(size_t nmemb, size_t size);
 char	*ft_strdup(const char *s);
+char	*ft_strdup_null(const char *s);
 //char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strjoin(char const *s1, char const *s2);
 //char	*ft_strtrim(char const *s1, char const *set);

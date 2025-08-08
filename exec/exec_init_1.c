@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 15:28:03 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/07 18:54:03 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/08 15:32:48 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,20 +38,20 @@
 	}
 }
 
-void	exec_feed_minishell(t_minishell **m, char **args, int nbcom, char **env)
+void	exec_feed_minishell(t_minishell **m, /*char **args, int nbcom0,*/ char **env)
 {
-	(*m)->nb_cmd = nbcom;
+	(*m)->nb_cmd = prs_lstget_nb(*m);
 	(*m)->is_here_doc = 0;
 	exec_init_path(m, env);
 	exec_init_env_list(m, env);
-	exec_init_cmds_and_cmd_args(m, args, nbcom);
-	exec_init_cmd_path(m, nbcom);
-	(*m)->fd_in = open(args[1], O_RDONLY);
-	if ((*m)->fd_in == -1)
-		perror(args[1]);
-	(*m)->fd_out = open(args[nbcom + OFST_FIRST_CMD], OW | OC | OT, FLAG_FIC);
-	if ((*m)->fd_out == -1)
-		perror(args[nbcom + OFST_FIRST_CMD]);
+	//exec_init_cmds_and_cmd_args(m, args, nbcom);
+	exec_init_cmd_path(m/*, nbcom*/);
+	//(*m)->fd_in = open(args[1], O_RDONLY); // TODO pas besoin normalement on init apres
+	//if ((*m)->fd_in == -1)
+	//	perror(args[1]);
+	//(*m)->fd_out = open(args[nbcom + OFST_FIRST_CMD], OW | OC | OT, FLAG_FIC); //TODO
+	//if ((*m)->fd_out == -1)
+	//	perror(args[nbcom + OFST_FIRST_CMD]);
 }
 
 void exec_init_minishell(t_minishell **m)
@@ -59,17 +59,19 @@ void exec_init_minishell(t_minishell **m)
 	*m = malloc(sizeof(t_minishell));
 	if (*m == NULL)
 		ft_exit_fail_status(*m, NULL, EXIT_ALLOC_ERROR);
+	ft_bzero(*m, sizeof(t_minishell));
 	(*m)->fd_in = -1;
 	(*m)->fd_out = -1;
-	(*m)->cmds = NULL;
-	(*m)->cmds2 = NULL;
-	(*m)->token_list = NULL;
-	(*m)->nb_cmd = 0;
-	(*m)->is_here_doc = 0;
-	(*m)->limiter = NULL;
-	(*m)->path = NULL;
-	(*m)->env_list = NULL;
-	(*m)->last_status = 0;
+	//(*m)->cmds = NULL;
+	// (*m)->cmds2 = NULL;
+	// (*m)->cmds2->cmd = NULL;
+	// (*m)->token_list = NULL;
+	// (*m)->nb_cmd = 0;
+	// (*m)->is_here_doc = 0;
+	// (*m)->limiter = NULL;
+	// (*m)->path = NULL;
+	// (*m)->env_list = NULL;
+	// (*m)->last_status = 0;
 	//exec_feed_pipex(m, NULL, 0, env); //TODO
 }
 

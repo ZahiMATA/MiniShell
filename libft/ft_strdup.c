@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 12:50:31 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/06 21:01:21 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/08 13:40:50 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,11 @@ char	*ft_strdup(const char *s)
 	while (len--)
 		zone[len] = s[len];
 	return (zone);
+}
+
+char	*ft_strdup_null(const char *s)
+{
+	if (s == NULL)
+		return (NULL);
+	return (ft_strdup(s));
 }

@@ -1,32 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prs_lstclear.c                                     :+:      :+:    :+:   */
+/*   prs_lstget.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/06 16:53:46 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/08 16:28:49 by ybouroga         ###   ########.fr       */
+/*   Created: 2025/08/08 12:31:20 by ybouroga          #+#    #+#             */
+/*   Updated: 2025/08/08 15:20:37 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "lexer.h"
 
-void	prs_lstclear(t_cmd2 **lst)
+// For example : /usr/bin/tr a A
+t_cmd2	*prs_lstget(t_minishell *m, int n)
+
 {
-	t_cmd2	*p;
+	t_cmd2	*l;
+	int		i;
 
-	if (lst == NULL)
-		return ;
-	while (*lst)
+	l = m->cmds2;
+	i = 0;
+	while (l && i < n)
 	{
-		p = (*lst)->next;
-		free((*lst)->cmd);
-		free((*lst)->cmd_abs);
-		free((*lst)->file_in);
-		free((*lst)->file_out);
-		free(*lst);
-		*lst = p;
+		i++;
+		l = l->next;
 	}
+	return (l);
+}
+
+int	prs_lstget_nb(t_minishell *m)
+
+{
+	t_cmd2	*l;
+	int		i;
+
+	l = m->cmds2;
+	i = 0;
+	while (l)
+	{
+		i++;
+		l = l->next;
+	}
+	return (i);
 }

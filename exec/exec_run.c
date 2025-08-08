@@ -37,54 +37,15 @@ static void	launch_process(t_minishell *m, int n, int pipes[][2])
 		i++;
 	}
 	env_tab = env_list_to_tab(m, m->env_list);
-	execve(m->cmds[n].path, m->cmds[n].args, env_tab);
+//	execve(m->cmds[n].path, m->cmds[n].args, env_tab);
+	execve(prs_lstget(m, n)->cmd_abs, /*prs_lstget(m, n)->cmd*/env_tab, env_tab); // TODO Metre le tab
 	mem_free_array(env_tab);
-	ft_exit_error(m, m->cmds[n].path);
+	ft_exit_error(m, prs_lstget(m, n)->cmd_abs);
 }
-
-/*
-static void	launch_process_begin(t_minishell *m, int n)
-{
-	char	**env_tab;
-
-	if (m->cmds[n].path == NULL)
-		ft_exit_with_status(m, ERROR_NOT_FOUND, 127);
-	debug_show_processes(m, "PID", m->cmds[n].path, n);
-	if (dup2(m->fd_in, STDIN_FILENO) == -1)
-		ft_exit_fail(m, ERROR_DUP2);
-	if (dup2(m->cmds[n].fd_pipe[1], STDOUT_FILENO) == -1)
-		ft_exit_fail(m, ERROR_DUP2);
-	mem_close_fds(m);
-	if (m->fd_in == -1)
-		return (debug_show_error("LPB"));
-	env_tab = env_list_to_tab(m, m->env_list);
-	execve(m->cmds[n].path, m->cmds[n].args, env_tab);
-	mem_free_array(env_tab);
-	ft_exit_error(m, m->cmds[n].path);
-}
-
-static void	launch_process_end(t_minishell *m, int n)
-{
-	char	**env_tab;
-
-	if (m->cmds[n].path == NULL)
-		ft_exit_with_status(m, ERROR_NOT_FOUND, 127);
-	debug_show_processes(m, "PID_END", m->cmds[n].path, n);
-	if (dup2(m->cmds[0].fd_pipe[0], STDIN_FILENO) == -1)
-		ft_exit_fail(m, ERROR_DUP2);
-	if (dup2(m->fd_out, STDOUT_FILENO) == -1)
-		ft_exit_fail(m, ERROR_DUP2);
-	mem_close_fds(m);
-	if (m->fd_out == -1)
-		return (debug_show_error("LBE"));
-	env_tab = env_list_to_tab(m, m->env_list);
-	execve(m->cmds[n].path, m->cmds[n].args, env_tab);
-	mem_free_array(env_tab);
-	ft_exit_error(m, m->cmds[n].path);
-}*/
 
 void	exec_execve(t_minishell *m)
 {
+	/*
 	int	pipes[m->nb_cmd - 1][2];
 	int	i;
 
@@ -98,10 +59,11 @@ void	exec_execve(t_minishell *m)
 	i = 0;
 	while (i < m->nb_cmd)
 	{
-		m->cmds[i].pid = fork();
-		if (m->cmds[i].pid == -1)
+
+		prs_lstget(m, i)->pid = fork();
+		if (prs_lstget(m, i)->pid == -1)
 			ft_exit_fail(m, ERROR_FORK);
-		if (m->cmds[i].pid == 0)
+		if (prs_lstget(m, i)->pid == 0)
 			launch_process(m, i, pipes);
 		i++;
 	}
@@ -115,32 +77,57 @@ void	exec_execve(t_minishell *m)
 	i = 0;
 	while (i < m->nb_cmd)
 	{
-		waitpid(m->cmds[i].pid, &m->cmds[i].status, 0);
+		waitpid(prs_lstget(m, i)->pid, &prs_lstget(m, i)->status, 0);
 		i++;
 	}
-//	if (pipe(m->cmds[0].fd_pipe) == -1)
-//		ft_exit_fail(m, ERROR_PIPE);
-	// m->cmds[0].pid = fork();
-	// if (m->cmds[0].pid == -1)
-	// 	ft_exit_fail(m, ERROR_FORK);
-	// if (m->cmds[0].pid == 0)
-	// 	launch_process_begin(m, 0);
-	// m->cmds[1].pid = fork();
-	// if (m->cmds[1].pid == -1)
-	// 	ft_exit_fail(m, ERROR_FORK);
-	// if (m->cmds[1].pid == 0)
-	// 	launch_process_end(m, 1);
-	////mem_close_fds(m);
-	// waitpid(m->cmds[0].pid, &m->cmds[0].status, 0);
-	// waitpid(m->cmds[1].pid, &m->cmds[1].status, 0);
-	debug_show_processes(m, "PARENT", NULL, -1);
+	debug_show_processes(m, "PARENT");*/
+
+	int		pipes[m->nb_cmd - 1][2];
+	int		i;
+	t_cmd2	*l;
+
+	i = 0;
+	while (i < m->nb_cmd - 1)
+	{
+		if (pipe(pipes[i]) == -1)
+			ft_exit_fail(m, ERROR_PIPE);
+		i++;
+	}
+	i = 0;
+	l = m->cmds2;
+	while (l)
+	{
+		l->pid = fork();
+		if (l->pid == -1)
+			ft_exit_fail(m, ERROR_FORK);
+		if (l->pid == 0)
+			launch_process(m, i, pipes);
+		l = l->next;
+		i++;
+	}
+	i = 0;
+	while (i < m->nb_cmd - 1)
+	{
+		close(pipes[i][0]);
+		close(pipes[i][1]);
+		i++;
+	}
+	i = 0;
+	l = m->cmds2;
+	while (l)
+	{
+		waitpid(l->pid, &l->status, 0);
+		l = l->next;
+		i++;
+	}
+	debug_show_processes(m, "PARENT");
 }
 
 int	exec_get_last_status(t_minishell *m)
 {
 	int	status;
 
-	status = m->cmds[m->nb_cmd - 1].status;
+	status = m->cmds2[m->nb_cmd - 1].status;
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	else if (WIFSIGNALED(status))

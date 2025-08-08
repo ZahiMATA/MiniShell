@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/07 18:32:18 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/08 15:33:07 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,16 +58,16 @@
 # define FLAG_FIC 0644
 // # define EXIT_CMDNOEXISTS 1
 
-typedef struct s_cmd
-{
-	char	**args;
-	char	*path;
-	char	*file_in; // gerer le free
-	char	*file_out; // gerer le free
-	int		status;
-	//int		fd_pipe[2];
-	int		pid;
-}	t_cmd;
+// typedef struct s_cmd
+// {
+// 	char	**args;
+// 	char	*path;
+// 	char	*file_in; // gerer le free
+// 	char	*file_out; // gerer le free
+// 	int		status;
+// 	//int		fd_pipe[2];
+// 	int		pid;
+// }	t_cmd;
 
 // TODO QUI remplacera s_cmd qui est une liste chainee
 // le tableau sera plus simple car on connait le nb de commandes
@@ -75,10 +75,13 @@ typedef struct s_cmd
 typedef struct s_cmd2
 {
 	char			*cmd;
+	char			*cmd_abs;
 	char			*file_in; // gerer le free
 	char			*file_out; // gerer le free
 	t_redirect		mode_in;
 	t_redirect		mode_out;
+	int				status;
+	int				pid;
 	struct	s_cmd2	*next;
 }	t_cmd2;
 
@@ -96,7 +99,7 @@ typedef struct s_minishell
 {
 	int				fd_in;
 	int				fd_out;
-	t_cmd			*cmds;
+	//t_cmd			*cmds;
 	t_cmd2			*cmds2; // TODO temporaire
 	t_token_list	*token_list;
 	int				nb_cmd;
@@ -110,14 +113,14 @@ typedef struct s_minishell
 void	mem_free_all(t_minishell *m);
 void	mem_free_array(char	**tab);
 void 	exec_init_minishell(t_minishell **m);
-void	exec_feed_minishell(t_minishell **m, char **args, int nbcom, char **env);
+void	exec_feed_minishell(t_minishell **m, char **env);
 void	exec_init_path(t_minishell **p, char **env);
 void	exec_init_cmds_and_cmd_args(t_minishell **p, char **cmd, int nbcom);
-void	exec_init_cmd_path(t_minishell **p, int nbcom);
+void	exec_init_cmd_path(t_minishell **p/*, int nbcom*/);
 char	*exec_find_command(t_minishell *m, char *cmd);
 void	exec_execve(t_minishell *m);
 void	debug_show_args(t_minishell *m);
-void	debug_show_processes(t_minishell *m, char *message, char *cmd, int i);
+void	debug_show_processes(t_minishell *m, char *message);
 void	debug_show_error(char *message);
 void	mem_free_null(char	**ptr);
 void	mem_close_fds(t_minishell *m);

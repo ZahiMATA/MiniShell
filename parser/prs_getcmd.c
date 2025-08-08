@@ -1,32 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prs_lstclear.c                                     :+:      :+:    :+:   */
+/*   prs_getargs.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/06 16:53:46 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/08 16:28:49 by ybouroga         ###   ########.fr       */
+/*   Created: 2025/08/08 14:44:16 by ybouroga          #+#    #+#             */
+/*   Updated: 2025/08/08 14:50:44 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "lexer.h"
 
-void	prs_lstclear(t_cmd2 **lst)
+// tr a A -> tr
+char	*prs_getcmd(t_minishell *m, char *s)
 {
-	t_cmd2	*p;
+	char	**split;
+	char	*ret;
 
-	if (lst == NULL)
-		return ;
-	while (*lst)
+	if (s == NULL)
+		return (NULL);
+	split = ft_split(s, ' ');
+	if (split == NULL)
+		ft_exit_fail_status(m, NULL, EXIT_ALLOC_ERROR);
+	if (split[0])
 	{
-		p = (*lst)->next;
-		free((*lst)->cmd);
-		free((*lst)->cmd_abs);
-		free((*lst)->file_in);
-		free((*lst)->file_out);
-		free(*lst);
-		*lst = p;
+		ret = ft_strdup(split[0]);
+		if (ret == NULL)
+		{
+			mem_free_array(split);
+			ft_exit_fail_status(m, NULL, EXIT_ALLOC_ERROR);
+		}
 	}
+	else
+		ret = NULL;
+	mem_free_array(split);
+	return ret;
 }
