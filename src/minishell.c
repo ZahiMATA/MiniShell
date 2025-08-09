@@ -48,6 +48,7 @@ void	test1(char **env)
 	while (1)
 	{
 		exec_init_minishell(&m);
+		m->last_status = last_status;
 		ft_putstr_fd(PROMPT, STDOUT_FILENO);
 		line = read_input(m, STDIN_FILENO);
 		if (line == NULL)

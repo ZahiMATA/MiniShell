@@ -6,7 +6,7 @@
 #    By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/28 10:35:37 by ybouroga          #+#    #+#              #
-#    Updated: 2025/08/08 20:36:59 by ybouroga         ###   ########.fr        #
+#    Updated: 2025/08/09 17:53:47 by ybouroga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,8 @@ SRCS = \
 	libft/ft_typec.c \
 	libft/ft_calloc.c \
 	libft/ft_bzero.c \
+	libft/ft_strlcat.c \
+	libft/ft_itoa.c \
 	libft_ms/ft_exit.c \
 	libft_ms/ft_return.c \
 	libft_ms/ft_lstnew_env.c \
@@ -53,8 +55,7 @@ SRCS = \
 	parser/prs_lstclear.c \
 	parser/prs_lstnew.c \
 	parser/prs_lstget.c \
-	parser/prs_getcmd.c \
-
+	parser/prs_getcmd.c
 
 HEADER = \
 	includes/minishell.h \

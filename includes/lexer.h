@@ -6,14 +6,14 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 12:18:08 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/08 20:39:29 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/09 16:20:50 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_H
 # define LEXER_H
 //#include "minishell.h"
-//# include <stddef.h>
+# include <stddef.h>
 //# include <stdlib.h>
 
 # ifndef DEBUG_LEX
@@ -64,6 +64,7 @@ typedef struct s_param
 } t_param;
 
 void			debug_show_tokens(t_minishell *m);
+void			debug_serial_token(t_minishell *m, char *buffer, size_t size);
 void			debug_show_cmds(t_minishell *m);
 t_token_list	*lex_lstnew(t_token token, char *val);
 void			lex_lstadd_back(t_token_list **lst, t_token_list *new);
