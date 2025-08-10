@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 18:20:43 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/10 15:00:54 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/10 16:01:27 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,9 @@ void	prs_lstadd_back(t_cmd2  **lst, t_cmd2 *new_lst);
 void	prs_lstclear(t_cmd2 **lst);
 t_cmd2	*prs_lstnew(t_cmd2 cmd);
 t_cmd2	*prs_lstget(t_minishell *m, int n);
+void	prs_lstadd_back_redir(t_redir  **lst, t_redir *new_lst);
+void	prs_lstclear_redir(t_redir **lst);
+t_redir	*prs_lstnew_redir(t_redir redir);
 char	*prs_getcmd(t_minishell *m, char *s);
 int		prs_lstget_nb(t_minishell *m);
 char	**prs_realloc_args(t_minishell *m, char **tab, int size, char *insert);
