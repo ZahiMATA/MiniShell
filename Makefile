@@ -6,7 +6,7 @@
 #    By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/28 10:35:37 by ybouroga          #+#    #+#              #
-#    Updated: 2025/08/09 17:53:47 by ybouroga         ###   ########.fr        #
+#    Updated: 2025/08/10 14:26:33 by ybouroga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,11 +51,13 @@ SRCS = \
 	lexer/lex_lstclear.c \
 	lexer/lexer.c \
 	parser/parser.c \
-	parser/prs_lstadd_back.c \
-	parser/prs_lstclear.c \
-	parser/prs_lstnew.c \
-	parser/prs_lstget.c \
-	parser/prs_getcmd.c
+	parser/parsing/prs_string.c \
+	parser/parsing/prs_redir.c \
+	parser/list/prs_lstadd_back.c \
+	parser/list/prs_lstclear.c \
+	parser/list/prs_lstnew.c \
+	parser/list/prs_lstget.c \
+	parser/prs_getcmd.c \
 
 HEADER = \
 	includes/minishell.h \

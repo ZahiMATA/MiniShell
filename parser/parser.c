@@ -1,19 +1,20 @@
-/*< Makefile  grep a | wc
-tests1:
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/10 13:26:51 by ybouroga          #+#    #+#             */
+/*   Updated: 2025/08/10 15:05:02 by ybouroga         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-test2.0
-< Makefile "tr a A" | "tr b B" > ficout -> doit err
-< Makefile tr "a b0" "A^B|" |  tr "a b|" "A^B1" > ficout
-< Makefile tr a A | tr b B > ficout
-< Makefile tr aa AA | tr bb BB > ficout
+#include "minishell.h"
+#include "parser.h"
 
-< Makefile cat > ficout -> OK
-< Makefile cat | wc > ficout -> KO
-
-
-cat < Makefile << FIN > outfile >> ficout
-
-test2:
+/*
+test:
 < Makefile tr a A | tr b B > ficout
 ->
 [<][makefile][tr a A][|][tr b B][>][ficout]
@@ -40,34 +41,28 @@ typedef struct _s_cmd
 }	t_cmd;
 */
 
-#include "minishell.h"
-#include "parser.h"
+
 
 static void	check_token(t_minishell *m)
 {
-	t_cmd2 cmd;
-	t_cmd2 *cmd2;
+	t_cmd/*2*/ cmd;
+	t_cmd/*2*/ *pcmd;
+	t_red_t type;
+	t_red_t *redir;
 
-	/*cmd.cmd = NULL;
-	cmd.file_in  = NULL;
-	cmd.file_out  = NULL;
-	cmd.mode_in = T_NONE;
-	cmd.mode_out = T_NONE;
-	cmd.next = NULL;*/
-	ft_bzero(&cmd, sizeof(t_cmd2));
-	cmd2 = NULL;
+	ft_bzero(&cmd, sizeof(t_cmd/*2*/));
+	pcmd = NULL;
 	while (m->token_list && m->token_list->token != T_PIPE)
 	{
-
 		if(ft_is_stringword(m))
-			cmd.cmd = m->token_list->val;
-		else if(m->token_list->token == T_REDIRECT_LEFT)
+			cmd.args = prs_realloc_args(m, cmd.args, cmd.n++, m->token_list->val);
+		else if(ft_is_redir(m->token_list->token))
 		{
+			type = prs_get_redir(m->token_list->token);
 			m->token_list = m->token_list->next;
 			if (m->token_list == NULL || ft_is_stringword(m) == 0)
 				return (ft_return_error(m, ERROR_NL, RETURN_NL)); // TODO ajouter free cmd
-			cmd.file_in = m->token_list->val;
-			cmd.mode_in = T_INPUT;
+			redir = prs
 		}
 		else if(m->token_list->token == T_REDIRECT_RIGHT)
 		{
@@ -79,10 +74,10 @@ static void	check_token(t_minishell *m)
 		}
 		m->token_list = m->token_list->next;
 	}
-	cmd2 = prs_lstnew(cmd);
-	if (cmd2 == NULL)
+	pcmd = prs_lstnew(cmd);
+	if (pcmd == NULL)
 		ft_exit_fail_status(m, NULL, EXIT_ALLOC_ERROR);
-	prs_lstadd_back(&m->cmds2, cmd2);
+	prs_lstadd_back(&m->cmds2, pcmd);
 }
 
 void	parser(t_minishell *m)
