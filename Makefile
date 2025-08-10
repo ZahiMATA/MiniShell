@@ -6,7 +6,7 @@
 #    By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/28 10:35:37 by ybouroga          #+#    #+#              #
-#    Updated: 2025/08/10 16:02:18 by ybouroga         ###   ########.fr        #
+#    Updated: 2025/08/10 20:07:26 by ybouroga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,7 +59,7 @@ SRCS = \
 	parser/list/cmd/prs_lstget.c \
 	parser/list/redir/prs_lstadd_back_redir.c \
 	parser/list/redir/prs_lstclear_redir.c \
-	parser/list/redir/prs_lstnew.c \
+	parser/list/redir/prs_lstnew_redir.c \
 	parser/prs_getcmd.c \
 
 HEADER = \
