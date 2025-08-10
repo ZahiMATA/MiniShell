@@ -21,17 +21,17 @@ void	mem_free_null(char	**ptr)
 	*ptr = NULL;
 }
 
-void	mem_free_array(char	**tab)
+void	mem_free_array(char	***tab)
 {
 	int	i;
 
 	i = 0;
-	if (tab == NULL)
+	if (tab == NULL || *tab == NULL)
 		return ;
-	while (tab[i])
-		mem_free_null(&tab[i++]);
-	free(tab);
-	tab = NULL;
+	while ((*tab)[i])
+		mem_free_null(&(*tab)[i++]);
+	free(*tab);
+	*tab = NULL;
 }
 /*
 static void	mem_free_cmds(t_minishell **m)
@@ -57,9 +57,9 @@ void	mem_free_all(t_minishell *m)
 		return ;
 	mem_close_fds(m);
 	//mem_free_cmds(&m);
-	prs_lstclear(&m->cmds2);
+	prs_lstclear(&m->cmds);
 	mem_free_null(&m->limiter);
-	mem_free_array(m->path);
+	mem_free_array(&m->path);
 	ft_lstclear_env(&m->env_list, del_env_content);
 	lex_lstclear(&m->token_list);
 	free(m);

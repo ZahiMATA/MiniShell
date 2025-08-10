@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 17:16:20 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/08 10:58:31 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/10 18:52:12 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,33 +37,42 @@ void	debug_show_args(t_minishell *m)
 	}
 }*/
 
+static char	*debug_get_args(char **tab)
+{
+	char	*buffer;
+	int		i;
+
+	buffer = malloc(BUFFER_LOG);
+	if (buffer == NULL)
+		return NULL;
+	buffer[0] = '\0';
+	i = 0;
+	while (tab && tab[i])
+	{
+		ft_strlcat(buffer, tab[i++], BUFFER_LOG);
+		ft_strlcat(buffer, " ", BUFFER_LOG);
+	}
+	return buffer;
+}
+
 void	debug_show_processes(t_minishell *m, char *message)
 {
-	t_cmd2	*l;
+	t_cmd	*l;
 	int		i;
+	char	*args;
 
 	if (DEBUG)
 	{
-		// ft_putstr(message);
-		// ft_putstr_fd("PID0=", STDOUT_FILENO);
-		// ft_putnbr_fd(m->cmds[0].pid, STDOUT_FILENO);
-		// ft_putstr(":END-PID0");
-		// ft_putstr_fd("PID1=", STDOUT_FILENO);
-		// ft_putnbr_fd(m->cmds[1].pid, STDOUT_FILENO);
-		// ft_putstr(":END-PID1");
-		// ft_putstr(":CMD=");
-		// ft_putstr(cmd);
-		// ft_putstr(":END-CMD");
-		// ft_putstr(":#=");
-		// ft_putnbr_fd(i, STDOUT_FILENO);
-		// ft_putstr(":END-#");
-
-		l = m->cmds2;
+		l = m->cmds;
 		ft_putstr(message);
 		i = 0;
 		while (l)
 		{
-			printf("{PID%d=[%d], CMD=[%s]}", i, l->pid, l->cmd);
+			args = debug_get_args(l->args);
+			if (args == NULL)
+				ft_exit_fail_status(m, NULL, EXIT_ALLOC_ERROR);
+			printf("{PID%d=[%d], CMD=[%s]}", i, l->pid, args);
+			free(args);
 			i++;
 			l = l->next;
 		}

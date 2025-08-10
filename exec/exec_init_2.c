@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 12:50:08 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/08 18:44:57 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/10 19:04:34 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,32 +67,6 @@ void	exec_init_cmds_and_cmd_args(t_minishell **m, char **cmd, int nbcom)
 
 char	*exec_find_command(t_minishell *m, char *cmd)
 {
-	/*char	*cmd_abs;
-	int		i;
-
-	if (cmd == NULL)
-		return (NULL);
-	cmd_abs = NULL;
-	if (access(cmd, X_OK) == 0)
-	{
-		cmd_abs = ft_strdup(cmd);
-		if (cmd_abs == NULL)
-        	ft_exit_fail_status(m, NULL, EXIT_ALLOC_ERROR);
-		return (cmd_abs);
-	}
-	i = 0;
-	while (m->path && m->path[i])
-	{
-		cmd_abs = ft_strjoin_with_char(m->path[i], '/', cmd);
-		if (cmd_abs == NULL)
-			ft_exit_fail_status(m, NULL, EXIT_ALLOC_ERROR);
-		if (access(cmd_abs, X_OK) == 0)
-			break ;
-		mem_free_null(&cmd_abs);
-		i++;
-	}
-	return (cmd_abs);
-*/
 	char	*cmd_abs;
 	int		i;
 
@@ -122,24 +96,15 @@ char	*exec_find_command(t_minishell *m, char *cmd)
 
 void	exec_init_cmd_path(t_minishell **m/*, int nbcom*/)
 {
-	/*
-	int	i;
-
-	i = 0;
-	while (i < nbcom)
-	{
-		(*m)->cmds[i].path = exec_find_command(*m, (*m)->cmds[i].args[0]);
-		i++;
-	}
-*/
-	t_cmd2	*l;
+	t_cmd	*l;
 	char	*cmd_abs;
 
-	l = (*m)->cmds2;
+	l = (*m)->cmds;
 
 	while (l)
 	{
-		cmd_abs = exec_find_command(*m, prs_getcmd(*m, l->cmd));
+		//cmd_abs = exec_find_command(*m, prs_getcmd(*m, l->cmd));
+		cmd_abs = exec_find_command(*m, prs_getcmd_from_args(*m, l->args));
 		if (cmd_abs)
 			l->cmd_abs = cmd_abs;
 		l = l->next;

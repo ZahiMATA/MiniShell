@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/08 18:45:09 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/10 19:31:31 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 #  define DEBUG 0
 # endif
 # define BUFFER_SIZE 1024
+# define BUFFER_LOG 1024
 # define KO 0
 # define OK 1
 # define MINISHELL "minishell"
@@ -73,6 +74,7 @@
 // TODO QUI remplacera s_cmd qui est une liste chainee
 // le tableau sera plus simple car on connait le nb de commandes
 // on revient a la liste car le paseur genere une liste
+/*
 typedef struct s_cmd2
 {
 	char			*cmd;
@@ -84,7 +86,7 @@ typedef struct s_cmd2
 	int				status;
 	int				pid;
 	struct	s_cmd2	*next;
-}	t_cmd2;
+}	t_cmd2;*/
 
 // TODO implementer init et l access et le free et le update data
 typedef struct s_env
@@ -100,8 +102,8 @@ typedef struct s_minishell
 {
 	int				fd_in;
 	int				fd_out;
-	//t_cmd			*cmds;
-	t_cmd2			*cmds2; // TODO temporaire
+	t_cmd			*cmds;
+	//t_cmd2			*cmds2; // TODO temporaire
 	t_token_list	*token_list;
 	int				nb_cmd;
 	int				is_here_doc;
@@ -112,7 +114,7 @@ typedef struct s_minishell
 }	t_minishell;
 
 void	mem_free_all(t_minishell *m);
-void	mem_free_array(char	**tab);
+void	mem_free_array(char	***tab);
 void 	exec_init_minishell(t_minishell **m);
 void	exec_feed_minishell(t_minishell **m, char **env);
 void	exec_init_path(t_minishell **p, char **env);

@@ -43,7 +43,7 @@ static void	launch_process(t_minishell *m, int n, int pipes[][2])
 	tab[1] = "a";
 	tab[2] = "b";
 	execve(prs_lstget(m, n)->cmd_abs, /*prs_lstget(m, n)->cmd*/tab, env_tab); // TODO Metre le tab
-	mem_free_array(env_tab);
+	mem_free_array(&env_tab);
 	ft_exit_error(m, prs_lstget(m, n)->cmd_abs);
 }
 
@@ -51,7 +51,7 @@ void	exec_execve(t_minishell *m)
 {
 	int		pipes[m->nb_cmd - 1][2];
 	int		i;
-	t_cmd2	*l;
+	t_cmd	*l;
 
 	i = 0;
 	while (i < m->nb_cmd - 1)
@@ -61,7 +61,7 @@ void	exec_execve(t_minishell *m)
 		i++;
 	}
 	i = 0;
-	l = m->cmds2;
+	l = m->cmds;
 	while (l)
 	{
 		l->pid = fork();
@@ -80,7 +80,7 @@ void	exec_execve(t_minishell *m)
 		i++;
 	}
 	i = 0;
-	l = m->cmds2;
+	l = m->cmds;
 	while (l)
 	{
 		waitpid(l->pid, &l->status, 0);
@@ -94,7 +94,7 @@ int	exec_get_last_status(t_minishell *m)
 {
 	int	status;
 
-	status = m->cmds2[m->nb_cmd - 1].status;
+	status = m->cmds[m->nb_cmd - 1].status;
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	else if (WIFSIGNALED(status))

@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 13:26:51 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/10 15:05:02 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/10 19:48:50 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	check_token(t_minishell *m)
 	t_cmd/*2*/ cmd;
 	t_cmd/*2*/ *pcmd;
 	t_red_t type;
-	t_red_t *redir;
+	t_redir *redir;
 
 	ft_bzero(&cmd, sizeof(t_cmd/*2*/));
 	pcmd = NULL;
@@ -56,28 +56,23 @@ static void	check_token(t_minishell *m)
 	{
 		if(ft_is_stringword(m))
 			cmd.args = prs_realloc_args(m, cmd.args, cmd.n++, m->token_list->val);
-		else if(ft_is_redir(m->token_list->token))
+		else if(ft_is_redir(m))
 		{
 			type = prs_get_redir(m->token_list->token);
 			m->token_list = m->token_list->next;
 			if (m->token_list == NULL || ft_is_stringword(m) == 0)
 				return (ft_return_error(m, ERROR_NL, RETURN_NL)); // TODO ajouter free cmd
-			redir = prs
-		}
-		else if(m->token_list->token == T_REDIRECT_RIGHT)
-		{
-			m->token_list = m->token_list->next;
-			if (m->token_list == NULL || ft_is_stringword(m) == 0)
-				return (ft_return_error(m, ERROR_NL, RETURN_NL));
-			cmd.file_out = m->token_list->val;
-			cmd.mode_out = T_OUTPUT;
+			redir = prs_lstnew_redir(type, m->token_list->val);
+			if(redir == NULL)
+				ft_exit_fail_status(m, NULL, EXIT_ALLOC_ERROR);
+			prs_lstadd_back_redir(&m->cmds->redirs, redir);
 		}
 		m->token_list = m->token_list->next;
 	}
 	pcmd = prs_lstnew(cmd);
 	if (pcmd == NULL)
 		ft_exit_fail_status(m, NULL, EXIT_ALLOC_ERROR);
-	prs_lstadd_back(&m->cmds2, pcmd);
+	prs_lstadd_back(&m->cmds, pcmd);
 }
 
 void	parser(t_minishell *m)
