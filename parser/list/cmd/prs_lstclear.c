@@ -6,12 +6,11 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 16:53:46 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/08 16:28:49 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/10 15:41:46 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "lexer.h"
 
 void	prs_lstclear(t_cmd2 **lst)
 {

@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 12:41:06 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/07 18:39:25 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/10 15:46:58 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,3 @@ t_cmd2	*prs_lstnew(t_cmd2 cmd)
 	list-> next = NULL;
 	return (list);
 }
-
