@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 11:16:14 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/10 18:54:42 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/10 21:08:42 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,10 @@ void	debug_show_cmds(t_minishell *m)
 	t_cmd	*l;
 
 	l = m->cmds;
+
 	if (DEBUG_LEX)
 	{
-		ft_putstr("\033[0;31mCmd\033[0m");
+		ft_putstr("\033[0;31mCmd[]\033[0m");
 		while (l)
 		{
 			printf("cmd=[%s]\n",
@@ -29,3 +30,10 @@ void	debug_show_cmds(t_minishell *m)
 	}
 }
 
+// TODO
+void	debug_serial_parser(t_minishell *m, char *buffer, size_t size)
+{
+	(void)m;
+	(void)buffer;
+	(void)size;
+}

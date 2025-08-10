@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/10 19:31:31 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/10 20:58:40 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,10 @@
 # include <fcntl.h>
 
 # ifndef DEBUG
-#  define DEBUG 0
+#  define DEBUG 1
+# endif
+# ifndef DEBUG_ENV
+#  define DEBUG_ENV 0
 # endif
 # define BUFFER_SIZE 1024
 # define BUFFER_LOG 1024
@@ -128,17 +131,10 @@ void	debug_show_error(char *message);
 void	mem_free_null(char	**ptr);
 void	mem_close_fds(t_minishell *m);
 int		exec_get_last_status(t_minishell *m);
-//void	ft_putchar_fd(char c, int fd);
-//void	ft_putstr_fd( char *s, int fd);
-//void	ft_putstr(char *s);
-//void	ft_putnbr_fd(int n, int fd);
 void	ft_print_array(char **tab);
 int		ft_strncmp(const char *s1, const char *s2, int n);
-//char	**ft_split_multi(char const *s, char c[2]);
-//char	**ft_split(char const *s, char c);
 int		ft_gerer_zone(char **split, char *zone, int *n);
 char	*ft_strchr(const char *s, int c);
-//int		ft_strlen(const char *str);
 t_env	*ft_lstnew_env(void *key, void *val);
 void	ft_lstadd_back_env(t_env **lst, t_env *new);
 void	ft_lstclear_env(t_env **lst, void (*del)(void *));

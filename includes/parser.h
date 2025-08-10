@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 18:20:43 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/10 19:04:12 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/10 21:08:15 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,6 @@ char	*prs_getcmd_from_args(t_minishell *m, char **args);
 int		prs_lstget_nb(t_minishell *m);
 char	**prs_realloc_args(t_minishell *m, char **tab, int size, char *insert);
 t_red_t	prs_get_redir(t_token t);
+void	debug_serial_parser(t_minishell *m, char *buffer, size_t size);
 
 #endif

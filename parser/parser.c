@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 13:26:51 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/10 19:48:50 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/10 20:27:54 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,14 @@ typedef struct _s_cmd
 }	t_cmd;
 */
 
-
-
 static void	check_token(t_minishell *m)
 {
-	t_cmd/*2*/ cmd;
-	t_cmd/*2*/ *pcmd;
+	t_cmd cmd;
+	t_cmd *pcmd;
 	t_red_t type;
 	t_redir *redir;
 
-	ft_bzero(&cmd, sizeof(t_cmd/*2*/));
+	ft_bzero(&cmd, sizeof(t_cmd));
 	pcmd = NULL;
 	while (m->token_list && m->token_list->token != T_PIPE)
 	{

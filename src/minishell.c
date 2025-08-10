@@ -67,12 +67,13 @@ void	test1(char **env)
 
 		lexer(m, line);
 		debug_show_tokens(m);
-
 		parser(m);
-		debug_show_cmds(m);
 
 		exec_feed_minishell(&m, env);
-		//exec_execve(m);
+		debug_show_args(m);
+		debug_show_cmds(m);
+
+		exec_execve(m);
 
 		last_status = m->last_status;
 		free(line);
