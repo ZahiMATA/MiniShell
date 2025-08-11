@@ -6,7 +6,7 @@
 #    By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/28 10:35:37 by ybouroga          #+#    #+#              #
-#    Updated: 2025/08/10 20:07:26 by ybouroga         ###   ########.fr        #
+#    Updated: 2025/08/11 16:11:41 by ybouroga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ SRCS = \
 	debug/debug_display.c \
 	debug/debug_token.c \
 	debug/debug_cmd.c \
+	debug/debug_pointer.c \
 	exec/exec_init_1.c \
 	exec/exec_init_2.c \
 	exec/exec_redir.c \

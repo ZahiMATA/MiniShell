@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 18:20:43 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/10 21:08:15 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/11 17:44:38 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,6 @@ typedef struct	s_redir
 	char			*file;
 	struct s_redir	*next;
 } t_redir;
-
-/*
-typedef struct s_cmd2
-{
-	char			*cmd;
-	char			*cmd_abs;
-	char			*file_in; // gerer le free
-	char			*file_out; // gerer le free
-	t_redirect		mode_in;
-	t_redirect		mode_out;
-	int				status;
-	int				pid;
-	struct	s_cmd2	*next;
-}	t_cmd2;*/
 
 typedef struct s_cmd
 {

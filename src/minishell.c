@@ -73,7 +73,8 @@ void	test1(char **env)
 		debug_show_args(m);
 		debug_show_cmds(m);
 
-		exec_execve(m);
+		if (m->last_status == 0)
+			exec_execve(m);
 
 		last_status = m->last_status;
 		free(line);

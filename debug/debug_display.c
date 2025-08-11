@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 17:16:20 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/10 21:23:28 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/11 10:33:41 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	debug_show_processes(t_minishell *m, char *message)
 			args = debug_get_args(l->args);
 			if (args == NULL)
 				ft_exit_fail_status(m, NULL, EXIT_ALLOC_ERROR);
-			printf("{PID%d=[%d], CMD=[%s]}", i, l->pid, args);
+			printf("{PID%d=[%d], CMD=[%s]}\n", i, l->pid, args);
 			free(args);
 			i++;
 			l = l->next;

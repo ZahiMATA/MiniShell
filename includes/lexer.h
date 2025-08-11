@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 12:18:08 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/10 14:22:10 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/11 11:54:22 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # define RETURN_NL 2
 
 typedef struct s_minishell	t_minishell;
-typedef struct s_cmd2		t_cmd2;
+//typedef struct s_cmd2		t_cmd2;
 
 typedef enum e_token
 {

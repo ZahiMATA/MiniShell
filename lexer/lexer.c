@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 11:23:17 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/09 14:34:30 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/11 15:28:49 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ static void	lexer_single_quote(t_param *_)
 	free(s);
 }
 
+/* A voir semble fonctionnel sans
 static void	lexer_word(t_param *_)
 {
 	char	*s;
@@ -108,6 +109,26 @@ static void	lexer_word(t_param *_)
 	}
 	s = ft_substring(_->line, start, len);
 	if (!s)
+		ft_exit_fail_status(_->m, NULL, EXIT_ALLOC_ERROR);
+	add_token(_, T_WORD, s, 0);
+	free(s);
+}*/
+
+static void lexer_word(t_param *_)
+{
+	char	*s;
+	int		start;
+	int		len;
+
+	len = 0;
+	start = _->i;
+	while (_->line[_->i] && !ft_islexer(_->line[_->i]))
+	{
+		len++;
+		_->i++;
+	}
+	s = ft_substring(_->line, start, len);
+	if (s == NULL)
 		ft_exit_fail_status(_->m, NULL, EXIT_ALLOC_ERROR);
 	add_token(_, T_WORD, s, 0);
 	free(s);

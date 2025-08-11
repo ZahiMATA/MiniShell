@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 15:28:03 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/10 20:56:11 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/11 19:05:04 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,17 @@ void	exec_feed_minishell(t_minishell **m, /*char **args, int nbcom0,*/ char **en
 
 void exec_init_minishell(t_minishell **m)
 {
-	*m = malloc(sizeof(t_minishell));
+	*m = ft_calloc(1, sizeof(t_minishell));
 	if (*m == NULL)
 		ft_exit_fail_status(*m, NULL, EXIT_ALLOC_ERROR);
-	ft_bzero(*m, sizeof(t_minishell));
+	//(*m)->cmds = ft_calloc(1, sizeof(t_cmd));
+	/*if ((*m)->cmds == NULL)
+		ft_exit_fail_status(*m, NULL, EXIT_ALLOC_ERROR);*/
+
+	/*(*m)->cmds->redirs  = ft_calloc(1, sizeof(t_redir));
+	if((*m)->cmds->redirs == NULL)
+		ft_exit_fail_status(*m, NULL, EXIT_ALLOC_ERROR);*/
+
 	(*m)->fd_in = -1;
 	(*m)->fd_out = -1;
 	//(*m)->cmds = NULL;
