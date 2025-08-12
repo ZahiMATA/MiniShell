@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 15:26:00 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/10 15:50:00 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/12 17:49:18 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,10 @@
 void	prs_lstadd_back_redir(t_redir  **lst, t_redir *new_lst)
 {
 	t_redir	*p;
+
+	debug_pointer(lst);
+	debug_pointer(*lst);
+
 
 	if (lst == NULL || new_lst == NULL)
 		return ;
