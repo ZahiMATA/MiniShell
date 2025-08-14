@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 12:18:08 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/11 11:54:22 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/14 11:48:36 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 //# include <stdlib.h>
 
 # ifndef DEBUG_LEX
-#  define DEBUG_LEX 1
+#  define DEBUG_LEX 0
 # endif
 # define ERROR_NOTCLOSEDSTRING "Syntax error: String must be closed"
 # define ERROR_NL "Syntax error near unexpected token `newline'"

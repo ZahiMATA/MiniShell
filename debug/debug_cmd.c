@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 11:16:14 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/11 19:05:37 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/14 11:59:02 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	debug_show_cmds(t_minishell *m)
 
 	l = m->cmds;
 
-	if (DEBUG_LEX)
+	//if (DEBUG_LEX)
 	{
 		ft_putstr("\033[0;31mCmd\033[0m");
 		while (l)
@@ -89,6 +89,8 @@ void	debug_serial_parser(t_minishell *m, char *buffer, size_t size)
 		debug_args(l, buffer, size);
 		debug_redirs(m, l, buffer, size);
 		ft_strlcat(buffer, ")", size);
+		if (l->next)
+			ft_strlcat(buffer, ",", size);
 		l = l-> next;
 	}
 	ft_strlcat(buffer, "\n", size);

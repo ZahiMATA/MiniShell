@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 13:26:51 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/11 18:52:17 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/14 10:42:54 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,27 +34,20 @@ static void	check_token(t_minishell *m)
 	pcmd = NULL;
 	while (m->token_list && m->token_list->token != T_PIPE)
 	{
-		printf("-Bct[%p][%s]\n", m->token_list, m->token_list->val);
 		if(ft_is_stringword(m))
 			cmd.args = prs_realloc_args(m, cmd.args, cmd.n++, m->token_list->val);
 		else if(ft_is_redir(m))
 		{
 			type = prs_get_redir(m->token_list->token);
-			printf("-B1[%p][%s]\n", m->token_list, m->token_list->val);
 			m->token_list = m->token_list->next;
-			printf("-B2[%p][%s][%d]\n", m->token_list, m->token_list->val, ft_is_stringword(m));
 			if (m->token_list == NULL || ft_is_stringword(m) == 0)
 				return (ft_return_error(m, ERROR_NL, RETURN_NL)); // TODO ajouter free cmd
-			printf("-B4[%p][%s]\n", m->token_list, m->token_list->val);
 			redir = prs_lstnew_redir(type, m->token_list->val);
 			if(redir == NULL)
 				ft_exit_fail_status(m, NULL, EXIT_ALLOC_ERROR);
 
-			printf("-B4.1[%s][%p]\n", redir->file, &m->cmds->redirs);
 			prs_lstadd_back_redir(&cmd.redirs, redir);
-			printf("-B4.2[%p][%s]\n", m->token_list, m->token_list->val);
 		}
-		printf("-B5[%p][%s]\n", m->token_list, m->token_list->val);
 		m->token_list = m->token_list->next;
 	}
 	pcmd = prs_lstnew(cmd);
@@ -65,22 +58,18 @@ static void	check_token(t_minishell *m)
 
 void	parser(t_minishell *m)
 {
-	//m->cmds = NULL;
-	printf("avant\n");
-	debug_show_cmds(m);
+	//printf("avant\n");
+	//debug_show_cmds(m);
 	while (m->token_list)
 	{
 		check_token(m);
-		printf("-B3[%d]\n", m->last_status);
 		if (m->cmds->args && m->cmds->args[0])
-			printf("-Bprs[%s]\n", m->cmds->args[0]);
 		if (m->last_status)
 			return ;
-		printf("-B4[%d]\n", m->last_status);
 		if (m->token_list && m->token_list->token == T_PIPE)
 			m->token_list = m->token_list->next;
 	}
-	printf("apres\n");
-	debug_show_cmds(m);
+	//printf("apres\n");
+	//debug_show_cmds(m);
 }
 

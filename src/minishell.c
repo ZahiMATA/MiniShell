@@ -58,8 +58,8 @@ void	test1(char **env)
 			free(line);
 			continue;
 		}
-		ft_putstr_fd("Texte entré[1] : ", STDOUT_FILENO);
-		ft_putstr_fd(line, STDERR_FILENO);
+		// ft_putstr_fd("Texte entré[1] : ", STDOUT_FILENO);
+		// ft_putstr_fd(line, STDERR_FILENO);
 		//char *args[] = { ".a.out", "Makefile", "tr ac AC", "tr b B", "tr xy XY", "ficout", NULL };
 		//exec_feed_minishell(&m, /*args, 3,*/ env);
 		//debug_show_args(m);
