@@ -4,11 +4,11 @@ char	*read_input(t_minishell *m, int fd)
 {
 	char	buffer[BUFFER_SIZE + 1];
 	int		n;
-	char	*line;
+	//char	*line;
 	char	*tmp;
 
-	line = ft_strdup("");
-	if (line == NULL)
+	m->line = ft_strdup("");
+	if (m->line == NULL)
 		ft_exit_fail_status(m, NULL, EXIT_ALLOC_ERROR);
 	n = 1;
 	while (n > 0)
@@ -20,19 +20,19 @@ char	*read_input(t_minishell *m, int fd)
 			return (NULL);
 		}
 		buffer[n] = '\0';
-		tmp = line;
-		line = ft_strjoin(line, buffer);
+		tmp = m->line;
+		m->line = ft_strjoin(m->line, buffer);
 		free(tmp);
-		if (line == NULL)
+		if (m->line == NULL)
 			ft_exit_fail_status(m, NULL, EXIT_ALLOC_ERROR);
 		m->last_status = EXIT_SUCCESS;
-		if (ft_strchr(line, '\n'))
-			return (line);
+		if (ft_strchr(m->line, '\n'))
+			return (m->line);
 	}
-	if (*line == '\0')
+	if (m->line[0] == '\0')
 	{
-		free(line);
+		mem_free_null(&m->line);
 		ft_exit_with_status(m, EXIT, EXIT_SUCCESS);
 	}
-	return line;
+	return m->line;
 }

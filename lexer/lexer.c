@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 11:23:17 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/11 15:28:49 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/14 14:55:41 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,18 @@ static void	lexer_string(t_param *_)
 	_->i++;
 	len = 0;
 	start = _->i;
-	while (_->line[_->i] && _->line[_->i] != '"')
+	while (_->m->line[_->i] && _->m->line[_->i] != '"')
 	{
 		len++;
 		_->i++;
 	}
-	if (_->line[_->i] == '\0')
+	if (_->m->line[_->i] == '\0')
 	{
 		ft_return_error(_->m, ERROR_NOTCLOSEDSTRING, EXIT_FAILURE);
 		lex_lstclear(&_->m->token_list);
 		return ;
 	}
-	s = ft_substring(_->line, start, len);
+	s = ft_substring(_->m->line, start, len);
 	if (!s)
 		ft_exit_fail_status(_->m, NULL, EXIT_ALLOC_ERROR);
 	add_token(_, T_STRING, s, 0);
@@ -62,18 +62,18 @@ static void	lexer_single_quote(t_param *_)
 	_->i++;
 	len = 0;
 	start = _->i;
-	while (_->line[_->i] && _->line[_->i] != '\'')
+	while (_->m->line[_->i] && _->m->line[_->i] != '\'')
 	{
 		len++;
 		_->i++;
 	}
-	if (_->line[_->i] == '\0')
+	if (_->m->line[_->i] == '\0')
 	{
 		ft_return_error(_->m, ERROR_NOTCLOSEDSTRING, EXIT_FAILURE);
 		lex_lstclear(&_->m->token_list);
 		return ;
 	}
-	s = ft_substring(_->line, start, len);
+	s = ft_substring(_->m->line, start, len);
 	if (!s)
 		ft_exit_fail_status(_->m, NULL, EXIT_ALLOC_ERROR);
 	add_token(_, T_STRING, s, 0);
@@ -122,12 +122,12 @@ static void lexer_word(t_param *_)
 
 	len = 0;
 	start = _->i;
-	while (_->line[_->i] && !ft_islexer(_->line[_->i]))
+	while (_->m->line[_->i] && !ft_islexer(_->m->line[_->i]))
 	{
 		len++;
 		_->i++;
 	}
-	s = ft_substring(_->line, start, len);
+	s = ft_substring(_->m->line, start, len);
 	if (s == NULL)
 		ft_exit_fail_status(_->m, NULL, EXIT_ALLOC_ERROR);
 	add_token(_, T_WORD, s, 0);
@@ -140,7 +140,7 @@ void	lexer(t_minishell *m, char *line)
 
 	_.m = m;
 	_.i = 0;
-	_.line = line;
+	//_.line = line;
 	while (m->last_status == EXIT_SUCCESS && line && line[_.i])
 	{
 		while (ft_isspace(line[_.i]))

@@ -39,7 +39,7 @@ void	test0(char **env)
 void	test1(char **env)
 {
 	t_minishell *m;
-	char 		*line;
+	//char 		*line;
 	int			last_status;
 
 	m = NULL;
@@ -50,8 +50,8 @@ void	test1(char **env)
 		exec_init_minishell(&m);
 		m->last_status = last_status;
 		ft_putstr_fd(PROMPT, STDOUT_FILENO);
-		line = read_input(m, STDIN_FILENO);
-		lexer(m, line); // freeline si bug, ajouter line dans m
+		m->line = read_input(m, STDIN_FILENO);
+		lexer(m, m->line);
 		debug_show_tokens(m);
 		parser(m);
 		exec_feed_minishell(&m, env);
@@ -60,7 +60,6 @@ void	test1(char **env)
 		if (m->last_status == 0)
 			exec_execve(m);
 		last_status = m->last_status;
-		free(line);
 		mem_free_all(m);
 	}
 }
