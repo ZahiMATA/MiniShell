@@ -51,31 +51,14 @@ void	test1(char **env)
 		m->last_status = last_status;
 		ft_putstr_fd(PROMPT, STDOUT_FILENO);
 		line = read_input(m, STDIN_FILENO);
-		if (line == NULL)
-			continue;
-		if (*line == '\0')
-		{
-			free(line);
-			continue;
-		}
-		// ft_putstr_fd("Texte entré[1] : ", STDOUT_FILENO);
-		// ft_putstr_fd(line, STDERR_FILENO);
-		//char *args[] = { ".a.out", "Makefile", "tr ac AC", "tr b B", "tr xy XY", "ficout", NULL };
-		//exec_feed_minishell(&m, /*args, 3,*/ env);
-		//debug_show_args(m);
-		//exec_execve(m);
-
-		lexer(m, line);
+		lexer(m, line); // freeline si bug, ajouter line dans m
 		debug_show_tokens(m);
 		parser(m);
-
 		exec_feed_minishell(&m, env);
 		debug_show_args(m);
 		debug_show_cmds(m);
-
 		if (m->last_status == 0)
 			exec_execve(m);
-
 		last_status = m->last_status;
 		free(line);
 		mem_free_all(m);

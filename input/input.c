@@ -19,27 +19,20 @@ char	*read_input(t_minishell *m, int fd)
 			ft_return_perror(m, NULL, EXIT_FAILURE);
 			return (NULL);
 		}
-		else if (n == 0)
-		{
-			if (*line == 0)
-			{
-				free(line);
-				ft_exit_with_status(m, EXIT, EXIT_SUCCESS);
-			}
-			break;
-		}
 		buffer[n] = '\0';
 		tmp = line;
 		line = ft_strjoin(line, buffer);
-		if (line == NULL)
-		{
-			free(tmp);
-			ft_exit_fail_status(m, NULL, EXIT_ALLOC_ERROR);
-		}
 		free(tmp);
+		if (line == NULL)
+			ft_exit_fail_status(m, NULL, EXIT_ALLOC_ERROR);
 		m->last_status = EXIT_SUCCESS;
 		if (ft_strchr(line, '\n'))
 			return (line);
+	}
+	if (*line == '\0')
+	{
+		free(line);
+		ft_exit_with_status(m, EXIT, EXIT_SUCCESS);
 	}
 	return line;
 }
