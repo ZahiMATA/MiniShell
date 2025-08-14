@@ -38,6 +38,7 @@ static void	launch_process(t_minishell *m, int n, int pipes[][2])
 	}
 	env_tab = env_list_to_tab(m, m->env_list);
 	debug_show_cmds(m);
+	printf("n=[%d],pipe.n-1.0[%d] pipe.n.1[%d]\n", n, pipes[n-1][0], pipes[n][1]);
 	execve(prs_lstget(m, n)->cmd_abs, prs_lstget(m, n)->args, env_tab); // TODO Metre le tab
 	mem_free_array(&env_tab);
 	ft_exit_error(m, prs_lstget(m, n)->cmd_abs);

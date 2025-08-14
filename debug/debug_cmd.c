@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 11:16:14 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/14 11:59:02 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/14 12:52:26 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	debug_show_cmds(t_minishell *m)
 		ft_putstr("\033[0;31mCmd\033[0m");
 		while (l)
 		{
-			printf("cmd_abs=[%s]#[%d]\n", l->cmd_abs, l->n);
+			printf("cmd_abs=[%s]#n=[%d]\n", l->cmd_abs, l->n);
 			i = 0;
 			while (l->args && l->args[i])
 				printf("args=[%s]\n", l->args[i++]);
