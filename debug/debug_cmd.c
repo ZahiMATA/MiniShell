@@ -6,13 +6,13 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 11:16:14 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/14 12:52:26 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/19 16:21:44 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	debug_show_cmds(t_minishell *m)
+void	debug_show_cmds(t_minishell *m, int n)
 {
 	t_cmd	*l;
 	int		i;
@@ -22,13 +22,19 @@ void	debug_show_cmds(t_minishell *m)
 	//if (DEBUG_LEX)
 	{
 		ft_putstr("\033[0;31mCmd\033[0m");
-		while (l)
+		i = 1;
+		while (i < n && l)
 		{
-			printf("cmd_abs=[%s]#n=[%d]\n", l->cmd_abs, l->n);
+			i++;
+			l = l->next;
+		}
+		if (l)
+		{
+			printf("cmd_abs=[%s]\n#n=[%d]\nn=[%d]\n", l->cmd_abs, l->n, n);
 			i = 0;
 			while (l->args && l->args[i])
 				printf("args=[%s]\n", l->args[i++]);
-			l = l->next;
+//			l = l->next;
 		}
 	}
 }

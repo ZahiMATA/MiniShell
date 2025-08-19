@@ -56,7 +56,7 @@ void	test1(char **env)
 		parser(m);
 		exec_feed_minishell(&m, env);
 		debug_show_args(m);
-		debug_show_cmds(m);
+		//debug_show_cmds(m);
 		if (m->last_status == 0)
 			exec_execve(m);
 		last_status = m->last_status;

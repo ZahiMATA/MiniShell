@@ -12,23 +12,67 @@
 
 #include "minishell.h"
 
+static void	redir_in(t_minishell *m)
+{
+	t_redir	*redir;
+
+	redir = m->cmds->redirs;
+	while (redir)
+	{
+		if (redir->type == N_REDIR_LEFT)
+		{
+			m->fd_in = open(redir->file, O_RDONLY);
+			if (m->fd_in == -1)
+				perror(redir->file);
+			if (dup2(m->fd_in, STDIN_FILENO) == -1)
+				ft_exit_fail(m, ERROR_DUP2);
+			close(m->fd_in);
+		}
+		redir = redir->next;
+	}
+}
+
+static void	redir_out(t_minishell *m)
+{
+	t_redir	*redir;
+
+	redir = m->cmds->redirs;
+	while (redir)
+	{
+		if (redir->type == N_REDIR_RIGHT)
+		{
+			m->fd_out = open(redir->file, OW | OC | OT, FLAG_FIC);
+			if (m->fd_out == -1)
+				perror(redir->file);
+			if (dup2(m->fd_out, STDOUT_FILENO) == -1)
+				ft_exit_fail(m, ERROR_DUP2);
+			close(m->fd_out);
+		}
+		redir = redir->next;
+	}
+}
+
 static void	launch_process(t_minishell *m, int n, int pipes[][2])
 {
 	char	**env_tab;
 	int		i;
 
+	// a voir
 	if (n == 0)
-		if ((m->fd_in != -1) && (dup2(m->fd_in, STDIN_FILENO) == -1))
-			ft_exit_fail(m, ERROR_DUP2);
+		redir_in(m);
+	if (n == m->nb_cmd - 1)
+		redir_out(m);
+
+
+	//redir_in(m);
 	if (n > 0)
 		if (dup2(pipes[n - 1][0] , STDIN_FILENO) == -1)
 			ft_exit_fail(m, ERROR_DUP2);
 	if (n < m->nb_cmd - 1)
 		if (dup2(pipes[n][1], STDOUT_FILENO) == -1)
 			ft_exit_fail(m, ERROR_DUP2);
-	if ((m->fd_out != -1) && (n == m->nb_cmd - 1))
-		if (dup2(m->fd_out, STDOUT_FILENO) == -1)
-			ft_exit_fail(m, ERROR_DUP2);
+
+	//redir_out(m);
 	i = 0;
 	while (i < m->nb_cmd - 1)
 	{
@@ -37,7 +81,7 @@ static void	launch_process(t_minishell *m, int n, int pipes[][2])
 		i++;
 	}
 	env_tab = env_list_to_tab(m, m->env_list);
-	debug_show_cmds(m);
+	debug_show_cmds(m, n);
 	printf("n=[%d],pipe.n-1.0[%d] pipe.n.1[%d]\n", n, pipes[n-1][0], pipes[n][1]);
 	execve(prs_lstget(m, n)->cmd_abs, prs_lstget(m, n)->args, env_tab); // TODO Metre le tab
 	mem_free_array(&env_tab);

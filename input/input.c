@@ -25,7 +25,7 @@ char	*read_input(t_minishell *m, int fd)
 		free(tmp);
 		if (m->line == NULL)
 			ft_exit_fail_status(m, NULL, EXIT_ALLOC_ERROR);
-		m->last_status = EXIT_SUCCESS;
+		//m->last_status = EXIT_SUCCESS;
 		if (ft_strchr(m->line, '\n'))
 			return (m->line);
 	}
