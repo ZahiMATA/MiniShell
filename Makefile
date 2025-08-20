@@ -6,7 +6,7 @@
 #    By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/28 10:35:37 by ybouroga          #+#    #+#              #
-#    Updated: 2025/08/20 15:26:57 by ybouroga         ###   ########.fr        #
+#    Updated: 2025/08/20 15:33:55 by ybouroga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -115,7 +115,10 @@ print-%:
 	@echo $* = $($*)
 
 gitadd:
-	git pull && git add **/*.c **/*.h Makefile .gitignore && git commit -m "$(m)" && git push
+#	git pull && git add **/*.c **/*.h Makefile .gitignore && git commit -m "$(m)" && git push
 #	git pull && git add $(shell find . -type f \( -name "*.c" -o -name "*.h" \)) .gitignore Makefile && git commit -m "$(m)" && git push
+	git pull && git add $(shell find . -type f \( -name "*.c" -o -name "*.h" \) \
+  -not -path "./OBJ/*" \
+  -not -path "./tester/*") .gitignore Makefile && git commit -m "$(m)" && git push
 
 .PHONY: all clean fclean re print obj
