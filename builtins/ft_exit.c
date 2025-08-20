@@ -1,3 +1,5 @@
+#include "minishell.h"
+
 int	ft_is_numeric(char *str) //TODO a mettre dans libft
 {
 	int	i;
@@ -41,6 +43,6 @@ int	ft_exit(char **argv)
     }
     exit(ft_atoi(argv[1]) % 256); // modUlo car peux afficher que 8bit
 }
-int main()
+/*int main()
 {
-}
+}*/

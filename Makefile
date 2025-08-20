@@ -6,7 +6,7 @@
 #    By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/28 10:35:37 by ybouroga          #+#    #+#              #
-#    Updated: 2025/08/20 17:11:18 by ybouroga         ###   ########.fr        #
+#    Updated: 2025/08/20 20:21:29 by ybouroga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,14 @@ NAME = minishell
 
 SRCS = \
 	src/minishell.c \
+	builtins/ft_cd.c \
+	builtins/ft_echo.c \
+	builtins/ft_env.c \
+	builtins/ft_exit.c \
+	builtins/ft_export.c \
+	builtins/ft_pwd.c \
+	builtins/ft_unset.c \
+	dispatcher/dispatcher.c \
 	debug/debug_display.c \
 	debug/debug_token.c \
 	debug/debug_cmd.c \
@@ -23,11 +31,13 @@ SRCS = \
 	exec/exec_redir.c \
 	exec/exec_run.c \
 	input/input.c \
+	libft/ft_atoi.c \
 	libft/ft_split.c \
 	libft/ft_split_multi.c \
 	libft/ft_print.c \
 	libft/ft_print_fd.c \
 	libft/ft_strlen.c \
+	libft/ft_strcmp.c \
 	libft/ft_strncmp.c \
 	libft/ft_strdup.c \
 	libft/ft_strjoin.c \

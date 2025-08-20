@@ -1,3 +1,4 @@
+#include "minishell.h"
 #include <limits.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -5,20 +6,20 @@
 #include <errno.h>
 #include <string.h>
 
-
+/*
 void	ft_putstr_fd(char *s, int fd)
 {
 	int	i;
 
 	i = 0;
-    if(!s)
-        return;
+	if(!s)
+		return;
 	while (s[i])
 	{
 		write(fd, &s[i], 1);
 		i++;
 	}
-}
+}*/
 /*
     -path_max : C’est une constante définie par le système, qui indique la longueur maximale autorisée pour un chemin absolu (genre /home/zahi/monprojet/minishell).
 
@@ -44,8 +45,8 @@ int ft_pwd(void)
     write(1, "\n", 1);
     return(0);
 }
-
+/*
 int main(void)
 {
     ft_pwd();
-}
+}*/

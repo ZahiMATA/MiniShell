@@ -57,8 +57,9 @@ void	test1(char **env)
 		exec_feed_minishell(&m, env);
 		debug_show_args(m);
 		//debug_show_cmds(m);
-		if (m->last_status == 0)
-			exec_execve(m);
+		//if (m->last_status == 0)
+		//	exec_execve(m);
+		dispatch(m);
 		last_status = m->last_status;
 		mem_free_all(m);
 	}

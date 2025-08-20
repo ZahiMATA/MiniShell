@@ -113,11 +113,11 @@ int ft_cd(char **argv, t_env *env_list)
     free(new_pwd);
     return(0);
 }
-
+/*
 int main()
 {
 
-}
+}*/
 /*
      -get_env_value(nom) : récupère une variable de ton environnement (ta liste chaînée)
     -chdir() : changer de dossier courant (cd)

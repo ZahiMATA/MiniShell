@@ -1,12 +1,13 @@
+#include "minishell.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 
-typedef struct s_env {
+/*typedef struct s_env {
     char *key;
     char *value;
     struct s_env *next;
-} t_env;
+} t_env;*/
 
 int is_valid_export_key(const char *str)
 {
@@ -41,12 +42,12 @@ void add_or_update_env_var(t_env **env_list, const char *key, const char *value)
 
     if (var)
     {
-        free(var->value);
+        free(var->val);
         if (value)
-            var->value = strdup(value);
+            var->val = strdup(value);
         else
-            var->value = NULL;
-    } 
+            var->val = NULL;
+    }
     else
     {
         t_env *new_node = malloc(sizeof(t_env));
@@ -54,9 +55,9 @@ void add_or_update_env_var(t_env **env_list, const char *key, const char *value)
             return; // tu peux aussi gérer une erreur ici
         new_node->key = strdup(key);
         if (value)
-            new_node->value = strdup(value);
+            new_node->val = strdup(value);
         else
-            new_node->value = NULL;
+            new_node->val = NULL;
         new_node->next = *env_list;
         *env_list = new_node;
     }
@@ -68,10 +69,10 @@ void print_export_env(t_env *env_list)
     while (env_list) {
         ft_putstr("declare -x ");
         ft_putstr(env_list->key);
-        if (env_list->value)
+        if (env_list->val)
         {
             ft_putstr("=\"");
-            ft_putstr(env_list->value);
+            ft_putstr(env_list->val);
             ft_putstr("\"");
         }
         ft_putstr("\n");

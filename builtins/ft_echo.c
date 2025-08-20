@@ -1,25 +1,26 @@
+#include "minishell.h"
 #include <limits.h>
 # include <stdio.h>
 # include <stdlib.h>
 #include <unistd.h>
 #include <errno.h>
 #include <string.h> //TODO supp include
-
-
+// TODO FAIRE lexpand ???
+/*
 void	ft_putstr_fd(char *s, int fd) //TODO supp
 {
 	int	i;
 
 	i = 0;
-    if(!s)
-        return;
+	if(!s)
+		return;
 	while (s[i])
 	{
 		write(fd, &s[i], 1);
 		i++;
 	}
 }
-
+*/
 int verif_arg(char *argv)
 {
     int i;
@@ -65,6 +66,7 @@ int ft_echo(char **argv)
     write(1, "\n", 1);
     return(0);
 }
+/*
 int main(void)
 {
     // Cas 1 : echo seul
@@ -92,4 +94,4 @@ int main(void)
     ft_echo(test6);
 
     return 0;
-}
+}*/
