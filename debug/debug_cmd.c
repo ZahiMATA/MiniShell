@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 11:16:14 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/19 16:21:44 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/20 12:59:10 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	debug_show_cmds(t_minishell *m, int n)
 
 	//if (DEBUG_LEX)
 	{
-		ft_putstr("\033[0;31mCmd\033[0m");
+		ft_putstr_nl("\033[0;31mCmd\033[0m");
 		i = 1;
 		while (i < n && l)
 		{

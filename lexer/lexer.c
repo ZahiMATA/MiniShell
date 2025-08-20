@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 11:23:17 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/14 14:55:41 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/20 10:55:54 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,32 +134,32 @@ static void lexer_word(t_param *_)
 	free(s);
 }
 
-void	lexer(t_minishell *m, char *line)
+void	lexer(t_minishell *m/*, char *line*/)
 {
 	t_param	_;
 
 	_.m = m;
 	_.i = 0;
 	//_.line = line;
-	while (m->last_status == EXIT_SUCCESS && line && line[_.i])
+	while (m->last_status == EXIT_SUCCESS && m->line && m->line[_.i])
 	{
-		while (ft_isspace(line[_.i]))
+		while (ft_isspace(m->line[_.i]))
 			_.i++;
-		if (line[_.i] == '\0')
+		if (m->line[_.i] == '\0')
 			break ;
-		else if (line[_.i] == '|')
+		else if (m->line[_.i] == '|')
 			add_token(&_, T_PIPE, "|", 1);
-		else if (line[_.i] == '<' && line[_.i + 1] == '<')
+		else if (m->line[_.i] == '<' && m->line[_.i + 1] == '<')
 			add_token(&_, T_DOUBLE_REDIRECT_LEFT, "<<", 2);
-		else if (line[_.i] == '>' && line[_.i + 1] == '>')
+		else if (m->line[_.i] == '>' && m->line[_.i + 1] == '>')
 			add_token(&_, T_DOUBLE_REDIRECT_RIGHT, ">>", 2);
-		else if (line[_.i] == '<')
+		else if (m->line[_.i] == '<')
 			add_token(&_, T_REDIRECT_LEFT, "<", 1);
-		else if (line[_.i] == '>')
+		else if (m->line[_.i] == '>')
 			add_token(&_, T_REDIRECT_RIGHT, ">", 1);
-		else if (line[_.i] == '"')
+		else if (m->line[_.i] == '"')
 			lexer_string(&_);
-		else if (line[_.i] == '\'')
+		else if (m->line[_.i] == '\'')
 			lexer_single_quote(&_);
 		else
 			lexer_word(&_);

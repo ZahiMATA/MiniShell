@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 12:18:08 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/19 16:05:38 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/20 10:54:19 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void			debug_show_cmds(t_minishell *m, int n);
 t_token_list	*lex_lstnew(t_token token, char *val);
 void			lex_lstadd_back(t_token_list **lst, t_token_list *new);
 void			lex_lstclear(t_token_list **lst);
-void		 	lexer(t_minishell *m, char *line);
+void		 	lexer(t_minishell *m/*, char *line*/);
 int				ft_islexer(int c);
 void			parser(t_minishell *m);
 int 			ft_is_stringword(t_minishell *m);

@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 18:53:47 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/09 17:13:56 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/20 12:58:54 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	debug_show_tokens(t_minishell *m)
 	l = m->token_list;
 	if (DEBUG_LEX)
 	{
-		ft_putstr("\033[0;31mToken\033[0m");
+		ft_putstr_nl("\033[0;31mToken\033[0m");
 		while (l)
 		{
 			printf("Token/Val[%d][%s]\n",

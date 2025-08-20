@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 11:30:19 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/05 12:33:18 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/20 13:00:04 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 void	ft_exit_with_status(t_minishell *m, char *message, int status)
 {
 	if (message)
-		ft_putstr(message);
+		ft_putstr_nl(message);
 	else
-		ft_putstr(MINISHELL);
+		ft_putstr_nl(MINISHELL);
 	mem_free_all(m);
 	exit(status);
 }

@@ -49,9 +49,9 @@ void	test1(char **env)
 	{
 		exec_init_minishell(&m);
 		m->last_status = last_status;
-		ft_putstr_fd(PROMPT, STDOUT_FILENO);
+		ft_putstr/*_fd*/(PROMPT/*, STDOUT_FILENO*/);
 		m->line = read_input(m, STDIN_FILENO);
-		lexer(m, m->line);
+		lexer(m/*, m->line*/);
 		debug_show_tokens(m);
 		parser(m);
 		exec_feed_minishell(&m, env);
@@ -78,5 +78,5 @@ int	main(int argc, char *argv[], char *env[])
 	if (argc == 1)
 		minishell(env);
 	else
-		ft_putstr(ERROR_WRONGARGS);
+		ft_putstr_nl(ERROR_WRONGARGS);
 }

@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 18:47:45 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/09 15:46:45 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/20 13:08:13 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ char	*ft_itoa(int n);
 void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putstr(char *s);
+void	ft_putstr_nl(char *s);
 //void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
 //t_list	*ft_lstnew(void *content);

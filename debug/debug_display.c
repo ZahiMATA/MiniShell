@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 17:16:20 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/11 10:33:41 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/20 12:58:42 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ void	debug_show_args(t_minishell *m)
 
 	if (DEBUG)
 	{
-		ft_putstr("DEBUG:");
-		ft_putstr("CMDS:");
+		ft_putstr_nl("DEBUG:");
+		ft_putstr_nl("CMDS:");
 		i = 0;
 		while (m->cmds && m->cmds[i].args)
 		{
@@ -70,7 +70,7 @@ void	debug_show_processes(t_minishell *m, char *message)
 	if (DEBUG)
 	{
 		l = m->cmds;
-		ft_putstr(message);
+		ft_putstr_nl(message);
 		i = 0;
 		while (l)
 		{
@@ -90,6 +90,6 @@ void	debug_show_error(char *message)
 	if (DEBUG)
 	{
 		perror("debug");
-		ft_putstr(message);
+		ft_putstr_nl(message);
 	}
 }

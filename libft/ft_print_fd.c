@@ -1,34 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print.c                                         :+:      :+:    :+:   */
+/*   ft_print_fd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/18 12:00:00 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/20 13:08:52 by ybouroga         ###   ########.fr       */
+/*   Created: 2025/08/20 13:03:15 by ybouroga          #+#    #+#             */
+/*   Updated: 2025/08/20 13:03:49 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
 #include <unistd.h>
 
-void	ft_putstr(char *s)
+void	ft_putchar_fd(char c, int fd)
 {
-	ft_putstr_fd(s, STDOUT_FILENO);
+	write(fd, &c, 1);
 }
 
-void	ft_putstr_nl(char *s)
+void	ft_putstr_fd( char *s, int fd)
 {
-	ft_putstr_fd(s, STDOUT_FILENO);
-	ft_putchar_fd('\n', STDOUT_FILENO);
+	if (s == NULL)
+		return ;
+	while (*s)
+		ft_putchar_fd(*s++, fd);
 }
 
-void	ft_print_array(char **tab)
+void	ft_putnbr_fd(int n, int fd)
 {
-	int	i;
+	long	l;
 
-	i = 0;
-	while (tab[i])
-		ft_putstr_nl(tab[i++]);
+	l = n;
+	if (l < 0)
+	{
+		ft_putchar_fd('-', fd);
+		l *= -1;
+	}
+	if (l > 9)
+		ft_putnbr_fd(l / 10, fd);
+	ft_putchar_fd((l % 10) + '0', fd);
 }
