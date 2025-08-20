@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 12:18:08 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/20 10:54:19 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/20 18:31:42 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # define RETURN_NL 2
 
 typedef struct s_minishell	t_minishell;
+typedef struct s_cmd		t_cmd;
 //typedef struct s_cmd2		t_cmd2;
 
 typedef enum e_token
@@ -65,6 +66,7 @@ typedef struct s_param
 
 void			debug_show_tokens(t_minishell *m);
 void			debug_serial_token(t_minishell *m, char *buffer, size_t size);
+void			debug_show_cmd(t_cmd *c, int n);
 void			debug_show_cmds(t_minishell *m, int n);
 t_token_list	*lex_lstnew(t_token token, char *val);
 void			lex_lstadd_back(t_token_list **lst, t_token_list *new);

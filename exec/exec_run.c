@@ -12,11 +12,11 @@
 
 #include "minishell.h"
 
-static void	redir_in(t_minishell *m)
+/*static*/ void	redir_in(t_minishell *m, t_cmd *cmd)
 {
 	t_redir	*redir;
 
-	redir = m->cmds->redirs;
+	redir = cmd->redirs;
 	while (redir)
 	{
 		if (redir->type == N_REDIR_LEFT)
@@ -32,11 +32,10 @@ static void	redir_in(t_minishell *m)
 	}
 }
 
-static void	redir_out(t_minishell *m)
+/*static*/ void	redir_out(t_minishell *m, t_cmd *cmd)
 {
 	t_redir	*redir;
-
-	redir = m->cmds->redirs;
+	redir = cmd->redirs;
 	while (redir)
 	{
 		if (redir->type == N_REDIR_RIGHT)
@@ -52,18 +51,19 @@ static void	redir_out(t_minishell *m)
 	}
 }
 
-static void	launch_process(t_minishell *m, int n, int pipes[][2])
+static void	launch_process(t_minishell *m, t_cmd *cmd, int n, int pipes[][2])
 {
 	char	**env_tab;
 	int		i;
 
-	// a voir
-	if (n == 0)
-		redir_in(m);
-	if (n == m->nb_cmd - 1)
-		redir_out(m);
+	//debug_show_cmds(m, n);
+	debug_show_cmd(cmd, n);
+	printf("n=[%d],pipe.n-1.0[%d] pipe.n.1[%d]\n", n, pipes[n-1][0], pipes[n][1]);
 
-
+	 if (n == 0)
+	 	redir_in(m, cmd);
+	 if (n == m->nb_cmd - 1)
+	 	redir_out(m, cmd);
 	//redir_in(m);
 	if (n > 0)
 		if (dup2(pipes[n - 1][0] , STDIN_FILENO) == -1)
@@ -81,9 +81,8 @@ static void	launch_process(t_minishell *m, int n, int pipes[][2])
 		i++;
 	}
 	env_tab = env_list_to_tab(m, m->env_list);
-	debug_show_cmds(m, n);
-	printf("n=[%d],pipe.n-1.0[%d] pipe.n.1[%d]\n", n, pipes[n-1][0], pipes[n][1]);
-	execve(prs_lstget(m, n)->cmd_abs, prs_lstget(m, n)->args, env_tab); // TODO Metre le tab
+	//execve(prs_lstget(m, n)->cmd_abs, prs_lstget(m, n)->args, env_tab); // TODO Metre le tab
+	execve(cmd->cmd_abs, cmd->args, env_tab); // TODO Metre le tab
 	mem_free_array(&env_tab);
 	ft_exit_error(m, prs_lstget(m, n)->cmd_abs);
 }
@@ -105,11 +104,12 @@ void	exec_execve(t_minishell *m)
 	l = m->cmds;
 	while (l)
 	{
+		//printf("EX=[%s]\n", l->args[0]);
 		l->pid = fork();
 		if (l->pid == -1)
 			ft_exit_fail(m, ERROR_FORK);
 		if (l->pid == 0)
-			launch_process(m, i, pipes);
+			launch_process(m, l, i, pipes);
 		l = l->next;
 		i++;
 	}
@@ -133,9 +133,14 @@ void	exec_execve(t_minishell *m)
 
 int	exec_get_last_status(t_minishell *m)
 {
-	int	status;
-
-	status = m->cmds[m->nb_cmd - 1].status;
+	int		status;
+	t_cmd	*tail;
+	tail = m->cmds;
+	if (tail == NULL)
+		return (1);
+	while (tail->next)
+		tail = tail ->next;
+	status = tail->status;
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	else if (WIFSIGNALED(status))

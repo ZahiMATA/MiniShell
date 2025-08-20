@@ -6,11 +6,29 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 11:16:14 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/20 12:59:10 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/20 19:02:58 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+
+void	debug_show_cmd(t_cmd *c, int n)
+{
+	int i ;
+
+	printf("\033[0;31mCmd\033[0m\n");
+
+	printf("Cmd_abs=[%s]\n#n=[%d]\nN=[%d]\n",
+		c->cmd_abs, c->n, n);
+	i = 0;
+	if (c->redirs && c->redirs->file)
+		printf("file=[%s]\ntype=[%d]\n", c->redirs->file, c->redirs->type);
+	else
+		printf("no redir or file\n");
+	while (c->args && c->args[i])
+		printf("args=[%s]\n", c->args[i++]);
+}
 
 void	debug_show_cmds(t_minishell *m, int n)
 {
@@ -21,8 +39,8 @@ void	debug_show_cmds(t_minishell *m, int n)
 
 	//if (DEBUG_LEX)
 	{
-		ft_putstr_nl("\033[0;31mCmd\033[0m");
-		i = 1;
+		ft_putstr_nl("\033[0;31mCmds\033[0m");
+		i = 0;
 		while (i < n && l)
 		{
 			i++;
@@ -30,7 +48,7 @@ void	debug_show_cmds(t_minishell *m, int n)
 		}
 		if (l)
 		{
-			printf("cmd_abs=[%s]\n#n=[%d]\nn=[%d]\n", l->cmd_abs, l->n, n);
+			printf("Cmd_abs=[%s]\n#n=[%d]\nN=[%d]\nf=[%s]\nt=[%d]\n", l->cmd_abs, l->n, n, l->redirs->file, l->redirs->type);
 			i = 0;
 			while (l->args && l->args[i])
 				printf("args=[%s]\n", l->args[i++]);
