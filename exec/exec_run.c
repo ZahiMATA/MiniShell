@@ -23,8 +23,8 @@
 		{
 			m->fd_in = open(redir->file, O_RDONLY);
 			if (m->fd_in == -1)
-				perror(redir->file);
-			if (dup2(m->fd_in, STDIN_FILENO) == -1)
+				ft_return_error(m, redir->file, ERROR1);
+			else if (dup2(m->fd_in, STDIN_FILENO) == -1)
 				ft_exit_fail(m, ERROR_DUP2);
 			close(m->fd_in);
 		}
@@ -42,8 +42,8 @@
 		{
 			m->fd_out = open(redir->file, OW | OC | OT, FLAG_FIC);
 			if (m->fd_out == -1)
-				perror(redir->file);
-			if (dup2(m->fd_out, STDOUT_FILENO) == -1)
+				ft_return_error(m, redir->file, ERROR1);
+			else if (dup2(m->fd_out, STDOUT_FILENO) == -1)
 				ft_exit_fail(m, ERROR_DUP2);
 			close(m->fd_out);
 		}
@@ -56,23 +56,18 @@ static void	launch_process(t_minishell *m, t_cmd *cmd, int n, int pipes[][2])
 	char	**env_tab;
 	int		i;
 
-	//debug_show_cmds(m, n);
-	debug_show_cmd(cmd, n);
-	printf("n=[%d],pipe.n-1.0[%d] pipe.n.1[%d]\n", n, pipes[n-1][0], pipes[n][1]);
-
-	 if (n == 0)
-	 	redir_in(m, cmd);
-	 if (n == m->nb_cmd - 1)
-	 	redir_out(m, cmd);
-	//redir_in(m);
+	//debug_show_cmd(cmd, n);
+	//printf("n=[%d],pipe.n-1.0[%d] pipe.n.1[%d]\n", n, pipes[n-1][0], pipes[n][1]);
 	if (n > 0)
 		if (dup2(pipes[n - 1][0] , STDIN_FILENO) == -1)
 			ft_exit_fail(m, ERROR_DUP2);
 	if (n < m->nb_cmd - 1)
 		if (dup2(pipes[n][1], STDOUT_FILENO) == -1)
 			ft_exit_fail(m, ERROR_DUP2);
-
-	//redir_out(m);
+	 if (n == 0)				// TODO a enlever ?
+	 	redir_in(m, cmd);
+	 if (n == m->nb_cmd - 1)	// TODO a enlever ?
+	 	redir_out(m, cmd);
 	i = 0;
 	while (i < m->nb_cmd - 1)
 	{
@@ -80,9 +75,11 @@ static void	launch_process(t_minishell *m, t_cmd *cmd, int n, int pipes[][2])
 		close(pipes[i][1]);
 		i++;
 	}
-	env_tab = env_list_to_tab(m, m->env_list);
-	//execve(prs_lstget(m, n)->cmd_abs, prs_lstget(m, n)->args, env_tab); // TODO Metre le tab
-	execve(cmd->cmd_abs, cmd->args, env_tab); // TODO Metre le tab
+	if (cmd->cmd_abs)
+	{
+		env_tab = env_list_to_tab(m, m->env_list);
+		execve(cmd->cmd_abs, cmd->args, env_tab);
+	}
 	mem_free_array(&env_tab);
 	ft_exit_error(m, prs_lstget(m, n)->cmd_abs);
 }

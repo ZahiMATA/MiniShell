@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 17:16:20 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/20 12:58:42 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/21 10:43:54 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void	debug_show_args(t_minishell *m)
 {
 	int		i;
 	char	*args;
-
 	if (DEBUG)
 	{
 		ft_putstr_nl("DEBUG:");

@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/20 20:18:12 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/21 11:51:32 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # define BUFFER_LOG 1024
 # define KO 0
 # define OK 1
+# define ERROR1 1
 # define MINISHELL "minishell"
 # define PROMPT "minishell$ "
 # define EXIT_ALLOC_ERROR 2
@@ -54,6 +55,7 @@
 # define ERROR_DUP2 "Error: Dup2"
 # define ERROR_PIPE "Error: Pipe"
 # define ERROR_NOT_FOUND "minishell: Command not found"
+# define ERROR_NOSUCH "No such file or directory"
 # define PATH "PATH="
 # define OFST_FIRST_CMD 2
 # define NB_NOT_ARG 3
@@ -160,6 +162,6 @@ int		ft_exit(char **argv);
 int		ft_export(char **args, t_env **env_list);
 int		ft_pwd(void);
 int		ft_unset(char **arg, t_env **env_list);
-
+void	ft_print_error(char *message);
 
 #endif
