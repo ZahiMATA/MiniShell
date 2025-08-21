@@ -25,9 +25,9 @@ int	ft_is_numeric(char *str) //TODO a mettre dans libft
 
 int	ft_exit(char **argv)
 {
-    int i;
+    //int i;
 
-    i = 0;
+    //i = 0;
     write(1, "exit\n", 5);
     if(!argv[1])
         exit(0);

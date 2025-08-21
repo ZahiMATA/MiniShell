@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 11:16:14 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/20 19:02:58 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/21 14:04:33 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ void	debug_serial_parser(t_minishell *m, char *buffer, size_t size)
 
 	buffer[0] = '\0';
 	l = m->cmds;
+	printf("ok\n");
 	while (l)
 	{
 		ft_strlcat(buffer, "CMD(", size);

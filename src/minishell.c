@@ -48,18 +48,19 @@ void	test1(char **env)
 	while (1)
 	{
 		exec_init_minishell(&m);
-		m->last_status = last_status;
-		ft_putstr/*_fd*/(PROMPT/*, STDOUT_FILENO*/);
+		ft_putstr(PROMPT);
 		m->line = read_input(m, STDIN_FILENO);
-		lexer(m/*, m->line*/);
+		lexer(m);
 		debug_show_tokens(m);
 		parser(m);
-		exec_feed_minishell(&m, env);
-		debug_show_args(m);
-		//debug_show_cmds(m);
-		//if (m->last_status == 0)
-		//	exec_execve(m); ou dispatch(m);
-		dispatch(m);
+		if (m->last_status == 0)
+		{
+			m->last_status = last_status;
+			exec_feed_minishell(&m, env);
+			debug_show_args(m);
+			//debug_show_cmds(m);
+			dispatch(m);
+		}
 		last_status = m->last_status;
 		mem_free_all(m);
 	}

@@ -23,7 +23,7 @@
 		{
 			m->fd_in = open(redir->file, O_RDONLY);
 			if (m->fd_in == -1)
-				ft_return_error(m, redir->file, ERROR1);
+				ft_return_error(m, redir->file, S_EMPTY, EXIT_FAILURE);
 			else if (dup2(m->fd_in, STDIN_FILENO) == -1)
 				ft_exit_fail(m, ERROR_DUP2);
 			close(m->fd_in);
@@ -42,7 +42,7 @@
 		{
 			m->fd_out = open(redir->file, OW | OC | OT, FLAG_FIC);
 			if (m->fd_out == -1)
-				ft_return_error(m, redir->file, ERROR1);
+				ft_return_error(m, redir->file, S_EMPTY, EXIT_FAILURE);
 			else if (dup2(m->fd_out, STDOUT_FILENO) == -1)
 				ft_exit_fail(m, ERROR_DUP2);
 			close(m->fd_out);
