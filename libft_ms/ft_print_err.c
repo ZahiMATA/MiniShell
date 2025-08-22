@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 11:33:16 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/21 14:23:28 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/22 18:44:15 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 # define DOT2_SPACE ": "
 
-void	ft_print_error(char *message, char *pmessage)
+void	ft_print_perror(char *message, char *pmessage)
 {
 	write(STDERR_FILENO, MINISHELL, ft_strlen(MINISHELL));
 	write(STDERR_FILENO, DOT2_SPACE, ft_strlen(DOT2_SPACE));
@@ -26,4 +26,12 @@ void	ft_print_error(char *message, char *pmessage)
 	}
 	else
 		write(STDERR_FILENO, "\n", 1);
+}
+
+void	ft_print_error(char *mes1, char *mes2)
+{
+	write(STDERR_FILENO, mes1, ft_strlen(mes1));
+	write(STDERR_FILENO, DOT2_SPACE, ft_strlen(DOT2_SPACE));
+	write(STDERR_FILENO, mes2, ft_strlen(mes2));
+	write(STDERR_FILENO, "\n", 1);
 }

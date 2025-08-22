@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 13:46:27 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/21 13:17:45 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/22 18:22:20 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,6 @@ void	ft_return_error(t_minishell *m, char *mes, char *pmes, int status)
 	if (mes)
 		ft_print_error(mes, pmes);
 	else
-		ft_putstr_nl(MINISHELL);
+		ft_putstr_nl(MINISHELL); // TODO Voir si utile
 	m -> last_status = status;
 }

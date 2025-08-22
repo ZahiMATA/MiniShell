@@ -6,7 +6,7 @@
 #    By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/28 10:35:37 by ybouroga          #+#    #+#              #
-#    Updated: 2025/08/21 12:01:55 by ybouroga         ###   ########.fr        #
+#    Updated: 2025/08/22 15:30:30 by ybouroga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -124,6 +124,9 @@ vg: all
 
 print-%:
 	@echo $* = $($*)
+
+mini:
+	clear && make && ./minishell
 
 gitadd:
 #	git pull && git add **/*.c **/*.h Makefile .gitignore && git commit -m "$(m)" && git push

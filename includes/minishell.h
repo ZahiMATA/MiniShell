@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/21 13:19:31 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/22 18:52:13 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@
 # define ERROR_FORK "Error: Fork"
 # define ERROR_DUP2 "Error: Dup2"
 # define ERROR_PIPE "Error: Pipe"
-# define ERROR_NOT_FOUND "minishell: Command not found"
+# define ERROR_COM "Command not found"
 # define ERROR_NOSUCH "No such file or directory"
 # define PATH "PATH="
 # define S_EMPTY ""
@@ -118,6 +118,7 @@ typedef struct s_minishell
 	t_env			*env_list; //gere le free
 	//char			**env;
 	char			*line;
+	char			*error; // a nettoyer
 	int				last_status; // pour echo $?
 }	t_minishell;
 
@@ -149,7 +150,8 @@ void	ft_return_error(t_minishell *m, char *mes, char *pmes, int status);
 void	ft_return_perror(t_minishell *m, char *message, int status);
 void	ft_exit_fail(t_minishell *m, char *message);
 void	ft_exit_fail_status(t_minishell *m, char *message, int status);
-void	ft_exit_error(t_minishell *m, char *message);
+void	ft_exit_perror(t_minishell *m, char *message);
+void	ft_exit_error(t_minishell *m, char *mes1, char *mes2, int status);
 void	ft_exit_with_status(t_minishell *m, char *message, int status);
 char 	*ft_substring(const char *s, int start, int len);
 char	*read_input(t_minishell *m, int fd);
@@ -163,6 +165,7 @@ int		ft_exit(char **argv);
 int		ft_export(char **args, t_env **env_list);
 int		ft_pwd(void);
 int		ft_unset(char **arg, t_env **env_list);
-void	ft_print_error(char *message, char *pmessage);
+void	ft_print_perror(char *message, char *pmessage);
+void	ft_print_error(char *mes1, char *mes2);
 
 #endif

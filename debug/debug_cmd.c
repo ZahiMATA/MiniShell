@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 11:16:14 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/21 14:27:50 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/22 17:47:41 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,14 @@ void	debug_show_cmd(t_cmd *c, int n)
 	printf("Cmd_abs=[%s]\n#n=[%d]\nN=[%d]\n",
 		c->cmd_abs, c->n, n);
 	i = 0;
-	if (c->redirs && c->redirs->file)
-		printf("file=[%s]\ntype=[%d]\n", c->redirs->file, c->redirs->type);
+
+	t_redir *r = c->redirs;
+	if (r)
+		while (r)
+		{
+			printf("file=[%s] type=[%d]\n", r->file, r->type);
+			r = r->next;
+		}
 	else
 		printf("no redir or file\n");
 	while (c->args && c->args[i])

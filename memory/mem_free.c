@@ -63,5 +63,6 @@ void	mem_free_all(t_minishell *m)
 	ft_lstclear_env(&m->env_list, del_env_content);
 	lex_lstclear(&m->token_list);
 	mem_free_null(&m->line);
+	mem_free_null(&m->error);
 	free(m);
 }
