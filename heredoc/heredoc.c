@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 10:50:18 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/25 19:00:11 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/25 19:03:35 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static	void ms_launch_child(t_minishell *m, int fd[2], char *limiter, int expand
 				break; // TODO sans ca bug
 			}
 
-			if (ft_strcmp(line, limiter) == 0)
+			if (ft_strcmp(line, limiter) == 0) // TODO supprimer le dernier \n du line
 			{
 				printf("ok1.1\n");
 				ft_printf_fd( STDERR_FILENO, WARNING_HEREDOC, limiter);
