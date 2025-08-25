@@ -32,9 +32,18 @@
 				ft_exit_fail(m, ERROR_DUP2);
 			close(m->fd_in);
 		}
+		else if (redir->type == N_DOUBLE_REDIR_LEFT)
+		{
+			m->fd_in = ms_heredoc(m, redir->file, 0);
+			if (m->fd_in == -1)
+				return;
+			dup2(m->fd_in, STDIN_FILENO);
+			close(m->fd_in);
+		}
 		redir = redir->next;
 	}
 }
+
 
 /*static*/ void	redir_out(t_minishell *m, t_cmd *cmd)
 {

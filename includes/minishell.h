@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/25 11:01:30 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/25 14:58:29 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <sys/wait.h>
 # include <errno.h>
 # include <fcntl.h>
+# include <signal.h>
 
 # ifndef DEBUG
 #  define DEBUG 0
@@ -36,6 +37,8 @@
 # define OK 1
 # define MINISHELL "minishell"
 # define PROMPT "minishell$ "
+# define PROMPT_HEREDOC "> "
+# define WARNING_HEREDOC "minishell: warning: here-document delimited by end-of-file (wanted `%s')"
 // # define EXIT_FAILURE 1
 # define EXIT_ALLOC_ERROR 2
 # define EXIT_PERMISSION_DENIED 126
@@ -167,5 +170,6 @@ int		ft_pwd(void);
 int		ft_unset(char **arg, t_env **env_list);
 void	ft_print_perror(char *message, char *pmessage);
 void	ft_print_error(char *mes1, char *mes2);
+int		ms_heredoc(t_minishell *m, char *limiter, int expand);
 
 #endif

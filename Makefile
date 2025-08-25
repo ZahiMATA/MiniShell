@@ -6,7 +6,7 @@
 #    By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/28 10:35:37 by ybouroga          #+#    #+#              #
-#    Updated: 2025/08/22 15:30:30 by ybouroga         ###   ########.fr        #
+#    Updated: 2025/08/25 14:14:51 by ybouroga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,6 +74,7 @@ SRCS = \
 	parser/list/redir/prs_lstclear_redir.c \
 	parser/list/redir/prs_lstnew_redir.c \
 	parser/prs_getcmd.c \
+	heredoc/heredoc.c \
 
 HEADER = \
 	includes/minishell.h \
