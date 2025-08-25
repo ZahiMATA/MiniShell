@@ -1,40 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_fd.c                                      :+:      :+:    :+:   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/20 13:03:15 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/25 17:42:29 by ybouroga         ###   ########.fr       */
+/*   Created: 2025/08/25 15:33:41 by ybouroga          #+#    #+#             */
+/*   Updated: 2025/08/25 17:44:52 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
 
-int	ft_putchar_fd(char c, int fd)
+# include <stdarg.h>
+
+typedef struct s_params
 {
-	return (write(fd, &c, 1));
-}
+	char	*s;
+	int		i;
+	int		ret;
+	int		fd;
+}	t_params;
 
-int	ft_putstr_fd( char *s, int fd)
-{
-	if (s == NULL)
-		return (0);
-	return (write(fd, s, ft_strlen(s)));
-}
+int	ft_printf_fd(int fd, const char *s, ...);
 
-void	ft_putnbr_fd(int n, int fd)
-{
-	long	l;
-
-	l = n;
-	if (l < 0)
-	{
-		ft_putchar_fd('-', fd);
-		l *= -1;
-	}
-	if (l > 9)
-		ft_putnbr_fd(l / 10, fd);
-	ft_putchar_fd((l % 10) + '0', fd);
-}
+#endif

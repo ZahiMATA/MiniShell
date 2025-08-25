@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/25 14:58:29 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/25 17:44:39 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "lexer.h"
 # include "parser.h"
 # include "libft.h"
+# include "ft_printf.h"
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>

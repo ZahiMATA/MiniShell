@@ -6,13 +6,14 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 18:47:45 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/20 20:06:24 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/25 17:35:13 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 # include <stddef.h>
+# include <unistd.h>
 
 typedef struct s_list
 {
@@ -53,8 +54,8 @@ char	**ft_split_multi(char const *s, char c[2]);
 char	*ft_itoa(int n);
 //char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 //void	ft_striteri(char *s, void (*f)(unsigned int, char*));
-void	ft_putchar_fd(char c, int fd);
-void	ft_putstr_fd(char *s, int fd);
+int		ft_putchar_fd(char c, int fd);
+int		ft_putstr_fd(char *s, int fd);
 void	ft_putstr(char *s);
 void	ft_putstr_nl(char *s);
 //void	ft_putendl_fd(char *s, int fd);
