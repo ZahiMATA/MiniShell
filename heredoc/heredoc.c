@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 10:50:18 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/25 17:46:38 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/25 18:42:23 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static	void ms_launch_child(t_minishell *m, int fd[2], char *limiter, int expand
 {
 	(void)expand;
 	char	*line;
-		//signal(SIGINT, SIG_DFL);
+	//signal(SIGINT, SIG_DFL);
 	close(fd[0]);
 	while (1)
 	{
@@ -37,7 +37,9 @@ static	void ms_launch_child(t_minishell *m, int fd[2], char *limiter, int expand
 			}
 			ft_putstr_fd(line, fd[1]);
 			ft_putchar_fd('\n', fd[1]);
+			//printf("ok\n");
 			mem_free_null(&line);
+			//printf("ok\n");
 		}
 	}
 	close(fd[1]);
