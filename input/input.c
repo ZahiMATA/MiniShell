@@ -31,8 +31,9 @@ char	*read_input(t_minishell *m, int fd)
 	}
 	if (m->line[0] == '\0')
 	{
-		mem_free_null(&m->line);
-		ft_exit_with_status(m, EXIT, EXIT_SUCCESS);
+		ft_putstr_nl("");
+		////mem_free_null(&m->line);
+		//ft_exit_with_status(m, EXIT, EXIT_SUCCESS);
 	}
 	return m->line;
 }
