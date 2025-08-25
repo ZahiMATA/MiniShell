@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 19:27:46 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/25 12:50:56 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/25 13:11:40 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,17 @@ int	is_builin(char *s)
 
 int	exec_builtin(t_minishell *m)
 {
-	if (ft_strcmp(m->line, "cd"))
+	if (ft_strcmp(m->line, "cd") == 0)
 		 ft_cd(m->cmds->args, m->env_list);
-	if (ft_strcmp(m->line, "echo"))
+	if (ft_strcmp(m->line, "echo") == 0)
 		 ft_echo(m->cmds->args);
-	if (ft_strcmp(m->line, "exit"))
+	if (ft_strcmp(m->line, "exit") == 0)
 		 ft_exit(m->cmds->args);
-	if (ft_strcmp(m->line, "export"))
+	if (ft_strcmp(m->line, "export") == 0)
 		 ft_export(m->cmds->args, &m->env_list);
-	if (ft_strcmp(m->line, "pwd"))
+	if (ft_strcmp(m->line, "pwd") == 0)
 		 ft_pwd();
-	if (ft_strcmp(m->line, "unset"))
+	if (ft_strcmp(m->line, "unset") == 0)
 		 ft_unset(m->cmds->args, &m->env_list);
 	return (0);
 }
