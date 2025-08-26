@@ -43,8 +43,8 @@ void	test1(char **env)
 	int			last_status;
 
 	m = NULL;
+	setup_signals();
 	last_status = 0;
-	(void)env;
 	while (1)
 	{
 		exec_init_minishell(&m);
@@ -53,6 +53,8 @@ void	test1(char **env)
 		lexer(m);
 		debug_show_tokens(m);
 		parser(m);
+		if (m->line == NULL)
+			ft_exit(m);
 		if (m->last_status == 0)
 		{
 			m->last_status = last_status;
@@ -60,6 +62,7 @@ void	test1(char **env)
 			debug_show_args(m);
 			//debug_show_cmds(m);
 			dispatch(m);
+			sig_kill_children(m);
 		}
 		last_status = m->last_status;
 		mem_free_all(m);

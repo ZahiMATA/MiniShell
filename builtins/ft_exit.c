@@ -23,11 +23,28 @@ int	ft_is_numeric(char *str) //TODO a mettre dans libft
 	return (1);
 }
 
-int	ft_exit(char **argv)
+int	ft_exit(t_minishell *m)
 {
-    //int i;
+	int status;
 
-    //i = 0;
+	ft_printf_fd(STDOUT_FILENO, "exit\n");
+	if(m->cmds == NULL || m->cmds->args == NULL || m->cmds->args[1] == NULL)
+		exit(0);
+	if (!ft_is_numeric(m->cmds->args[1]))
+	{
+		ft_printf_fd(STDERR_FILENO, "exit: numeric argument required\n");
+		exit(255);
+	}
+	else if (m->cmds->args[2])
+	{
+		ft_printf_fd(STDERR_FILENO, "%s: exit: too many arguments\n", MINISHELL);
+		return(1);
+	}
+	status = ft_atoi(m->cmds->args[1]) % 256;
+	mem_free_all(m);
+	exit(status);
+
+/*
     write(1, "exit\n", 5);
     if(!argv[1])
         exit(0);
@@ -42,7 +59,5 @@ int	ft_exit(char **argv)
         return(1);
     }
     exit(ft_atoi(argv[1]) % 256); // modUlo car peux afficher que 8bit
+*/
 }
-/*int main()
-{
-}*/

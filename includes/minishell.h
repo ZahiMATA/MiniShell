@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/25 17:44:39 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/26 19:07:41 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@
 # define OK 1
 # define MINISHELL "minishell"
 # define PROMPT "minishell$ "
+# define CTRL_C "^C"
 # define PROMPT_HEREDOC "> "
 # define WARNING_HEREDOC "minishell: warning: here-document delimited by end-of-file (wanted `%s')"
 // # define EXIT_FAILURE 1
@@ -70,33 +71,7 @@
 # define FLAG_FIC 0644
 // # define EXIT_CMDNOEXISTS 1
 
-// typedef struct s_cmd
-// {
-// 	char	**args;
-// 	char	*path;
-// 	char	*file_in; // gerer le free
-// 	char	*file_out; // gerer le free
-// 	int		status;
-// 	//int		fd_pipe[2];
-// 	int		pid;
-// }	t_cmd;
-
-// TODO QUI remplacera s_cmd qui est une liste chainee
-// le tableau sera plus simple car on connait le nb de commandes
-// on revient a la liste car le paseur genere une liste
-/*
-typedef struct s_cmd2
-{
-	char			*cmd;
-	char			*cmd_abs;
-	char			*file_in; // gerer le free
-	char			*file_out; // gerer le free
-	t_redirect		mode_in;
-	t_redirect		mode_out;
-	int				status;
-	int				pid;
-	struct	s_cmd2	*next;
-}	t_cmd2;*/
+extern volatile sig_atomic_t g_signal;
 
 // TODO implementer init et l access et le free et le update data
 typedef struct s_env
@@ -113,14 +88,12 @@ typedef struct s_minishell
 	int				fd_in;
 	int				fd_out;
 	t_cmd			*cmds;
-	//t_cmd2			*cmds2; // TODO temporaire
 	t_token_list	*token_list;
 	int				nb_cmd;
 	int				is_here_doc;
 	char			*limiter;
 	char			**path;
 	t_env			*env_list; //gere le free
-	//char			**env;
 	char			*line;
 	char			*error; // a nettoyer
 	int				last_status; // pour echo $?
@@ -161,16 +134,20 @@ char 	*ft_substring(const char *s, int start, int len);
 char	*read_input(t_minishell *m, int fd);
 char	**env_list_to_tab(t_minishell *m, t_env *env);
 void	 debug_pointer(void *p);
+void	debug_var(char *s);
 void	dispatch(t_minishell *m);
 int		ft_cd(char **argv, t_env *env_list);
 int		ft_echo(char **argv);
 int		ft_env(char **arg, t_env *env_list);
-int		ft_exit(char **argv);
+int		ft_exit(t_minishell *m);
 int		ft_export(char **args, t_env **env_list);
 int		ft_pwd(void);
 int		ft_unset(char **arg, t_env **env_list);
 void	ft_print_perror(char *message, char *pmessage);
 void	ft_print_error(char *mes1, char *mes2);
 int		ms_heredoc(t_minishell *m, char *limiter, int expand);
+void	sig_kill_children(t_minishell *m);
+void	setup_signals(void);
+
 
 #endif

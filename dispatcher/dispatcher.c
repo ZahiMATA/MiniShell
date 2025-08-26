@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 19:27:46 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/25 13:11:40 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/26 19:17:07 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,19 @@ int	is_builin(char *s)
 	);
 }
 
-int	exec_builtin(t_minishell *m)
+int	exec_builtin(t_minishell *m, char *cmd)
 {
-	if (ft_strcmp(m->line, "cd") == 0)
+	if (ft_strcmp(cmd, "cd") == 0)
 		 ft_cd(m->cmds->args, m->env_list);
-	if (ft_strcmp(m->line, "echo") == 0)
+	if (ft_strcmp(cmd, "echo") == 0)
 		 ft_echo(m->cmds->args);
-	if (ft_strcmp(m->line, "exit") == 0)
-		 ft_exit(m->cmds->args);
-	if (ft_strcmp(m->line, "export") == 0)
+	if (ft_strcmp(cmd, "exit") == 0)
+		 ft_exit(m);
+	if (ft_strcmp(cmd, "export") == 0)
 		 ft_export(m->cmds->args, &m->env_list);
-	if (ft_strcmp(m->line, "pwd") == 0)
+	if (ft_strcmp(cmd, "pwd") == 0)
 		 ft_pwd();
-	if (ft_strcmp(m->line, "unset") == 0)
+	if (ft_strcmp(cmd, "unset") == 0)
 		 ft_unset(m->cmds->args, &m->env_list);
 	return (0);
 }
@@ -45,8 +45,8 @@ int	exec_builtin(t_minishell *m)
 void	dispatch(t_minishell *m)
 {
 	if (m->cmds && m->cmds->args && is_builin(m->cmds->args[0]))
-	{
-		exec_builtin(m);
+	{   
+		exec_builtin(m, m->cmds->args[0]);
 	}
 	else
 	{

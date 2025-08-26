@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 12:18:08 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/20 18:31:42 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/26 16:38:12 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
 
 typedef struct s_minishell	t_minishell;
 typedef struct s_cmd		t_cmd;
-//typedef struct s_cmd2		t_cmd2;
 
 typedef enum e_token
 {

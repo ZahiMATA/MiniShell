@@ -30,10 +30,6 @@ char	*read_input(t_minishell *m, int fd)
 			return (m->line);
 	}
 	if (m->line[0] == '\0')
-	{
-		ft_putstr_nl("");
-		////mem_free_null(&m->line);
-		//ft_exit_with_status(m, EXIT, EXIT_SUCCESS);
-	}
+		return NULL;
 	return m->line;
 }

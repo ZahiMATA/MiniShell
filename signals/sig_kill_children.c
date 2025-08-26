@@ -1,34 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   debug_pointer.c                                    :+:      :+:    :+:   */
+/*   sig_kill_children.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/11 16:01:50 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/26 19:16:18 by ybouroga         ###   ########.fr       */
+/*   Created: 2025/08/26 15:57:47 by ybouroga          #+#    #+#             */
+/*   Updated: 2025/08/26 20:08:21 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void debug_pointer(void *p)
+void	sig_kill_children(t_minishell *m)
 {
-	printf("debug_pointer : begin\n");
-	if (p == NULL)
-			printf("p is null\n");
-	else
-	{
-		printf("p is not null[%p]\n", p);
-		/*if (*p == NULL)
-			printf("*p is null[%p]\n", *p);
-		else
-			printf("*p is not null[%p]\n", *p);*/
-	}
-	printf("debug_pointer : end\n");
-}
+	t_cmd	*c;
 
-void debug_var(char *s)
-{
-	ft_printf_fd(STDIN_FILENO, "[%s]\n", s);
+	if (g_signal)
+	{
+		g_signal = 0;
+		//ft_printf_fd(STDOUT_FILENO, "%s\n", PROMPT);
+		if (m && m->cmds)
+		{
+			c = m->cmds;
+			while (c)
+			{
+				if (c->pid > 0)
+					kill(c->pid, SIGINT);
+				c = c->next;
+			}
+		}
+		ft_printf_fd(STDOUT_FILENO, "\n");
+	}
 }
