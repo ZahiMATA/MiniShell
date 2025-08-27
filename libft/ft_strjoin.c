@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 11:50:06 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/27 12:16:18 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/27 15:00:02 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,31 +24,28 @@
 #include <stddef.h>
 #include <stdlib.h>
 
-char	*ft_strjoin_2(char const *s1, char const *s2)
+char	*ft_strjoin_2(char **s1, char const *s2)
 {
 	char	*zone;
 	size_t	len1;
 	size_t	len2;
-	size_t	i;
 
-	len1 = ft_strlen(s1);
-	len2 = ft_strlen(s2);
+	len1 = 0;
+	len2 = 0;
+	if (*s1)
+		len1 = ft_strlen(*s1);
+	if (s2)
+		len2 = ft_strlen(s2);
 	zone = malloc((len1 + len2 + 1) * sizeof(char));
 	if (zone == NULL)
 		return (NULL);
-	i = 0;
-	while (i < len1)
-	{
-		zone[i] = s1[i];
-		i++;
-	}
-	i = 0;
-	while (i < len2)
-	{
-		zone[i + len1] = s2[i];
-		i++;
-	}
+	if (*s1)
+		ft_memcpy(zone, *s1, len1);
+	if (s2)
+		ft_memcpy(zone + len1, s2, len2);
+	free(*s1);
 	zone[len1 + len2] = '\0';
+	*s1 = zone;
 	return (zone);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/27 12:09:18 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/27 15:06:49 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 # include <errno.h>
 # include <fcntl.h>
 # include <signal.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 
 # ifndef DEBUG
 #  define DEBUG 0

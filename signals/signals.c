@@ -17,7 +17,7 @@ static void sigint_handler(int sig)
 
 static void sigquit_handler(int sig)
 {
-    (void)sig;
+	(void)sig;
 }
 
 void setup_signals(void)

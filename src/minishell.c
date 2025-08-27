@@ -50,8 +50,8 @@ void	test1(char **env)
 	while (1)
 	{
 		exec_init_minishell(&m);
-		if(got_signal == GOT_NO_SIGNAL) ft_putstr(PROMPT);
-		m->line = read_input(m, STDIN_FILENO);
+		//if(got_signal == GOT_NO_SIGNAL) ft_putstr(PROMPT);
+		m->line = read_input(m, got_signal);
 		lexer(m);
 		debug_show_tokens(m);
 		parser(m);
@@ -62,7 +62,6 @@ void	test1(char **env)
 			m->last_status = last_status;
 			exec_feed_minishell(&m, env);
 			debug_show_args(m);
-			//debug_show_cmds(m);
 			dispatch(m);
 			got_signal = sig_kill_children(m);
 		}

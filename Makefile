@@ -6,7 +6,7 @@
 #    By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/28 10:35:37 by ybouroga          #+#    #+#              #
-#    Updated: 2025/08/26 16:51:59 by ybouroga         ###   ########.fr        #
+#    Updated: 2025/08/27 15:16:58 by ybouroga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,6 +47,8 @@ SRCS = \
 	libft/ft_bzero.c \
 	libft/ft_strlcat.c \
 	libft/ft_itoa.c \
+	libft/ft_memcpy.c \
+	libft/ft_memset.c \
 	libft_ms/ft_exit.c \
 	libft_ms/ft_return.c \
 	libft_ms/ft_lstnew_env.c \
@@ -92,6 +94,8 @@ OBJS = $(SRCS:%.c=$(REP_OUT)/%.o)
 
 DIRS = $(sort $(dir $(OBJS)))
 
+LIBS = -lreadline #-ncurnses
+
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -Iincludes
 
@@ -105,7 +109,7 @@ $(DIRS):
 	mkdir -p $@
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBS)
 
 $(REP_OUT)/%.o: %.c $(HEADER)
 	$(CC) $(CFLAGS) -c $< -o $@
