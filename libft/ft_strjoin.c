@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 11:50:06 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/27 12:13:19 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/27 12:16:18 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 #include <stddef.h>
 #include <stdlib.h>
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin_2(char const *s1, char const *s2)
 {
 	char	*zone;
 	size_t	len1;
