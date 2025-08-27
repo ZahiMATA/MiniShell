@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/26 19:07:41 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/27 12:09:18 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@
 # define OC O_CREAT
 # define OT O_TRUNC
 # define FLAG_FIC 0644
+# define GOT_NO_SIGNAL 0
+# define GOT_SIGNAL 1
 // # define EXIT_CMDNOEXISTS 1
 
 extern volatile sig_atomic_t g_signal;
@@ -123,7 +125,7 @@ void	ft_lstadd_back_env(t_env **lst, t_env *new);
 void	ft_lstclear_env(t_env **lst, void (*del)(void *));
 void	ft_lstiter_env(t_env *lst, void (*f)(void *, void *));
 void	del_env_content(void *ptr);
-void	ft_return_error(t_minishell *m, char *mes, char *pmes, int status);
+void	ft_return_error(t_minishell *m, char *mes1, char *mes2, int status);
 void	ft_return_perror(t_minishell *m, char *message, int status);
 void	ft_exit_fail(t_minishell *m, char *message);
 void	ft_exit_fail_status(t_minishell *m, char *message, int status);
@@ -146,8 +148,7 @@ int		ft_unset(char **arg, t_env **env_list);
 void	ft_print_perror(char *message, char *pmessage);
 void	ft_print_error(char *mes1, char *mes2);
 int		ms_heredoc(t_minishell *m, char *limiter, int expand);
-void	sig_kill_children(t_minishell *m);
+int		sig_kill_children(t_minishell *m);
 void	setup_signals(void);
-
 
 #endif

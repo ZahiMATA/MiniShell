@@ -9,10 +9,10 @@ volatile sig_atomic_t	g_signal = 0;
 
 static void sigint_handler(int sig)
 {
-    (void)sig;
+	(void)sig;
 	g_signal = 1;
-	//ft_printf_fd(STDOUT_FILENO, "\n%s", PROMPT);
-	ft_printf_fd(STDOUT_FILENO, "\n");
+	write(STDOUT_FILENO, "\n", 1);
+	write(STDOUT_FILENO, PROMPT, ft_strlen(PROMPT));
 }
 
 static void sigquit_handler(int sig)
@@ -22,8 +22,8 @@ static void sigquit_handler(int sig)
 
 void setup_signals(void)
 {
-    signal(SIGINT,  sigint_handler);
-    signal(SIGQUIT, sigquit_handler);
+	signal(SIGINT,  sigint_handler);
+	signal(SIGQUIT, sigquit_handler);
 }
 
 /* pas un sig

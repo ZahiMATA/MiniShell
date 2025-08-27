@@ -41,14 +41,16 @@ void	test1(char **env)
 	t_minishell *m;
 	//char 		*line;
 	int			last_status;
+	int			got_signal;
 
 	m = NULL;
 	setup_signals();
 	last_status = 0;
+	got_signal = 0;
 	while (1)
 	{
 		exec_init_minishell(&m);
-		ft_putstr(PROMPT);
+		if(got_signal == GOT_NO_SIGNAL) ft_putstr(PROMPT);
 		m->line = read_input(m, STDIN_FILENO);
 		lexer(m);
 		debug_show_tokens(m);
@@ -62,7 +64,7 @@ void	test1(char **env)
 			debug_show_args(m);
 			//debug_show_cmds(m);
 			dispatch(m);
-			sig_kill_children(m);
+			got_signal = sig_kill_children(m);
 		}
 		last_status = m->last_status;
 		mem_free_all(m);

@@ -6,20 +6,19 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 15:57:47 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/26 20:08:21 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/27 12:09:51 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	sig_kill_children(t_minishell *m)
+int	sig_kill_children(t_minishell *m)
 {
 	t_cmd	*c;
 
 	if (g_signal)
 	{
 		g_signal = 0;
-		//ft_printf_fd(STDOUT_FILENO, "%s\n", PROMPT);
 		if (m && m->cmds)
 		{
 			c = m->cmds;
@@ -30,6 +29,7 @@ void	sig_kill_children(t_minishell *m)
 				c = c->next;
 			}
 		}
-		ft_printf_fd(STDOUT_FILENO, "\n");
+		return GOT_SIGNAL;
 	}
+	return GOT_NO_SIGNAL;
 }

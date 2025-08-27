@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 11:50:06 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/06 21:01:33 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/27 12:13:19 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,34 @@
 #include "libft.h"
 #include <stddef.h>
 #include <stdlib.h>
+
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	char	*zone;
+	size_t	len1;
+	size_t	len2;
+	size_t	i;
+
+	len1 = ft_strlen(s1);
+	len2 = ft_strlen(s2);
+	zone = malloc((len1 + len2 + 1) * sizeof(char));
+	if (zone == NULL)
+		return (NULL);
+	i = 0;
+	while (i < len1)
+	{
+		zone[i] = s1[i];
+		i++;
+	}
+	i = 0;
+	while (i < len2)
+	{
+		zone[i + len1] = s2[i];
+		i++;
+	}
+	zone[len1 + len2] = '\0';
+	return (zone);
+}
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {

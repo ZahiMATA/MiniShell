@@ -16,6 +16,10 @@ char	*read_input(t_minishell *m, int fd)
 		n = read(fd, buffer, BUFFER_SIZE);
 		if (n < 0)
 		{
+			// pas besoin gere par le signal
+			//if (errno == EINTR)
+				//continue;
+				//write(1, "n", 1);
 			ft_return_perror(m, NULL, EXIT_FAILURE);
 			return (NULL);
 		}

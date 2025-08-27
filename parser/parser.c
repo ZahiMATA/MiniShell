@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 13:26:51 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/21 14:26:27 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/27 11:10:39 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	check_token(t_minishell *m)
 			type = prs_get_redir(m->token_list->token);
 			m->token_list = m->token_list->next;
 			if (m->token_list == NULL || ft_is_stringword(m) == 0)
-				return (ft_return_error(m, ERROR_NL, NULL, RETURN_NL)); // TODO ajouter free cmd
+				return (ft_return_error(m, MINISHELL, ERROR_NL, RETURN_NL)); // TODO ajouter free cmd
 			redir = prs_lstnew_redir(type, m->token_list->val);
 			if(redir == NULL)
 				ft_exit_fail_status(m, NULL, EXIT_ALLOC_ERROR);
