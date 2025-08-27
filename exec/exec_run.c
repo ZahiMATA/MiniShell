@@ -75,7 +75,7 @@ static void	launch_process(t_minishell *m, t_cmd *cmd, int n, int pipes[][2])
 
 	//debug_show_cmd(cmd, n);
 	//printf("n=[%d],pipe.n-1.0=[%d] pipe.n.1=[%d]\n", n, pipes[n-1][0], pipes[n][1]);
-
+	setup_signals_for_children();
 	if (n > 0)
 		if (dup2(pipes[n - 1][0] , STDIN_FILENO) == -1)
 			ft_exit_fail(m, ERROR_DUP2);

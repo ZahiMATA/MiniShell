@@ -52,6 +52,7 @@ void	test1(char **env)
 		exec_init_minishell(&m);
 		//if(got_signal == GOT_NO_SIGNAL) ft_putstr(PROMPT);
 		m->line = read_input(m, got_signal);
+		//debug_var(m->line);
 		lexer(m);
 		debug_show_tokens(m);
 		parser(m);
@@ -64,6 +65,7 @@ void	test1(char **env)
 			debug_show_args(m);
 			dispatch(m);
 			got_signal = sig_kill_children(m);
+			//ft_printf_fd(1,"[%c]", got_signal + '0');
 		}
 		last_status = m->last_status;
 		mem_free_all(m);

@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/27 15:06:49 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/27 19:38:24 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@
 # define PROMPT "minishell$ "
 # define CTRL_C "^C"
 # define PROMPT_HEREDOC "> "
-# define WARNING_HEREDOC "minishell: warning: here-document delimited by end-of-file (wanted `%s')"
+# define WARNING_HEREDOC "minishell: warning: here-document delimited by end-of-file (wanted `%s')\n"
 // # define EXIT_FAILURE 1
 # define EXIT_ALLOC_ERROR 2
 # define EXIT_PERMISSION_DENIED 126
@@ -152,5 +152,6 @@ void	ft_print_error(char *mes1, char *mes2);
 int		ms_heredoc(t_minishell *m, char *limiter, int expand);
 int		sig_kill_children(t_minishell *m);
 void	setup_signals(void);
+void	setup_signals_for_children(void);
 
 #endif
