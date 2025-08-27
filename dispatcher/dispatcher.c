@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dispatcher.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zmata <zmata@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 19:27:46 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/26 19:17:07 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/27 12:42:00 by zmata            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int	exec_builtin(t_minishell *m, char *cmd)
 		 ft_cd(m->cmds->args, m->env_list);
 	if (ft_strcmp(cmd, "echo") == 0)
 		 ft_echo(m->cmds->args);
+	if (ft_strcmp(cmd, "env") == 0)
+		ft_env(m->cmds->args, m->env_list);
 	if (ft_strcmp(cmd, "exit") == 0)
 		 ft_exit(m);
 	if (ft_strcmp(cmd, "export") == 0)
@@ -45,7 +47,7 @@ int	exec_builtin(t_minishell *m, char *cmd)
 void	dispatch(t_minishell *m)
 {
 	if (m->cmds && m->cmds->args && is_builin(m->cmds->args[0]))
-	{   
+	{
 		exec_builtin(m, m->cmds->args[0]);
 	}
 	else
