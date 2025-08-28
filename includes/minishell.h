@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zmata <zmata@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/28 09:33:11 by zmata            ###   ########.fr       */
+/*   Updated: 2025/08/28 13:41:52 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ void	debug_var(char *s);
 void	dispatch(t_minishell *m);
 int		ft_history(char **argv);
 int		ft_cd(char **argv, t_env *env_list);
-int		ft_echo(char **argv);
+int		ft_echo(t_minishell *m, char **argv);
 int		ft_env(char **arg, t_env *env_list);
 int		ft_exit(t_minishell *m);
 int		ft_export(char **args, t_env **env_list);

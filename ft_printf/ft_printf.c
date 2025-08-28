@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 10:28:00 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/25 17:43:55 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/28 14:41:04 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,9 @@ static int	test_ft_printf(va_list params, t_params *p)
 		p->ret += ft_putchar_fd(va_arg(params, int), p->fd);
 	else if (p->s[p->i] && p->s[p->i] == '%' && p->s[p->i + 1] == 's')
 		p->ret += ft_putstr_fd(va_arg(params, char *), p->fd);
-	/*else if (s[i] && s[i] == '%' && (s[i + 1] == 'd' || s[i + 1] == 'i'))
-		*ret += print_string_di(va_arg(params, int));
+	else if (p->s[p->i] && p->s[p->i] == '%' && (p->s[p->i + 1] == 'd' || p->s[p->i + 1] == 'i'))
+		p->ret += ft_putnbr_fd(va_arg(params, int), p->fd);
+	/*
 	else if (s[i] && s[i] == '%' && s[i + 1] == 'u')
 		*ret += print_string_u(va_arg(params, unsigned int));
 	else if (s[i] && s[i] == '%' && s[i + 1] == 'x')

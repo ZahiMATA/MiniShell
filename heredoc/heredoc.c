@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 10:50:18 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/27 19:41:14 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/28 13:25:17 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,38 +15,33 @@
 static	void ms_launch_child(t_minishell *m, int fd[2], char *limiter, int expand)
 {
 	(void)expand;
-	char	*line;
+	//char	*line;
 	//signal(SIGINT, SIG_DFL);
 	close(fd[0]);
 	while (1)
 	{
 		ft_putstr(PROMPT_HEREDOC);
-		line = read_input(m, GOT_SIGNAL);
+		m->line = read_input(m, GOT_SIGNAL);
 		{
-			if (/*line[0] == 0*/ line == NULL)
+			//debug_var(m->line);
+			if (m->line == NULL)
 			{
 				ft_printf_fd( STDERR_FILENO, WARNING_HEREDOC, limiter);
-				close(fd[1]);
-				mem_free_all(m);
-				break; // TODO sans ca bug
-			}
-
-			if (ft_strcmp(line, limiter) == 0) // TODO supprimer le dernier \n du line
-			{
-				//printf("ok1.1\n");
-				mem_free_null(&line);
-				//printf("ok1.2\n");
 				break;
 			}
-			ft_putstr_fd(line, fd[1]);
+
+			if ( m->line && ft_strcmp(m->line, limiter) == 0)
+			{
+				break;
+			}
+			ft_putstr_fd(m->line, fd[1]);
 			ft_putchar_fd('\n', fd[1]);
-			//printf("ok2.1\n");
-			mem_free_null(&line);
-			//printf("ok2.2\n");
+			mem_free_null(&m->line);
 		}
 	}
 	close(fd[1]);
-	mem_free_all(m);
+	mem_free_null(&m->line);
+	//mem_free_all(m);
 }
 
 int	ms_heredoc(t_minishell *m, char *limiter, int expand)

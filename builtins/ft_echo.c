@@ -23,48 +23,54 @@ void	ft_putstr_fd(char *s, int fd) //TODO supp
 */
 int verif_arg(char *argv)
 {
-    int i;
+	int i;
 
-    i = 0;
+	i = 0;
 
-    if(argv[i] == '-')
-       i++;
-    while(argv[i] == 'n')
-       i++;
-    if(argv[i] == '\0')
-        return(0); //-n
-    else
-        return(1); // pas de -n
+	if(argv[i] == '-')
+		i++;
+	while(argv[i] == 'n')
+		i++;
+	if(argv[i] == '\0')
+		return(0); //-n
+	else
+		return(1); // pas de -n
 }
-int ft_echo(char **argv)
+int ft_echo(t_minishell *m, char **argv)
 {
-    int yes_backslash_n;
-    int i;
+	int yes_backslash_n;
+	int i;
 
-    i = 1;
-    yes_backslash_n = 0;
+	i = 1;
+	yes_backslash_n = 0;
 
-    while(argv[i])
-    {
-        if(verif_arg(argv[i]) == 0)
-        {
-            yes_backslash_n = 1;
-            i++;
-        }
-        else
-            break;
-    }
-    while(argv[i])
-    {
-        ft_putstr_fd(argv[i],1);
-        if (argv[i + 1])
-		    write(1, " ", 1);
-        i++;
-    }
-    if (yes_backslash_n == 1)
-        return(0);
-    write(1, "\n", 1);
-    return(0);
+	while(argv[i])
+	{
+		if(verif_arg(argv[i]) == 0)
+		{
+			yes_backslash_n = 1;
+			i++;
+		}
+		else
+			break;
+	}
+	while(argv[i])
+	{
+		if (ft_strcmp(argv[i], "$?") == 0)
+		{
+			ft_printf_fd(1, "%d", m->last_status);
+		}
+		else
+			ft_putstr_fd(argv[i], 1);
+		if (argv[i + 1])
+			write(1, " ", 1);
+		i++;
+	}
+	if (yes_backslash_n == 1)
+		return(0);
+	write(1, "\n", 1);
+	m->last_status = 0; // TODO a vour ou le placer de facon generale
+	return(0);
 }
 /*
 int main(void)
