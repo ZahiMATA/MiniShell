@@ -6,7 +6,7 @@
 /*   By: zmata <zmata@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 19:27:46 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/27 12:42:00 by zmata            ###   ########.fr       */
+/*   Updated: 2025/08/28 09:37:31 by zmata            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ int	is_builin(char *s)
 		ft_strcmp(s, "exit") == 0 ||
 		ft_strcmp(s, "export") == 0 ||
 		ft_strcmp(s, "pwd") == 0 ||
-		ft_strcmp(s, "unset") == 0
+		ft_strcmp(s, "unset") == 0 ||
+		ft_strcmp(s, "history") == 0
 	);
 }
 
@@ -41,6 +42,8 @@ int	exec_builtin(t_minishell *m, char *cmd)
 		 ft_pwd();
 	if (ft_strcmp(cmd, "unset") == 0)
 		 ft_unset(m->cmds->args, &m->env_list);
+	if (ft_strcmp(cmd, "history") == 0)
+		ft_history(m->cmds->args);
 	return (0);
 }
 

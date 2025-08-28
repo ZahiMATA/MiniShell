@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+         #
+#    By: zmata <zmata@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/28 10:35:37 by ybouroga          #+#    #+#              #
-#    Updated: 2025/08/27 15:16:58 by ybouroga         ###   ########.fr        #
+#    Updated: 2025/08/28 09:35:42 by zmata            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ SRCS = \
 	builtins/ft_export.c \
 	builtins/ft_pwd.c \
 	builtins/ft_unset.c \
+	builtins/ft_history.c \
 	dispatcher/dispatcher.c \
 	debug/debug_display.c \
 	debug/debug_token.c \

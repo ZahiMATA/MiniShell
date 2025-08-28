@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zmata <zmata@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/27 19:38:24 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/28 09:33:11 by zmata            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,7 @@ char	**env_list_to_tab(t_minishell *m, t_env *env);
 void	 debug_pointer(void *p);
 void	debug_var(char *s);
 void	dispatch(t_minishell *m);
+int		ft_history(char **argv);
 int		ft_cd(char **argv, t_env *env_list);
 int		ft_echo(char **argv);
 int		ft_env(char **arg, t_env *env_list);
