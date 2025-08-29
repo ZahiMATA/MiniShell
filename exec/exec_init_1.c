@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 15:28:03 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/20 20:20:54 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/29 12:57:14 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,14 @@
 	}
 }
 
-void	exec_feed_minishell(t_minishell **m, /*char **args, int nbcom0,*/ char **env)
+void	exec_feed_minishell(t_minishell **m, char **env)
 {
 	(*m)->nb_cmd = prs_lstget_nb(*m);
 	(*m)->is_here_doc = 0;
 	//(*m)->env = env;
 	exec_init_path(m, env);
-	exec_init_env_list(m, env);
+	if ((*m)->env_list == NULL)
+		exec_init_env_list(m, env);
 	//exec_init_cmds_and_cmd_args(m, args, nbcom);
 	exec_init_cmd_path(m/*, nbcom*/);
 	//(*m)->fd_in = open(args[1], O_RDONLY); // TODO pas besoin normalement on init apres
@@ -55,11 +56,13 @@ void	exec_feed_minishell(t_minishell **m, /*char **args, int nbcom0,*/ char **en
 	//	perror(args[nbcom + OFST_FIRST_CMD]);
 }
 
-void exec_init_minishell(t_minishell **m)
+void exec_init_minishell(t_minishell **m/*, t_env *last_env_list*/)
 {
 	*m = ft_calloc(1, sizeof(t_minishell));
 	if (*m == NULL)
 		ft_exit_fail_status(*m, NULL, EXIT_ALLOC_ERROR);
+	// if (last_env_list)
+	// 	(*m)->env_list = last_env_list;
 	//(*m)->cmds = ft_calloc(1, sizeof(t_cmd));
 	/*if ((*m)->cmds == NULL)
 		ft_exit_fail_status(*m, NULL, EXIT_ALLOC_ERROR);*/

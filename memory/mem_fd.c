@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void	mem_close_fds(t_minishell *p)
+void mem_close_fds(t_minishell *p)
 {
 	/*int	i;
 
@@ -29,4 +29,6 @@ void	mem_close_fds(t_minishell *p)
 		close(p->fd_in);
 	if (p->fd_out != -1)
 		close(p->fd_out);
+	p->fd_in = -1;
+	p->fd_out = -1;
 }

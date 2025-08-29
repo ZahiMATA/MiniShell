@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/29 12:10:46 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/29 13:06:45 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,8 +104,9 @@ typedef struct s_minishell
 }	t_minishell;
 
 void	mem_free_all(t_minishell *m);
+void	mem_reset_m(t_minishell *m);
 void	mem_free_array(char	***tab);
-void 	exec_init_minishell(t_minishell **m);
+void 	exec_init_minishell(t_minishell **m/*, t_env *last_env_list*/);
 void	exec_feed_minishell(t_minishell **m, char **env);
 void	exec_init_path(t_minishell **p, char **env);
 void	exec_init_cmds_and_cmd_args(t_minishell **p, char **cmd, int nbcom);

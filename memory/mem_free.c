@@ -66,3 +66,18 @@ void	mem_free_all(t_minishell *m)
 	mem_free_null(&m->error);
 	free(m);
 }
+
+void	mem_reset_m(t_minishell *m)
+{
+	if (m == NULL)
+		return ;
+	mem_close_fds(m);
+	prs_lstclear(&m->cmds);
+	mem_free_null(&m->limiter);
+	mem_free_array(&m->path);
+	//ft_lstclear_env(&m->env_list, del_env_content);
+	lex_lstclear(&m->token_list);
+	mem_free_null(&m->line);
+	mem_free_null(&m->error);
+	//free(m);
+}
