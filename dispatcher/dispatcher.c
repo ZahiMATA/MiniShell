@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 19:27:46 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/29 11:19:24 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/29 14:37:23 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	exec_builtin(t_minishell *m, char *cmd)
 	if (ft_strcmp(cmd, "unset") == 0)
 		 ft_unset(m->cmds->args, &m->env_list);
 	if (ft_strcmp(cmd, "history") == 0)
-		ft_history(m->cmds->args);
+		ft_history(m);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/29 13:06:45 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/29 15:09:03 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ typedef struct s_minishell
 	char			*line;
 	char			*error; // a nettoyer
 	int				last_status; // pour echo $?
+	t_list			*history;
 }	t_minishell;
 
 void	mem_free_all(t_minishell *m);
@@ -141,7 +142,8 @@ char	**env_list_to_tab(t_minishell *m, t_env *env);
 void	 debug_pointer(void *p);
 void	debug_var(const char *s);
 void	dispatch(t_minishell *m);
-int		ft_history(char **argv);
+int		ft_history(t_minishell *m);
+void	ft_add_history(t_minishell *m, char *s);
 int		ft_cd(char **argv, t_env *env_list);
 int		ft_echo(t_minishell *m, char **argv);
 int		ft_env(char **arg, t_env *env_list);

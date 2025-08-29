@@ -6,7 +6,7 @@
 #    By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/28 10:35:37 by ybouroga          #+#    #+#              #
-#    Updated: 2025/08/28 14:46:22 by ybouroga         ###   ########.fr        #
+#    Updated: 2025/08/29 15:12:36 by ybouroga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,6 +50,15 @@ SRCS = \
 	libft/ft_itoa.c \
 	libft/ft_memcpy.c \
 	libft/ft_memset.c \
+	libft/ft_lstadd_back.c \
+	libft/ft_lstadd_front.c \
+	libft/ft_lstclear.c \
+	libft/ft_lstdelone.c \
+	libft/ft_lstiter.c \
+	libft/ft_lstlast.c \
+	libft/ft_lstmap.c \
+	libft/ft_lstnew.c \
+	libft/ft_lstsize.c \
 	libft_ms/ft_exit.c \
 	libft_ms/ft_return.c \
 	libft_ms/ft_lstnew_env.c \
