@@ -93,11 +93,17 @@ static void	launch_process(t_minishell *m, t_cmd *cmd, int n, int pipes[][2])
 		close(pipes[i][1]);
 		i++;
 	}
-	 if (m->last_status != 0)
-	 {
-	 	ft_return_error(m, m->error, S_EMPTY, m->last_status);
+	if (m->last_status != 0)
+	{
+		ft_return_error(m, m->error, S_EMPTY, m->last_status);
 		mem_free_null(&m->error);
-	 }
+	}
+	if (/*cmd->args && */is_builin(cmd->args[0]))
+	{
+		exec_builtin(m, cmd->args[0]);
+		mem_free_all(m);
+		exit(0);
+	}
 	if (cmd->cmd_abs)
 	{
 		env_tab = env_list_to_tab(m, m->env_list);

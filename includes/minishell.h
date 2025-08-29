@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/28 13:41:52 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/29 10:57:53 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,5 +154,7 @@ int		ms_heredoc(t_minishell *m, char *limiter, int expand);
 int		sig_kill_children(t_minishell *m);
 void	setup_signals(void);
 void	setup_signals_for_children(void);
+int		exec_builtin(t_minishell *m, char *cmd);
+int		is_builin(char *s);
 
 #endif
