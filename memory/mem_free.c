@@ -60,10 +60,11 @@ void	mem_free_all(t_minishell *m)
 	prs_lstclear(&m->cmds);
 	mem_free_null(&m->limiter);
 	mem_free_array(&m->path);
-	ft_lstclear_env(&m->env_list, del_env_content);
+	ft_lstclear_env(&m->env_list, ft_del_env_content);
 	lex_lstclear(&m->token_list);
 	mem_free_null(&m->line);
 	mem_free_null(&m->error);
+	ft_lstclear(&m->history, ft_del_content);
 	free(m);
 }
 

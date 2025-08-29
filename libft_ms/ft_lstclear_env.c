@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 17:04:11 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/06 21:07:56 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/29 15:22:23 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 #include "minishell.h"
 
-void	ft_lstdelone_env(t_env *env, void (*del)(void *))
+static void	ft_lstdelone_env(t_env *env, void (*del)(void *))
 {
 	if (env == NULL || del == NULL)
 		return;
@@ -43,7 +43,7 @@ void	ft_lstclear_env(t_env **lst, void (*del)(void *))
 	}
 }
 
-void	del_env_content(void *ptr)
+void	ft_del_env_content(void *ptr)
 {
 	free(ptr);
 }

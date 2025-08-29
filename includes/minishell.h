@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/29 15:09:03 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/29 15:20:29 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ typedef struct s_minishell
 	char			**path;
 	t_env			*env_list; //gere le free
 	char			*line;
-	char			*error; // a nettoyer
+	char			*error;
 	int				last_status; // pour echo $?
 	t_list			*history;
 }	t_minishell;
@@ -128,7 +128,7 @@ t_env	*ft_lstnew_env(void *key, void *val);
 void	ft_lstadd_back_env(t_env **lst, t_env *new);
 void	ft_lstclear_env(t_env **lst, void (*del)(void *));
 void	ft_lstiter_env(t_env *lst, void (*f)(void *, void *));
-void	del_env_content(void *ptr);
+void	ft_del_env_content(void *ptr);
 void	ft_return_error(t_minishell *m, char *mes1, char *mes2, int status);
 void	ft_return_perror(t_minishell *m, char *message, int status);
 void	ft_exit_fail(t_minishell *m, char *message);

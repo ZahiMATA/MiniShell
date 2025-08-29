@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstclear_bonus.c                                :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybouroga <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 17:04:11 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/05/15 17:37:30 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/29 15:20:45 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /* @CDOCS void ft_lstclear(t_list **lst, void (*del)(void *));
- * @RETOUR Supprime et libère la mémoire de l’élément passé en paramètre, et 
+ * @RETOUR Supprime et libère la mémoire de l’élément passé en paramètre, et
  * de tous les éléments qui suivent, à l’aide de ’del’ et de free(3)
  * Enfin, le pointeur initial doit être mis à NULL.
  * @IN L1->L2>-L3
@@ -32,6 +32,10 @@ void	ft_lstclear(t_list **lst, void (*del)(void *))
 		ft_lstdelone(*lst, del);
 		*lst = p;
 	}
+}
+void	ft_del_content(void *ptr)
+{
+	free(ptr);
 }
 /*
 #include <stdlib.h>
