@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 16:01:50 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/29 12:10:33 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/29 16:40:58 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,9 @@ void debug_pointer(void *p)
 void debug_var(const char *s)
 {
 	ft_printf_fd(STDIN_FILENO, "[%s]\n", s);
+}
+
+void debug_var_i(int i)
+{
+	ft_printf_fd(STDIN_FILENO, "[%d]\n", i);
 }

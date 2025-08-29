@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 19:27:46 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/29 14:37:23 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/29 19:43:13 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	is_builin(char *s)
 int	exec_builtin(t_minishell *m, char *cmd)
 {
 	if (ft_strcmp(cmd, "cd") == 0)
-		 ft_cd(m->cmds->args, m->env_list);
+		 ft_cd(m, m->cmds->args, m->env_list);
 	if (ft_strcmp(cmd, "echo") == 0)
 		 ft_echo(m, m->cmds->args);
 	if (ft_strcmp(cmd, "env") == 0)

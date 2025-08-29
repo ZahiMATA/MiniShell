@@ -64,10 +64,11 @@ void	test1(char **env)
 		{
 			m->last_status = last_status;
 			exec_feed_minishell(&m, env);
-			debug_show_args(m);
 			dispatch(m);
 			got_signal = sig_kill_children(m);
 			//ft_printf_fd(1,"[%c]", got_signal + '0');
+			set_last_status(m);
+			debug_show_args(m);
 		}
 		last_status = m->last_status;
 		mem_reset_m(m);

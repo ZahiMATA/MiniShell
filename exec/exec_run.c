@@ -72,6 +72,7 @@ static void	launch_process(t_minishell *m, t_cmd *cmd, int n, int pipes[][2])
 {
 	char	**env_tab;
 	int		i;
+	int		status;
 
 	//debug_show_cmd(cmd, n);
 	//printf("n=[%d],pipe.n-1.0=[%d] pipe.n.1=[%d]\n", n, pipes[n-1][0], pipes[n][1]);
@@ -98,11 +99,15 @@ static void	launch_process(t_minishell *m, t_cmd *cmd, int n, int pipes[][2])
 		ft_return_error(m, m->error, S_EMPTY, m->last_status);
 		mem_free_null(&m->error);
 	}
+	// debug_var(cmd->args[0]);
+	// debug_var(cmd->args[1]);
+	// debug_var_i(n);
 	if (/*cmd->args && */is_builin(cmd->args[0]))
 	{
 		exec_builtin(m, cmd->args[0]);
+		status = m->last_status;
 		mem_free_all(m);
-		exit(0);
+		exit(status);
 	}
 	if (cmd->cmd_abs)
 	{
@@ -154,26 +159,38 @@ void	exec_execve(t_minishell *m)
 	l = m->cmds;
 	while (l)
 	{
-		waitpid(l->pid, &l->status, 0);
+		waitpid(l->pid, &l->status_c, 0);
 		l = l->next;
 		i++;
 	}
 	//debug_show_processes(m, "PARENT");
 }
 
-int	exec_get_last_status(t_minishell *m)
+int	decompress_status(int status)
 {
-	int		status;
-	t_cmd	*tail;
-	tail = m->cmds;
-	if (tail == NULL)
-		return (1);
-	while (tail->next)
-		tail = tail ->next;
-	status = tail->status;
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	else if (WIFSIGNALED(status))
 		return (128 + WTERMSIG(status));
 	return (1);
 }
+
+int	set_last_status(t_minishell *m)
+{
+	t_cmd	*tail;
+	tail = m->cmds;
+	if (tail == NULL)
+	{
+		//printf("tail=0\n");
+		return (1);
+	}
+	while (tail)
+	{
+		tail->status = decompress_status(tail->status_c);
+		m->last_status = tail->status;
+		tail = tail ->next;
+	}
+	return (0);
+	//printf("cs=[%d]\n", tail->status);
+}
+

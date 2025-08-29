@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 18:20:43 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/20 17:17:03 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/29 19:35:10 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct s_cmd
 	char			*cmd_abs;
 	int				n;
 	t_redir			*redirs;
+	int				status_c;
 	int				status;
 	int				pid;
 	struct s_cmd 	*next;

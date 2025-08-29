@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/29 15:20:29 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/29 20:17:06 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <limits.h>
 
 # ifndef DEBUG
 #  define DEBUG 0
@@ -119,7 +120,7 @@ void	debug_show_processes(t_minishell *m, char *message);
 void	debug_show_error(char *message);
 void	mem_free_null(char	**ptr);
 void	mem_close_fds(t_minishell *m);
-int		exec_get_last_status(t_minishell *m);
+int		set_last_status(t_minishell *m);
 void	ft_print_array(char **tab);
 int		ft_strncmp(const char *s1, const char *s2, int n);
 int		ft_gerer_zone(char **split, char *zone, int *n);
@@ -141,10 +142,11 @@ char	*read_input(t_minishell *m, int fd);
 char	**env_list_to_tab(t_minishell *m, t_env *env);
 void	 debug_pointer(void *p);
 void	debug_var(const char *s);
+void	debug_var_i(int i);
 void	dispatch(t_minishell *m);
 int		ft_history(t_minishell *m);
 void	ft_add_history(t_minishell *m, char *s);
-int		ft_cd(char **argv, t_env *env_list);
+int		ft_cd(t_minishell *m, char **argv, t_env *env_list);
 int		ft_echo(t_minishell *m, char **argv);
 int		ft_env(char **arg, t_env *env_list);
 int		ft_exit(t_minishell *m);

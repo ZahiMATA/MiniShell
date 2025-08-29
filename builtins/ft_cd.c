@@ -1,22 +1,23 @@
-#include <limits.h>
+#include "minishell.h"
+/*#include <limits.h>
 # include <stdio.h>
 # include <stdlib.h>
 #include <unistd.h>
 #include <errno.h>
-#include <string.h>
-
+#include <string.h>*/
+/*
 typedef struct s_env { //TODO supp
     char *key;
     char *value;
     struct s_env *next;
-} t_env;
+} t_env;*/
 
 char *get_env_value(char *key, t_env *env_list)
 {
     while (env_list)
     {
         if (strcmp(env_list->key, key) == 0)
-            return env_list->value;
+            return env_list->val;
         env_list = env_list->next;
     }
     return NULL;
@@ -33,14 +34,14 @@ void update_pwd_and_oldpwd(char *old_pwd, char *new_pwd, t_env *env_list)
     {
         if (strcmp(tmp->key, "OLDPWD") == 0)
         {
-            free(tmp->value);
-            tmp->value = strdup(old_pwd);
+            free(tmp->val);
+            tmp->val = strdup(old_pwd);
             found_oldpwd = 1;
         }
         else if (strcmp(tmp->key, "PWD") == 0)
         {
-            free(tmp->value);
-            tmp->value = strdup(new_pwd);
+            free(tmp->val);
+            tmp->val = strdup(new_pwd);
             found_pwd = 1;
         }
         last = tmp;
@@ -51,7 +52,7 @@ void update_pwd_and_oldpwd(char *old_pwd, char *new_pwd, t_env *env_list)
     {
         t_env *new_oldpwd = malloc(sizeof(t_env));
         new_oldpwd->key = strdup("OLDPWD");
-        new_oldpwd->value = strdup(old_pwd);
+        new_oldpwd->val = strdup(old_pwd);
         new_oldpwd->next = NULL;
         if (last)
             last->next = new_oldpwd;
@@ -64,7 +65,7 @@ void update_pwd_and_oldpwd(char *old_pwd, char *new_pwd, t_env *env_list)
     {
         t_env *new_pwd_env = malloc(sizeof(t_env)); //TODO protec
         new_pwd_env->key = strdup("PWD");
-        new_pwd_env->value = strdup(new_pwd);
+        new_pwd_env->val = strdup(new_pwd);
         new_pwd_env->next = NULL;
         if (last)
             last->next = new_pwd_env;
@@ -73,45 +74,48 @@ void update_pwd_and_oldpwd(char *old_pwd, char *new_pwd, t_env *env_list)
     }
 }
 
-int ft_cd(char **argv, t_env *env_list)
+int ft_cd(t_minishell *m, char **argv, t_env *env_list)
 {
-    char old_pwd[PATH_MAX];
-    char *new_pwd;
-    char    *road;
+	char old_pwd[PATH_MAX];
+	char *new_pwd;
+	char    *road;
+	//debug_var(argv[1]);
+	road = NULL;
+	getcwd(old_pwd, PATH_MAX); //save old pwd
 
-    road = NULL;
-    getcwd(old_pwd, PATH_MAX); //save old pwd
-
-    if(!argv[1])
-        road = get_env_value("HOME", env_list);
-    else if(argv[1][0] == '-' && argv[1][1] == '\0')
-    {
-        road = get_env_value("OLDPWD", env_list);
-         if (!road)
-        {
-            write(2, "cd: OLDPWD not set\n", 20); //TODO changer les write
-            return (1);
-        }
-        printf("%s\n", road); //TODO changer les write
-    }
-    else
-        road = (argv[1]);
-    if (!road)
-    {
-        write(2, "cd: target path not set\n", 25);
-        return (1);
-    }
-    if(chdir(road) == -1) //se deplace et verifie si le cd reussi
-    {
-        perror("cd");
-        return(1);
-    }
-    new_pwd = getcwd(NULL, 0); // danger
-    if (!new_pwd)
-        return (1);
-    update_pwd_and_oldpwd(old_pwd, new_pwd, env_list);
-    free(new_pwd);
-    return(0);
+	if(!argv[1])
+		road = get_env_value("HOME", env_list);
+	else if(argv[1][0] == '-' && argv[1][1] == '\0')
+	{
+		road = get_env_value("OLDPWD", env_list);
+			if (!road)
+		{
+			write(2, "cd: OLDPWD not set\n", 20); //TODO changer les write
+			return (1);
+		}
+		printf("%s\n", road); //TODO changer les write
+	}
+	else
+		road = (argv[1]);
+	if (!road)
+	{
+		write(2, "cd: target path not set\n", 25);
+		return (1);
+	}
+	if(chdir(road) == -1) //se deplace et verifie si le cd reussi
+	{
+		//perror("cd");
+		ft_printf_fd(STDERR_FILENO, "%s: %s: %s: %s\n", \
+			MINISHELL, argv[0], argv[1], ERROR_NOSUCH);
+		m->last_status = EXIT_FAILURE;
+		return(1);
+	}
+	new_pwd = getcwd(NULL, 0); // danger
+	if (!new_pwd)
+		return (1);
+	update_pwd_and_oldpwd(old_pwd, new_pwd, env_list);
+	free(new_pwd);
+	return(0);
 }
 /*
 int main()

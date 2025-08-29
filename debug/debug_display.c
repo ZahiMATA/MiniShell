@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 17:16:20 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/21 10:43:54 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/29 20:09:42 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,18 @@ void	debug_show_args(t_minishell *m)
 		ft_putstr_nl("DEBUG:");
 		ft_putstr_nl("CMDS:");
 		i = 0;
-		while (m->cmds && m->cmds[i].args)
+		t_cmd *cmd = m->cmds;
+		while (cmd /*&& m->cmds->args[i]*/)
 		{
-			args = debug_get_args(m->cmds[i].args);
+			args = debug_get_args(cmd->args);
 			if (args == NULL)
 				ft_exit_fail_status(m, NULL, EXIT_ALLOC_ERROR);
-			printf("cmd%d=%s\n", i, args);
+			printf("[cmd%d=%s][s_c=%d][s=%d]\n", i, args, m->cmds->status_c, m->cmds->status);
+			//printf("cmd%d=%s\n", i, args);
 			//ft_print_array(m->cmds[i].args);
 			free(args);
 			i++;
+			cmd= cmd->next;
 		}
 	}
 	if (DEBUG_ENV)
