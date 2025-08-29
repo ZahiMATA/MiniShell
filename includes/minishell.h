@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/29 10:57:53 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/29 12:10:46 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ char 	*ft_substring(const char *s, int start, int len);
 char	*read_input(t_minishell *m, int fd);
 char	**env_list_to_tab(t_minishell *m, t_env *env);
 void	 debug_pointer(void *p);
-void	debug_var(char *s);
+void	debug_var(const char *s);
 void	dispatch(t_minishell *m);
 int		ft_history(char **argv);
 int		ft_cd(char **argv, t_env *env_list);
