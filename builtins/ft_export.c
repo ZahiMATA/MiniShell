@@ -53,6 +53,8 @@ void add_or_update_env_var(t_env **env_list, const char *key, const char *value)
 		else
 			new_node->val = NULL;
 		new_node->next = *env_list;
+		debug_var(key);
+		debug_var(value);
 		*env_list = new_node;
 	}
 }
