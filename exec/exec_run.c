@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-/*static*/ void	redir_in(t_minishell *m, t_cmd *cmd)
+static void	redir_in(t_minishell *m, t_cmd *cmd)
 {
 	t_redir	*redir;
 
@@ -24,7 +24,6 @@
 			m->fd_in = open(redir->file, O_RDONLY);
 			if (m->fd_in == -1)
 			{
-				//ft_return_error(m, redir->file, S_EMPTY, EXIT_FAILURE);
 				m->status = EXIT_FAILURE;
 				m->error = ft_strdup(redir->file);
 			}
@@ -36,7 +35,7 @@
 		{
 			m->fd_in = ms_heredoc(m, redir->file, 0);
 			if (m->fd_in == -1)
-				return;
+				return ;
 			dup2(m->fd_in, STDIN_FILENO);
 			close(m->fd_in);
 		}
@@ -44,10 +43,10 @@
 	}
 }
 
-
-/*static*/ void	redir_out(t_minishell *m, t_cmd *cmd)
+static void	redir_out(t_minishell *m, t_cmd *cmd)
 {
 	t_redir	*redir;
+
 	redir = cmd->redirs;
 	while (redir)
 	{
@@ -56,7 +55,6 @@
 			m->fd_out = open(redir->file, OW | OC | OT, FLAG_FIC);
 			if (m->fd_out == -1)
 			{
-				//ft_return_error(m, redir->file, S_EMPTY, EXIT_FAILURE);
 				m->status = EXIT_FAILURE;
 				m->error = ft_strdup(redir->file);
 			}
@@ -70,9 +68,11 @@
 
 static void	launch_process(t_minishell *m, t_cmd *cmd, int n, int pipes[][2])
 {
-	char	**env_tab;
-	int		i;
-	int		status;
+	char		**env_tab;
+	int			i;
+	int			status;
+	struct stat	st;
+	t_err		err;
 
 	//debug_show_cmd(cmd, n);
 	//printf("n=[%d],pipe.n-1.0=[%d] pipe.n.1=[%d]\n", n, pipes[n-1][0], pipes[n][1]);
@@ -109,17 +109,26 @@ static void	launch_process(t_minishell *m, t_cmd *cmd, int n, int pipes[][2])
 		mem_free_all(m);
 		exit(status);
 	}
+	if (stat(cmd->cmd_abs, &st) == -1)
+		ft_exit_error(m, cmd->args[0], ERROR_COM, EXIT_COMMAND_NOT_FOUND);
+	else if ((st.st_mode &  __S_IFMT) == __S_IFDIR )
+	{
+		err.mes1 = MINISHELL;
+		err.mes2 = cmd->cmd_abs;
+		err.mes3 = ERROR_DIR;
+		ft_exit_err(m, err, EXIT_IS_A_DIRECTORY);
+	}
 	if (cmd->cmd_abs)
 	{
 		env_tab = env_list_to_tab(m, m->env_list);
 		execve(cmd->cmd_abs, cmd->args, env_tab);
 		mem_free_array(&env_tab);
-		ft_exit_perror(m, "cmd->cmd_abs");
+		ft_exit_perror(m, cmd->cmd_abs);
 	}
-	else
+	/*else
 	{
 		ft_exit_error(m, cmd->args[0], ERROR_COM, EXIT_COMMAND_NOT_FOUND);
-	}
+	}*/
 }
 
 void	exec_execve(t_minishell *m)

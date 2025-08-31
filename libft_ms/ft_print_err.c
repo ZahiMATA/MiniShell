@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 11:33:16 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/25 18:07:07 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/31 15:10:05 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,12 @@ void	ft_print_perror(char *message, char *pmessage)
 		ft_printf_fd(STDERR_FILENO, "\n");
 }
 
-void	ft_print_error(char *mes1, char *mes2)
+void	ft_print_error(char *mes1, char *mes2, char * mes3)
 {
-	ft_printf_fd(STDERR_FILENO, "%s: %s\n", mes1, mes2);
+	if (mes3 == NULL)
+		ft_printf_fd(STDERR_FILENO, "%s: %s\n", mes1, mes2);
+	else
+		ft_printf_fd(STDERR_FILENO, "%s: %s: %s\n", mes1, mes2, mes3);
 
 	/*write(STDERR_FILENO, mes1, ft_strlen(mes1));
 	write(STDERR_FILENO, DOT2_SPACE, ft_strlen(DOT2_SPACE));

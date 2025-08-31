@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/31 11:19:11 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/31 15:22:59 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <limits.h>
+# include <sys/stat.h>
 
 # ifndef DEBUG
 #  define DEBUG 0
@@ -47,6 +48,7 @@
 // # define EXIT_FAILURE 1
 # define EXIT_ALLOC_ERROR 2
 # define EXIT_PERMISSION_DENIED 126
+# define EXIT_IS_A_DIRECTORY 126
 # define EXIT_COMMAND_NOT_FOUND 127
 # define EXIT_SYNTAX_ERROR 258
 # define EXIT "exit"
@@ -63,6 +65,7 @@
 # define ERROR_DUP2 "Error: Dup2"
 # define ERROR_PIPE "Error: Pipe"
 # define ERROR_COM "Command not found"
+# define ERROR_DIR "Is a directory"
 # define ERROR_NOSUCH "No such file or directory"
 # define PATH "PATH="
 # define S_EMPTY ""
@@ -79,6 +82,16 @@
 extern volatile sig_atomic_t g_signal;
 
 // TODO implementer init et l access et le free et le update data
+
+typedef struct s_err
+{
+	char	*mes1;
+	char	*mes2;
+	char	*mes3;
+	//int		status;
+
+} t_err;
+
 typedef struct s_env
 {
 	char			*key;
@@ -137,6 +150,7 @@ void	ft_exit_fail(t_minishell *m, char *message);
 void	ft_exit_fail_status(t_minishell *m, char *message, int status);
 void	ft_exit_perror(t_minishell *m, char *message);
 void	ft_exit_error(t_minishell *m, char *mes1, char *mes2, int status);
+void	ft_exit_err(t_minishell *m, t_err err, int status);
 void	ft_exit_with_status(t_minishell *m, char *message, int status);
 char 	*ft_substring(const char *s, int start, int len);
 char	*read_input(t_minishell *m, int fd);
@@ -155,7 +169,7 @@ int		ft_export(char **args, t_env **env_list);
 int		ft_pwd(void);
 int		ft_unset(char **arg, t_env **env_list);
 void	ft_print_perror(char *message, char *pmessage);
-void	ft_print_error(char *mes1, char *mes2);
+void	ft_print_error(char *mes1, char *mes2, char * mes3);
 int		ms_heredoc(t_minishell *m, char *limiter, int expand);
 int		sig_kill_children(t_minishell *m);
 void	setup_signals(void);
