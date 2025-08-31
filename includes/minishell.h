@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/31 15:22:59 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/31 18:49:04 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,10 @@
 # define EXIT_ALLOC_ERROR 2
 # define EXIT_PERMISSION_DENIED 126
 # define EXIT_IS_A_DIRECTORY 126
+# define EXIT_IS_NOT_A_DIRECTORY 126
+# define EXIT_PERMISSION 126
 # define EXIT_COMMAND_NOT_FOUND 127
+# define EXIT_NO_SUCH_FILE 127
 # define EXIT_SYNTAX_ERROR 258
 # define EXIT "exit"
 # define ERROR "Error"
@@ -64,8 +67,10 @@
 # define ERROR_FORK "Error: Fork"
 # define ERROR_DUP2 "Error: Dup2"
 # define ERROR_PIPE "Error: Pipe"
+# define ERROR_PERMISSION "Permission denied"
 # define ERROR_COM "Command not found"
 # define ERROR_DIR "Is a directory"
+# define ERROR_NOT_DIR "Not a directory"
 # define ERROR_NOSUCH "No such file or directory"
 # define PATH "PATH="
 # define S_EMPTY ""

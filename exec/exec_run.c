@@ -102,23 +102,40 @@ static void	launch_process(t_minishell *m, t_cmd *cmd, int n, int pipes[][2])
 	// debug_var(cmd->args[0]);
 	// debug_var(cmd->args[1]);
 	// debug_var_i(n);
-	if (/*cmd->args && */is_builin(cmd->args[0]))
+	if (cmd->args && is_builin(cmd->args[0]))
 	{
 		exec_builtin(m, cmd->args[0]);
 		status = m->status;
 		mem_free_all(m);
 		exit(status);
 	}
-	if (stat(cmd->cmd_abs, &st) == -1)
+	else if (ft_strchr(cmd->args[0], '/') == 0 && cmd->cmd_abs == NULL)
 		ft_exit_error(m, cmd->args[0], ERROR_COM, EXIT_COMMAND_NOT_FOUND);
-	else if ((st.st_mode &  __S_IFMT) == __S_IFDIR )
+	else if ((ft_strchr(cmd->args[0], '/') && cmd->cmd_abs == NULL) ||
+		(stat(cmd->cmd_abs, &st) == -1)
+	)
+	{
+		err.mes1 = MINISHELL;
+		err.mes2 = cmd->args[0];
+		err.mes3 = ERROR_NOSUCH;
+		ft_exit_err(m, err, EXIT_NO_SUCH_FILE);
+	}
+	else if ((st.st_mode & __S_IFMT) == __S_IFDIR )
 	{
 		err.mes1 = MINISHELL;
 		err.mes2 = cmd->cmd_abs;
 		err.mes3 = ERROR_DIR;
 		ft_exit_err(m, err, EXIT_IS_A_DIRECTORY);
 	}
-	if (cmd->cmd_abs)
+	if (access(cmd->cmd_abs, X_OK) == -1)
+	{
+		err.mes1 = MINISHELL;
+		//err.mes2 = cmd->args[0];
+		err.mes2 = cmd->cmd_abs;
+		err.mes3 = ERROR_PERMISSION;
+		ft_exit_err(m, err, EXIT_PERMISSION);
+	}
+	else
 	{
 		env_tab = env_list_to_tab(m, m->env_list);
 		execve(cmd->cmd_abs, cmd->args, env_tab);
