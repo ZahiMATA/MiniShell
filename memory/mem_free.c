@@ -81,4 +81,6 @@ void	mem_reset_m(t_minishell *m)
 	mem_free_null(&m->line);
 	mem_free_null(&m->error);
 	//free(m);
+	m->status_echo = m->status;
+	m->status = 0;
 }

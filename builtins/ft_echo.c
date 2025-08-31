@@ -58,7 +58,7 @@ int ft_echo(t_minishell *m, char **argv)
 	{
 		if (ft_strcmp(argv[i], "$?") == 0)
 		{
-			ft_printf_fd(1, "%d", m->last_status);
+			ft_printf_fd(1, "%d", m->status);
 		}
 		else
 			ft_putstr_fd(argv[i], 1);
@@ -69,7 +69,7 @@ int ft_echo(t_minishell *m, char **argv)
 	if (yes_backslash_n == 1)
 		return(0);
 	write(1, "\n", 1);
-	m->last_status = 0; // TODO a vour ou le placer de facon generale
+	m->status = 0; // TODO a vour ou le placer de facon generale
 	return(0);
 }
 /*

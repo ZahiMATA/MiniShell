@@ -25,7 +25,7 @@
 			if (m->fd_in == -1)
 			{
 				//ft_return_error(m, redir->file, S_EMPTY, EXIT_FAILURE);
-				m->last_status = EXIT_FAILURE;
+				m->status = EXIT_FAILURE;
 				m->error = ft_strdup(redir->file);
 			}
 			else if (dup2(m->fd_in, STDIN_FILENO) == -1)
@@ -57,7 +57,7 @@
 			if (m->fd_out == -1)
 			{
 				//ft_return_error(m, redir->file, S_EMPTY, EXIT_FAILURE);
-				m->last_status = EXIT_FAILURE;
+				m->status = EXIT_FAILURE;
 				m->error = ft_strdup(redir->file);
 			}
 			else if (dup2(m->fd_out, STDOUT_FILENO) == -1)
@@ -94,9 +94,9 @@ static void	launch_process(t_minishell *m, t_cmd *cmd, int n, int pipes[][2])
 		close(pipes[i][1]);
 		i++;
 	}
-	if (m->last_status != 0)
+	if (m->status != 0)
 	{
-		ft_return_error(m, m->error, S_EMPTY, m->last_status);
+		ft_return_error(m, m->error, S_EMPTY, m->status);
 		mem_free_null(&m->error);
 	}
 	// debug_var(cmd->args[0]);
@@ -105,7 +105,7 @@ static void	launch_process(t_minishell *m, t_cmd *cmd, int n, int pipes[][2])
 	if (/*cmd->args && */is_builin(cmd->args[0]))
 	{
 		exec_builtin(m, cmd->args[0]);
-		status = m->last_status;
+		status = m->status;
 		mem_free_all(m);
 		exit(status);
 	}
@@ -187,7 +187,7 @@ int	set_last_status(t_minishell *m)
 	while (tail)
 	{
 		tail->status = decompress_status(tail->status_c);
-		m->last_status = tail->status;
+		m->status = tail->status;
 		tail = tail ->next;
 	}
 	return (0);

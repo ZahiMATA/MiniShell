@@ -40,13 +40,13 @@ void	test1(char **env)
 {
 	t_minishell *m;
 	//char 		*line;
-	int			last_status;
+	//int			last_status;
 	//t_env		*last_env_list;
 	int			got_signal;
 
 	m = NULL;
 	setup_signals();
-	last_status = 0;
+	//last_status = 0;
 	//last_env_list = NULL;
 	got_signal = 0;
 	exec_init_minishell(&m/*, last_env_list*/);
@@ -60,9 +60,9 @@ void	test1(char **env)
 		parser(m);
 		if (m->line == NULL)
 			ft_exit(m);
-		if (m->last_status == 0)
+		if (m->status == 0)
 		{
-			m->last_status = last_status;
+			m->status = m->status_echo;
 			exec_feed_minishell(&m, env);
 			dispatch(m);
 			got_signal = sig_kill_children(m);
@@ -70,9 +70,7 @@ void	test1(char **env)
 			set_last_status(m);
 			debug_show_args(m);
 		}
-		last_status = m->last_status;
 		mem_reset_m(m);
-		m->last_status = 0;
 	}
 }
 

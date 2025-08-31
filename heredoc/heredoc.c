@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 10:50:18 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/28 13:25:17 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/31 11:27:32 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	ms_heredoc(t_minishell *m, char *limiter, int expand)
 	waitpid(pid, &status, 0);
 	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
 	{
-		m->last_status = 130;
+		m->status = 130;
 		close(fd[0]);
 		return -1;
 	}

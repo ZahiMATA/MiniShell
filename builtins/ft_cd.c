@@ -107,7 +107,7 @@ int ft_cd(t_minishell *m, char **argv, t_env *env_list)
 		//perror("cd");
 		ft_printf_fd(STDERR_FILENO, "%s: %s: %s: %s\n", \
 			MINISHELL, argv[0], argv[1], ERROR_NOSUCH);
-		m->last_status = EXIT_FAILURE;
+		m->status = EXIT_FAILURE;
 		return(1);
 	}
 	new_pwd = getcwd(NULL, 0); // danger

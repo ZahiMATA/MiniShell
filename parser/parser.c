@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 13:26:51 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/27 11:10:39 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/08/31 11:26:18 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ void	parser(t_minishell *m)
 	{
 		check_token(m);
 		if (m->cmds && m->cmds->args && m->cmds->args[0])
-		if (m->last_status)
-			return ;
+			if (m->status)
+				return ;
 		if (m->token_list && m->token_list->token == T_PIPE)
 			m->token_list = m->token_list->next;
 	}
