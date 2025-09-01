@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 19:27:46 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/29 19:43:13 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/01 14:34:28 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,23 +26,23 @@ int	is_builin(char *s)
 	);
 }
 
-int	exec_builtin(t_minishell *m, char *cmd)
+int	exec_builtin(t_minishell *m, t_cmd *cmd)
 {
-	if (ft_strcmp(cmd, "cd") == 0)
-		 ft_cd(m, m->cmds->args, m->env_list);
-	if (ft_strcmp(cmd, "echo") == 0)
-		 ft_echo(m, m->cmds->args);
-	if (ft_strcmp(cmd, "env") == 0)
-		ft_env(m->cmds->args, m->env_list);
-	if (ft_strcmp(cmd, "exit") == 0)
-		 ft_exit(m);
-	if (ft_strcmp(cmd, "export") == 0)
+	if (ft_strcmp(cmd->args[0], "cd") == 0)
+		 ft_cd(m, cmd);
+	if (ft_strcmp(cmd->args[0], "echo") == 0)
+		 ft_echo(m, cmd);
+	if (ft_strcmp(cmd->args[0], "env") == 0)
+		ft_env(m, cmd);
+	if (ft_strcmp(cmd->args[0], "exit") == 0)
+		 ft_exit(m, cmd);
+	if (ft_strcmp(cmd->args[0], "export") == 0)
 		 ft_export(m->cmds->args, &m->env_list);
-	if (ft_strcmp(cmd, "pwd") == 0)
+	if (ft_strcmp(cmd->args[0], "pwd") == 0)
 		 ft_pwd();
-	if (ft_strcmp(cmd, "unset") == 0)
+	if (ft_strcmp(cmd->args[0], "unset") == 0)
 		 ft_unset(m->cmds->args, &m->env_list);
-	if (ft_strcmp(cmd, "history") == 0)
+	if (ft_strcmp(cmd->args[0], "history") == 0)
 		ft_history(m);
 	return (0);
 }
@@ -51,7 +51,7 @@ void	dispatch(t_minishell *m)
 {
 	if (m->cmds && m->cmds->args && m->nb_cmd == 1 && is_builin(m->cmds->args[0]))
 	{
-		exec_builtin(m, m->cmds->args[0]);
+		exec_builtin(m, m->cmds);
 	}
 	else
 	{

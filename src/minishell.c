@@ -59,7 +59,7 @@ void	test1(char **env)
 		debug_show_tokens(m);
 		parser(m);
 		if (m->line == NULL)
-			ft_exit(m);
+			ft_exit(m, NULL);
 		if (m->status == 0)
 		{
 			m->status = m->status_echo;
@@ -67,9 +67,11 @@ void	test1(char **env)
 			dispatch(m);
 			got_signal = sig_kill_children(m);
 			//ft_printf_fd(1,"[%c]", got_signal + '0');
-			set_last_status(m);
+			// set_last_status(m);
 			debug_show_args(m);
 		}
+		// set_last_status(m);
+		// debug_show_args(m);
 		mem_reset_m(m);
 	}
 }

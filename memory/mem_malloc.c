@@ -1,30 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prs_lstclear.c                                     :+:      :+:    :+:   */
+/*   mem_malloc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/06 16:53:46 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/01 18:18:25 by ybouroga         ###   ########.fr       */
+/*   Created: 2025/09/01 17:13:22 by ybouroga          #+#    #+#             */
+/*   Updated: 2025/09/01 17:55:54 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	prs_lstclear(t_cmd **lst)
+void *mem_malloc(size_t size, const char *mes)
 {
-	t_cmd	*p;
+	void *p;
 
-	if (lst == NULL)
-		return ;
-	while (*lst)
-	{
-		p = (*lst)->next;
-		mem_free_array(&(*lst)->args, "prs_lstclear.args");
-		free((*lst)->cmd_abs);
-		prs_lstclear_redir(&(*lst)->redirs);
-		mem_free(*lst, "prs_lstclear");
-		*lst = p;
-	}
+	p = malloc(size);
+	if (p == NULL)
+		return (NULL);
+	if (DEBUG_MALLOC)
+		ft_printf_fd(STDERR_FILENO, "MALLOC[%d][%s]\n", p, mes);
+	return (p);
 }

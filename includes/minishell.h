@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/31 18:49:04 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/01 18:12:19 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,13 @@
 # include <sys/stat.h>
 
 # ifndef DEBUG
-#  define DEBUG 0
+#  define DEBUG 1
 # endif
 # ifndef DEBUG_ENV
 #  define DEBUG_ENV 0
+# endif
+# ifndef DEBUG_MALLOC
+#  define DEBUG_MALLOC 1
 # endif
 # define BUFFER_SIZE 1024
 # define BUFFER_LOG 1024
@@ -126,7 +129,11 @@ typedef struct s_minishell
 
 void	mem_free_all(t_minishell *m);
 void	mem_reset_m(t_minishell *m);
-void	mem_free_array(char	***tab);
+void	mem_free_array(char	***tab, char *mes);
+void	mem_free_null(char	**p, char *mes);
+void	mem_free(void *p, char *mes);
+void	mem_close_fds(t_minishell *m);
+void	*mem_malloc(size_t size, const char *mes);
 void 	exec_init_minishell(t_minishell **m/*, t_env *last_env_list*/);
 void	exec_feed_minishell(t_minishell **m, char **env);
 void	exec_init_path(t_minishell **p, char **env);
@@ -137,8 +144,6 @@ void	exec_execve(t_minishell *m);
 void	debug_show_args(t_minishell *m);
 void	debug_show_processes(t_minishell *m, char *message);
 void	debug_show_error(char *message);
-void	mem_free_null(char	**ptr);
-void	mem_close_fds(t_minishell *m);
 int		set_last_status(t_minishell *m);
 void	ft_print_array(char **tab);
 int		ft_strncmp(const char *s1, const char *s2, int n);
@@ -166,10 +171,10 @@ void	debug_var_i(int i);
 void	dispatch(t_minishell *m);
 int		ft_history(t_minishell *m);
 void	ft_add_history(t_minishell *m, char *s);
-int		ft_cd(t_minishell *m, char **argv, t_env *env_list);
-int		ft_echo(t_minishell *m, char **argv);
-int		ft_env(char **arg, t_env *env_list);
-int		ft_exit(t_minishell *m);
+int		ft_cd(t_minishell *m, t_cmd *cmd);
+int		ft_echo(t_minishell *m, t_cmd *cmd);
+int		ft_env(t_minishell *m, t_cmd *cmd);
+int		ft_exit(t_minishell *m, t_cmd *cmd);
 int		ft_export(char **args, t_env **env_list);
 int		ft_pwd(void);
 int		ft_unset(char **arg, t_env **env_list);
@@ -179,7 +184,7 @@ int		ms_heredoc(t_minishell *m, char *limiter, int expand);
 int		sig_kill_children(t_minishell *m);
 void	setup_signals(void);
 void	setup_signals_for_children(void);
-int		exec_builtin(t_minishell *m, char *cmd);
+int		exec_builtin(t_minishell *m, t_cmd *cmd);
 int		is_builin(char *s);
 
 #endif

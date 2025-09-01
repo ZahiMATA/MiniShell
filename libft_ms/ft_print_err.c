@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 11:33:16 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/01 11:20:56 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/01 14:48:42 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@ void	ft_print_perror(char *message, char *pmessage)
 
 void	ft_print_error(char *mes1, char *mes2, char * mes3)
 {
-	if (mes3 == NULL)
+	if (mes2 == NULL)
+		ft_printf_fd(STDERR_FILENO, "%s\n", mes1);
+	else if (mes3 == NULL)
 		ft_printf_fd(STDERR_FILENO, "%s: %s\n", mes1, mes2);
 	else
 		ft_printf_fd(STDERR_FILENO, "%s: %s: %s\n", mes1, mes2, mes3);

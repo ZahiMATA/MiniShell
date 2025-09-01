@@ -36,7 +36,7 @@ int verif_arg(char *argv)
 	else
 		return(1); // pas de -n
 }
-int ft_echo(t_minishell *m, char **argv)
+int ft_echo(t_minishell *m, t_cmd *cmd)
 {
 	int yes_backslash_n;
 	int i;
@@ -44,9 +44,9 @@ int ft_echo(t_minishell *m, char **argv)
 	i = 1;
 	yes_backslash_n = 0;
 
-	while(argv[i])
+	while(cmd->args[i])
 	{
-		if(verif_arg(argv[i]) == 0)
+		if(verif_arg(cmd->args[i]) == 0)
 		{
 			yes_backslash_n = 1;
 			i++;
@@ -54,15 +54,15 @@ int ft_echo(t_minishell *m, char **argv)
 		else
 			break;
 	}
-	while(argv[i])
+	while(cmd->args[i])
 	{
-		if (ft_strcmp(argv[i], "$?") == 0)
+		if (ft_strcmp(cmd->args[i], "$?") == 0)
 		{
 			ft_printf_fd(1, "%d", m->status);
 		}
 		else
-			ft_putstr_fd(argv[i], 1);
-		if (argv[i + 1])
+			ft_putstr_fd(cmd->args[i], 1);
+		if (cmd->args[i + 1])
 			write(1, " ", 1);
 		i++;
 	}

@@ -74,20 +74,20 @@ void update_pwd_and_oldpwd(char *old_pwd, char *new_pwd, t_env *env_list)
     }
 }
 
-int ft_cd(t_minishell *m, char **argv, t_env *env_list)
+int ft_cd(t_minishell *m, t_cmd *cmd)
 {
-	char old_pwd[PATH_MAX];
-	char *new_pwd;
-	char    *road;
+	char	old_pwd[PATH_MAX];
+	char	*new_pwd;
+	char	*road;
 	//debug_var(argv[1]);
 	road = NULL;
 	getcwd(old_pwd, PATH_MAX); //save old pwd
 
-	if(!argv[1])
-		road = get_env_value("HOME", env_list);
-	else if(argv[1][0] == '-' && argv[1][1] == '\0')
+	if(!cmd->args[1])
+		road = get_env_value("HOME", m->env_list);
+	else if(cmd->args[1][0] == '-' && cmd->args[1][1] == '\0')
 	{
-		road = get_env_value("OLDPWD", env_list);
+		road = get_env_value("OLDPWD", m->env_list);
 			if (!road)
 		{
 			write(2, "cd: OLDPWD not set\n", 20); //TODO changer les write
@@ -96,7 +96,7 @@ int ft_cd(t_minishell *m, char **argv, t_env *env_list)
 		printf("%s\n", road); //TODO changer les write
 	}
 	else
-		road = (argv[1]);
+		road = (cmd->args[1]);
 	if (!road)
 	{
 		write(2, "cd: target path not set\n", 25);
@@ -106,14 +106,14 @@ int ft_cd(t_minishell *m, char **argv, t_env *env_list)
 	{
 		//perror("cd");
 		ft_printf_fd(STDERR_FILENO, "%s: %s: %s: %s\n", \
-			MINISHELL, argv[0], argv[1], ERROR_NOSUCH);
+			MINISHELL, cmd->args[0], cmd->args[1], ERROR_NOSUCH);
 		m->status = EXIT_FAILURE;
 		return(1);
 	}
 	new_pwd = getcwd(NULL, 0); // danger
 	if (!new_pwd)
 		return (1);
-	update_pwd_and_oldpwd(old_pwd, new_pwd, env_list);
+	update_pwd_and_oldpwd(old_pwd, new_pwd, m->env_list);
 	free(new_pwd);
 	return(0);
 }

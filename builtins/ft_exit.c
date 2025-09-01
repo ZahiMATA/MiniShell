@@ -23,24 +23,27 @@ int	ft_is_numeric(char *str) //TODO a mettre dans libft
 	return (1);
 }
 
-int	ft_exit(t_minishell *m)
+int	ft_exit(t_minishell *m, t_cmd *cmd)
 {
 	int status;
 
 	ft_printf_fd(STDOUT_FILENO, "exit\n");
-	if(m->cmds == NULL || m->cmds->args == NULL || m->cmds->args[1] == NULL)
+	if(cmd == NULL || cmd->args == NULL || cmd->args[1] == NULL)
+	{
+		mem_free_all(m);
 		exit(0);
-	if (!ft_is_numeric(m->cmds->args[1]))
+	}
+	if (!ft_is_numeric(cmd->args[1]))
 	{
 		ft_printf_fd(STDERR_FILENO, "exit: numeric argument required\n");
 		exit(255);
 	}
-	else if (m->cmds->args[2])
+	else if (cmd->args[2])
 	{
 		ft_printf_fd(STDERR_FILENO, "%s: exit: too many arguments\n", MINISHELL);
 		return(1);
 	}
-	status = ft_atoi(m->cmds->args[1]) % 256;
+	status = ft_atoi(cmd->args[1]) % 256;
 	mem_free_all(m);
 	exit(status);
 

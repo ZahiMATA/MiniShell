@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 10:50:18 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/31 11:27:32 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/01 18:21:36 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ static	void ms_launch_child(t_minishell *m, int fd[2], char *limiter, int expand
 			}
 			ft_putstr_fd(m->line, fd[1]);
 			ft_putchar_fd('\n', fd[1]);
-			mem_free_null(&m->line);
+			mem_free_null(&m->line, "ms_launch_child.line");
 		}
 	}
 	close(fd[1]);
-	mem_free_null(&m->line);
+	mem_free_null(&m->line, "ms_launch_child.line");
 	//mem_free_all(m);
 }
 

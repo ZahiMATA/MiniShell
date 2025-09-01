@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   px_run.c                                           :+:      :+:    :+:   */
+/*   exec_run.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/02 15:24:15 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/07/10 16:08:29 by ybouroga         ###   ########.fr       */
+/*   Created: 2025/09/01 11:40:57 by ybouroga          #+#    #+#             */
+/*   Updated: 2025/09/01 11:40:57 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,14 +97,14 @@ static void	launch_process(t_minishell *m, t_cmd *cmd, int n, int pipes[][2])
 	if (m->status != 0)
 	{
 		ft_return_error(m, m->error, S_EMPTY, m->status);
-		mem_free_null(&m->error);
+		mem_free_null(&m->error, "error");
 	}
 	// debug_var(cmd->args[0]);
 	// debug_var(cmd->args[1]);
 	// debug_var_i(n);
 	if (cmd->args && is_builin(cmd->args[0]))
 	{
-		exec_builtin(m, cmd->args[0]);
+		exec_builtin(m, cmd/*->args[0]*/);
 		status = m->status;
 		mem_free_all(m);
 		exit(status);
@@ -139,7 +139,7 @@ static void	launch_process(t_minishell *m, t_cmd *cmd, int n, int pipes[][2])
 	{
 		env_tab = env_list_to_tab(m, m->env_list);
 		execve(cmd->cmd_abs, cmd->args, env_tab);
-		mem_free_array(&env_tab);
+		mem_free_array(&env_tab, "env_tab");
 		ft_exit_perror(m, cmd->cmd_abs);
 	}
 	/*else
@@ -189,6 +189,7 @@ void	exec_execve(t_minishell *m)
 		l = l->next;
 		i++;
 	}
+	set_last_status(m);
 	//debug_show_processes(m, "PARENT");
 }
 

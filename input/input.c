@@ -20,10 +20,16 @@ char	*read_input(t_minishell *m, int got_signal)
 	// rl_redisplay();
 	//m->line = readline(PROMPT);
 	if (got_signal == GOT_NO_SIGNAL)
+	{
 		m->line = readline(PROMPT);
+		//  if (m->line == NULL && feof(stdin) == 0)
+		//  	return NULL;
+	}
 	else
 	{
 		 m->line = readline("");
+		// if (m->line == NULL && feof(stdin) == 0)
+		// 	return NULL;
 //	 	m->line = readline("\033[C\b");
 //	 	m->line = readline("\033[D\033[C");
 	}

@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 12:50:08 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/31 17:53:32 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/01 18:09:30 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ char	*exec_find_command(t_minishell *m, char *cmd)
 			ft_exit_fail_status(m, NULL, EXIT_ALLOC_ERROR);
 		if (access(cmd_abs, X_OK) == 0)
 			break ;
-		mem_free_null(&cmd_abs);
+		mem_free_null(&cmd_abs, "cmd_abs");
 		i++;
 	}
 	return (cmd_abs);

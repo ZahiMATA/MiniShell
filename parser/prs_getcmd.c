@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 14:44:16 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/10 19:51:49 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/01 18:20:37 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,13 @@ char	*prs_getcmd(t_minishell *m, char *s)
 		ret = ft_strdup(split[0]);
 		if (ret == NULL)
 		{
-			mem_free_array(&split);
+			mem_free_array(&split, "prs_getcmd.split");
 			ft_exit_fail_status(m, NULL, EXIT_ALLOC_ERROR);
 		}
 	}
 	else
 		ret = NULL;
-	mem_free_array(&split);
+	mem_free_array(&split, "prs_getcmd.split");
 	return ret;
 }
 
