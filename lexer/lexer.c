@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 11:23:17 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/31 11:24:56 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/01 11:31:30 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	lexer_string(t_param *_)
 	}
 	if (_->m->line[_->i] == '\0')
 	{
-		ft_return_error(_->m, ERROR_NOTCLOSEDSTRING, NULL, EXIT_FAILURE);
+		ft_return_error(_->m, ERROR_SYNTAX, ERROR_STRINGNOTCLOSED, EXIT_FAILURE);
 		lex_lstclear(&_->m->token_list);
 		return ;
 	}
@@ -69,8 +69,7 @@ static void	lexer_single_quote(t_param *_)
 	}
 	if (_->m->line[_->i] == '\0')
 	{
-		// ft_return_error(_->m, ERROR_NOTCLOSEDSTRING, EXIT_FAILURE);
-		ft_return_error(_->m, ERROR_NOTCLOSEDSTRING, NULL, EXIT_FAILURE);
+		ft_return_error(_->m, ERROR_SYNTAX, ERROR_STRINGNOTCLOSED, EXIT_FAILURE);
 		lex_lstclear(&_->m->token_list);
 		return ;
 	}
