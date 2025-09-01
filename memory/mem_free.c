@@ -18,13 +18,14 @@ void	mem_free(void *p, char *mes)
 	if (DEBUG_MALLOC)
 		if (p)
 		{
-			ft_printf_fd(STDERR_FILENO, "MALLOC[%d][%s]\n", p, mes);
+			ft_printf_fd(STDERR_FILENO, "FREE[%d][%s]\n", p, mes);
 			free(p);
 		}
 }
 
 void	mem_free_null(char	**p, char *mes)
 {
+	//ft_printf_fd(STDERR_FILENO, "SPECIAL[%d][%s]\n", p, mes);
 	if (p == NULL || *p == NULL)
 		return ;
 	mem_free(*p, mes);

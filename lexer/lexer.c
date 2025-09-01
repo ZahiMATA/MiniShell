@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 11:23:17 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/01 17:47:46 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/01 19:02:01 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	lexer_string(t_param *_)
 		ft_exit_fail_status(_->m, NULL, EXIT_ALLOC_ERROR);
 	add_token(_, T_STRING, s, 0);
 	_->i++;
-	free(s);
+	mem_free(s, "lexer_string.s");
 }
 
 static void	lexer_single_quote(t_param *_)
