@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 15:57:47 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/31 11:29:22 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/02 13:00:36 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	sig_kill_children(t_minishell *m)
 		if (m && m->cmds)
 		{
 			got_signal = GOT_SIGNAL; //TODO A REMOINTER ??
-			m->status = 128 + SIGINT; //TODO A REMOINTER ??
+			m->last_status = 128 + SIGINT; //TODO A REMOINTER ??
 			c = m->cmds;
 			while (c)
 			{

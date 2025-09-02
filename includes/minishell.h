@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/01 19:21:34 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/02 11:53:55 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ typedef struct s_minishell
 	char			*line;
 	char			*error;
 	int				status_echo;
-	int				status;
+	int				last_status;
 	t_list			*history;
 }	t_minishell;
 

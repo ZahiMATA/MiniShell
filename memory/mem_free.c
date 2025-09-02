@@ -93,6 +93,6 @@ void	mem_reset_m(t_minishell *m)
 	mem_free_null(&m->line, "line");
 	mem_free_null(&m->error, "error");
 	//free(m);
-	m->status_echo = m->status;
-	m->status = 0;
+	m->status_echo = m->last_status;
+	m->last_status = 0;
 }

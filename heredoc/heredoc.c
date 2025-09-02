@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 10:50:18 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/01 18:21:36 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/02 13:00:05 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,9 @@ int	ms_heredoc(t_minishell *m, char *limiter, int expand)
 		ms_launch_child(m, fd, limiter, expand);
 	close(fd[1]);
 	waitpid(pid, &status, 0);
-	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT) // A VOIR
 	{
-		m->status = 130;
+		m->last_status = 130;
 		close(fd[0]);
 		return -1;
 	}

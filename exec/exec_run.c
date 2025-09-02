@@ -24,7 +24,7 @@ static void	redir_in(t_minishell *m, t_cmd *cmd)
 			m->fd_in = open(redir->file, O_RDONLY);
 			if (m->fd_in == -1)
 			{
-				m->status = EXIT_FAILURE;
+				m->last_status = EXIT_FAILURE;
 				m->error = ft_strdup(redir->file);
 			}
 			else if (dup2(m->fd_in, STDIN_FILENO) == -1)
@@ -55,7 +55,8 @@ static void	redir_out(t_minishell *m, t_cmd *cmd)
 			m->fd_out = open(redir->file, OW | OC | OT, FLAG_FIC);
 			if (m->fd_out == -1)
 			{
-				m->status = EXIT_FAILURE;
+				m->last_status = EXIT_FAILURE; // TODO A voir si on quitte ici ou pas
+				mem_free_null(&m->error, "error");
 				m->error = ft_strdup(redir->file);
 			}
 			else if (dup2(m->fd_out, STDOUT_FILENO) == -1)
@@ -83,10 +84,10 @@ static void	launch_process(t_minishell *m, t_cmd *cmd, int n, int pipes[][2])
 	if (n < m->nb_cmd - 1)
 		if (dup2(pipes[n][1], STDOUT_FILENO) == -1)
 			ft_exit_fail(m, ERROR_DUP2);
-	 //if (n == 0)				// TODO a enlever ?
-	redir_in(m, cmd);
-	 //if (n == m->nb_cmd - 1)	// TODO a enlever ?
-	redir_out(m, cmd);
+	if (n == 0)				// TODO a enlever ?
+		redir_in(m, cmd);
+	if (n == m->nb_cmd - 1)	// TODO a enlever ?
+		redir_out(m, cmd);
 	i = 0;
 	while (i < m->nb_cmd - 1)
 	{
@@ -94,9 +95,9 @@ static void	launch_process(t_minishell *m, t_cmd *cmd, int n, int pipes[][2])
 		close(pipes[i][1]);
 		i++;
 	}
-	if (m->status != 0)
+	if (m->last_status != 0)
 	{
-		ft_return_error(m, m->error, S_EMPTY, m->status);
+		ft_return_error(m, m->error, S_EMPTY, m->last_status);
 		mem_free_null(&m->error, "error");
 	}
 	// debug_var(cmd->args[0]);
@@ -104,8 +105,8 @@ static void	launch_process(t_minishell *m, t_cmd *cmd, int n, int pipes[][2])
 	// debug_var_i(n);
 	if (cmd->args && is_builin(cmd->args[0]))
 	{
-		exec_builtin(m, cmd/*->args[0]*/);
-		status = m->status;
+		status = exec_builtin(m, cmd/*->args[0]*/);
+		//status = cmd->status;
 		mem_free_all(m);
 		exit(status);
 	}
@@ -214,7 +215,7 @@ int	set_last_status(t_minishell *m)
 	while (tail)
 	{
 		tail->status = decompress_status(tail->status_c);
-		m->status = tail->status;
+		m->last_status = tail->status;
 		tail = tail ->next;
 	}
 	return (0);

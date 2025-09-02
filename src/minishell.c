@@ -60,9 +60,9 @@ void	test1(char **env)
 		parser(m);
 		if (m->line == NULL)
 			ft_exit(m, NULL);
-		if (m->status == 0)
+		if (m->last_status == 0)
 		{
-			m->status = m->status_echo;
+			m->last_status = m->status_echo;
 			exec_feed_minishell(&m, env);
 			dispatch(m);
 			got_signal = sig_kill_children(m);

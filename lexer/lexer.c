@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 11:23:17 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/01 19:02:01 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/02 12:58:25 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ void	lexer(t_minishell *m/*, char *line*/)
 	_.m = m;
 	_.i = 0;
 	//_.line = line;
-	while (m->status == EXIT_SUCCESS && m->line && m->line[_.i])
+	while (m->last_status == EXIT_SUCCESS && m->line && m->line[_.i])
 	{
 		while (ft_isspace(m->line[_.i]))
 			_.i++;
