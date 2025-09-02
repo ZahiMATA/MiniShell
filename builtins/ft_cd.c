@@ -1,131 +1,138 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_cd.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/02 10:33:18 by ybouroga          #+#    #+#             */
+/*   Updated: 2025/09/02 10:42:17 by ybouroga         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
-/*#include <limits.h>
-# include <stdio.h>
-# include <stdlib.h>
-#include <unistd.h>
-#include <errno.h>
-#include <string.h>*/
-/*
-typedef struct s_env { //TODO supp
-    char *key;
-    char *value;
-    struct s_env *next;
-} t_env;*/
 
-char *get_env_value(char *key, t_env *env_list)
+static char	*get_env_value(char *key, t_env *env_list)
 {
-    while (env_list)
-    {
-        if (strcmp(env_list->key, key) == 0)
-            return env_list->val;
-        env_list = env_list->next;
-    }
-    return NULL;
+	while (env_list)
+	{
+		if (ft_strcmp(env_list->key, key) == 0)
+			return (env_list->val);
+		env_list = env_list->next;
+	}
+	return (NULL);
 }
 
-void update_pwd_and_oldpwd(char *old_pwd, char *new_pwd, t_env *env_list)
+static void	set_env_kv(t_env **lst, const char *key, const char *val)
 {
-    t_env *tmp = env_list;
-    t_env *last = NULL;
-    int found_pwd = 0;
-    int found_oldpwd = 0;
+	t_env	*tmp;
 
-    while (tmp)
-    {
-        if (strcmp(tmp->key, "OLDPWD") == 0)
-        {
-            free(tmp->val);
-            tmp->val = strdup(old_pwd);
-            found_oldpwd = 1;
-        }
-        else if (strcmp(tmp->key, "PWD") == 0)
-        {
-            free(tmp->val);
-            tmp->val = strdup(new_pwd);
-            found_pwd = 1;
-        }
-        last = tmp;
-        tmp = tmp->next;
-    }
-
-    if (!found_oldpwd)
-    {
-        t_env *new_oldpwd = malloc(sizeof(t_env));
-        new_oldpwd->key = strdup("OLDPWD");
-        new_oldpwd->val = strdup(old_pwd);
-        new_oldpwd->next = NULL;
-        if (last)
-            last->next = new_oldpwd;
-        else
-            env_list = new_oldpwd;
-        last = new_oldpwd;
-    }
-
-    if (!found_pwd)
-    {
-        t_env *new_pwd_env = malloc(sizeof(t_env)); //TODO protec
-        new_pwd_env->key = strdup("PWD");
-        new_pwd_env->val = strdup(new_pwd);
-        new_pwd_env->next = NULL;
-        if (last)
-            last->next = new_pwd_env;
-        else
-            env_list = new_pwd_env;
-    }
+	tmp = *lst;
+	while (tmp)
+	{
+		if (ft_strcmp(tmp->key, key) == 0)
+		{
+			free(tmp->val);
+			tmp->val = (val) ? ft_strdup(val) : NULL;
+			return ;
+		}
+		tmp = tmp->next;
+	}
+	tmp = (t_env *)malloc(sizeof(t_env));
+	if (!tmp)
+		return ;
+	tmp->key = ft_strdup(key);
+	tmp->val = (val) ? ft_strdup(val) : NULL;
+	if (!tmp->key || (val && !tmp->val))
+	{
+		free(tmp->key);
+		free(tmp->val);
+		free(tmp);
+		return ;
+	}
+	tmp->next = *lst;
+	*lst = tmp;
 }
 
-int ft_cd(t_minishell *m, t_cmd *cmd)
+static char	*expand_tilde(char *arg, t_env *env_list)
 {
-	char	old_pwd[PATH_MAX];
-	char	*new_pwd;
-	char	*road;
-	//debug_var(argv[1]);
+	char	*home;
+	char	*rest;
+	char	*joined;
+
+	if (!arg)
+		return (NULL);
+	if (arg[0] != '~')
+		return (ft_strdup(arg));
+	home = get_env_value("HOME", env_list);
+	if (!home)
+		return (NULL);
+	if (arg[1] == '\0')
+		return (ft_strdup(home));
+	rest = ft_strdup(arg + 1);
+	if (!rest)
+		return (NULL);
+	joined = ft_strjoin(home, rest);
+	free(rest);
+	return (joined);
+}
+
+static void	update_pwd_and_oldpwd(char *old_pwd, char *new_pwd, t_env **env_list)
+{
+	set_env_kv(env_list, "OLDPWD", old_pwd);
+	set_env_kv(env_list, "PWD", new_pwd);
+}
+
+
+int	ft_cd(t_minishell *m, t_cmd *cmd)
+{
+	char		old_pwd[PATH_MAX];
+	char		*new_pwd;
+	char		*road;
+	t_env		**penv;
+
+	(void)m;
+	penv =  &m->env_list;
+	if (!getcwd(old_pwd, PATH_MAX))
+		return (1);
 	road = NULL;
-	getcwd(old_pwd, PATH_MAX); //save old pwd
-
-	if(!cmd->args[1])
+	if (!cmd->args[1])
+	{
 		road = get_env_value("HOME", m->env_list);
-	else if(cmd->args[1][0] == '-' && cmd->args[1][1] == '\0')
+		if (!road)
+			return (ft_printf_fd(2, "cd: HOME not set\n"), 1);
+		road = ft_strdup(road);
+	}
+	else if (cmd->args[1][0] == '~')
+	{
+		road = expand_tilde(cmd->args[1], m->env_list);
+		if (!road)
+			return (ft_printf_fd(2, "cd: HOME not set\n"), 1);
+	}
+	else if (cmd->args[1][0] == '-' && cmd->args[1][1] == '\0')
 	{
 		road = get_env_value("OLDPWD", m->env_list);
-			if (!road)
-		{
-			write(2, "cd: OLDPWD not set\n", 20); //TODO changer les write
-			return (1);
-		}
-		printf("%s\n", road); //TODO changer les write
+		if (!road)
+			return (ft_printf_fd(2, "cd: OLDPWD not set\n"), 1);
+		ft_printf_fd(1, "%s\n", road);
+		road = ft_strdup(road);
 	}
 	else
-		road = (cmd->args[1]);
+		road = ft_strdup(cmd->args[1]);
 	if (!road)
+		return (ft_printf_fd(2, "cd: target path not set\n"), 1);
+	if (chdir(road) == -1)
 	{
-		write(2, "cd: target path not set\n", 25);
+		ft_printf_fd(2, "%s: %s: %s: %s\n", MINISHELL, "cd", road, ERROR_NOSUCH);
+		free(road);
 		return (1);
 	}
-	if(chdir(road) == -1) //se deplace et verifie si le cd reussi
-	{
-		//perror("cd");
-		ft_printf_fd(STDERR_FILENO, "%s: %s: %s: %s\n", \
-			MINISHELL, cmd->args[0], cmd->args[1], ERROR_NOSUCH);
-		m->status = EXIT_FAILURE;
-		return(1);
-	}
-	new_pwd = getcwd(NULL, 0); // danger
+	free(road);
+	new_pwd = getcwd(NULL, 0);
 	if (!new_pwd)
 		return (1);
-	update_pwd_and_oldpwd(old_pwd, new_pwd, m->env_list);
+	update_pwd_and_oldpwd(old_pwd, new_pwd, penv);
 	free(new_pwd);
-	return(0);
+	return (0);
 }
-/*
-int main()
-{
 
-}*/
-/*
-     -get_env_value(nom) : récupère une variable de ton environnement (ta liste chaînée)
-    -chdir() : changer de dossier courant (cd)
-    -getcwd : permet de récupérer le chemin du répertoire de travail courant
-*/
-
-//TODO rajjoutter cd til
