@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 11:30:19 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/31 15:14:42 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/02 16:02:39 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,18 +58,18 @@ void	ft_exit_perror(t_minishell *m, char *message)
 void	ft_exit_error(t_minishell *m, char *mes1, char *mes2, int status)
 {
 
-	ft_print_error(mes1, mes2, NULL);
+	ft_perror(mes1, mes2, NULL);
 	//exit(EXIT_COMMAND_NOT_FOUND);
 	mem_free_all(m);
 	//printf("[%d]\n", status); // TODO a supprimer
 	exit(status);
 }
 
-void	ft_exit_err(t_minishell *m, t_err err, int status)
+void	ft_exit_err(t_minishell *m, int status, void *nop)
 {
-	ft_print_error(err.mes1, err.mes2, err.mes3);
+	(void)nop;
+	//ft_print_error(err.mes1, err.mes2, err.mes3);
 	//exit(EXIT_COMMAND_NOT_FOUND);
 	mem_free_all(m);
-	//printf("[%d]\n", status); // TODO a supprimer
 	exit(status);
 }

@@ -6,7 +6,7 @@
 #    By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/28 10:35:37 by ybouroga          #+#    #+#              #
-#    Updated: 2025/09/01 17:56:31 by ybouroga         ###   ########.fr        #
+#    Updated: 2025/09/02 15:27:02 by ybouroga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,6 +68,7 @@ SRCS = \
 	libft_ms/ft_typel.c \
 	libft_ms/ft_substring.c \
 	libft_ms/ft_print_err.c \
+	libft_ms/ft_files.c \
 	memory/mem_free.c \
 	memory/mem_fd.c \
 	memory/mem_malloc.c \

@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/02 11:53:55 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/02 16:18:04 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,7 @@ void	ft_exit_fail(t_minishell *m, char *message);
 void	ft_exit_fail_status(t_minishell *m, char *message, int status);
 void	ft_exit_perror(t_minishell *m, char *message);
 void	ft_exit_error(t_minishell *m, char *mes1, char *mes2, int status);
-void	ft_exit_err(t_minishell *m, t_err err, int status);
+void	ft_exit_err(t_minishell *m, int status, void *nop);
 void	ft_exit_with_status(t_minishell *m, char *message, int status);
 char 	*ft_substring(const char *s, int start, int len);
 char	*read_input(t_minishell *m, int fd);
@@ -179,7 +179,10 @@ int		ft_export(char **args, t_env **env_list);
 int		ft_pwd(void);
 int		ft_unset(char **arg, t_env **env_list);
 void	ft_print_perror(char *message, char *pmessage);
-void	ft_print_error(char *mes1, char *mes2, char * mes3);
+void	*ft_perror(char *mes1, char *mes2, char * mes3);
+int		ft_stat(const char *path);
+int		ft_is_dir(const char *path);
+int		ft_not_dir_but_file(char *path);
 int		ms_heredoc(t_minishell *m, char *limiter, int expand);
 int		sig_kill_children(t_minishell *m);
 void	setup_signals(void);

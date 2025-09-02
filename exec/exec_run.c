@@ -72,8 +72,6 @@ static void	launch_process(t_minishell *m, t_cmd *cmd, int n, int pipes[][2])
 	char		**env_tab;
 	int			i;
 	int			status;
-	struct stat	st;
-	t_err		err;
 
 	//debug_show_cmd(cmd, n);
 	//printf("n=[%d],pipe.n-1.0=[%d] pipe.n.1=[%d]\n", n, pipes[n-1][0], pipes[n][1]);
@@ -85,9 +83,9 @@ static void	launch_process(t_minishell *m, t_cmd *cmd, int n, int pipes[][2])
 		if (dup2(pipes[n][1], STDOUT_FILENO) == -1)
 			ft_exit_fail(m, ERROR_DUP2);
 	if (n == 0)				// TODO a enlever ?
-		redir_in(m, cmd);
+	redir_in(m, cmd);
 	if (n == m->nb_cmd - 1)	// TODO a enlever ?
-		redir_out(m, cmd);
+	redir_out(m, cmd);
 	i = 0;
 	while (i < m->nb_cmd - 1)
 	{
@@ -110,32 +108,16 @@ static void	launch_process(t_minishell *m, t_cmd *cmd, int n, int pipes[][2])
 		mem_free_all(m);
 		exit(status);
 	}
+	else if (ft_not_dir_but_file(cmd->args[0]))
+		ft_exit_err(m, EXIT_IS_NOT_A_DIRECTORY, ft_perror(MINISHELL, cmd->cmd_abs, ERROR_NOT_DIR));
 	else if (ft_strchr(cmd->args[0], '/') == 0 && cmd->cmd_abs == NULL)
 		ft_exit_error(m, cmd->args[0], ERROR_COM, EXIT_COMMAND_NOT_FOUND);
-	else if ((ft_strchr(cmd->args[0], '/') && cmd->cmd_abs == NULL) ||
-		(stat(cmd->cmd_abs, &st) == -1)
-	)
-	{
-		err.mes1 = MINISHELL;
-		err.mes2 = cmd->args[0];
-		err.mes3 = ERROR_NOSUCH;
-		ft_exit_err(m, err, EXIT_NO_SUCH_FILE);
-	}
-	else if ((st.st_mode & __S_IFMT) == __S_IFDIR )
-	{
-		err.mes1 = MINISHELL;
-		err.mes2 = cmd->cmd_abs;
-		err.mes3 = ERROR_DIR;
-		ft_exit_err(m, err, EXIT_IS_A_DIRECTORY);
-	}
+	else if ((ft_strchr(cmd->args[0], '/') && cmd->cmd_abs == NULL) || (ft_stat(cmd->cmd_abs) == -1))
+		ft_exit_err(m, EXIT_NO_SUCH_FILE, ft_perror(MINISHELL, cmd->args[0], ERROR_NOSUCH));
+	else if (ft_is_dir(cmd->cmd_abs))
+		ft_exit_err(m, EXIT_IS_A_DIRECTORY, ft_perror(MINISHELL, cmd->cmd_abs, ERROR_DIR));
 	if (access(cmd->cmd_abs, X_OK) == -1)
-	{
-		err.mes1 = MINISHELL;
-		//err.mes2 = cmd->args[0];
-		err.mes2 = cmd->cmd_abs;
-		err.mes3 = ERROR_PERMISSION;
-		ft_exit_err(m, err, EXIT_PERMISSION);
-	}
+		ft_exit_err(m, EXIT_PERMISSION, ft_perror(MINISHELL, cmd->cmd_abs, ERROR_PERMISSION));
 	else
 	{
 		env_tab = env_list_to_tab(m, m->env_list);
