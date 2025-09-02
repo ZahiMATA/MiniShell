@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 19:27:46 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/02 13:06:10 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/02 16:40:54 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	dispatch(t_minishell *m)
 		m->cmds->status = exec_builtin(m, m->cmds);
 		m->last_status = m->cmds->status;
 	}
-	else
+	else if (m->cmds)
 	{
 		exec_execve(m);
 	}
