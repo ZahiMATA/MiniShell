@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 16:53:46 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/01 19:20:13 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/02 20:20:48 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,17 @@
 void	lex_lstclear(t_token_list **lst)
 {
 	t_token_list	*p;
-	
+
 	if (lst == NULL)
 		return ;
+	//debug_var("10");
+	//ft_printf_fd(2, "[%d][%d]\n", lst, *lst);
 	while (*lst)
 	{
+		//debug_var("11");
 		p = (*lst)->next;
-		mem_free((*lst)->val, "lex_lstclear.val");
-		mem_free(*lst, "lex_lstclear");
+		mem_free((*lst)->val, "lex_lstclear.val", (*lst)->val);
+		mem_free(*lst, "lex_lstclear", "NULL");
 		*lst = p;
 	}
 	*lst = NULL;

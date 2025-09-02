@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstdelone_bonus.c                               :+:      :+:    :+:   */
+/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybouroga <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 15:02:57 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/05/15 17:02:18 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/02 19:07:55 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /* @CDOCS void ft_lstdelone(t_list *lst, void (*del)(void *))
  * @RETURN lst: L’élément à free del: L’adresse de la fonction permettant de
  * supprimer le contenu de l’élément.
- * Libère la mémoire de l’élément passé en argument en utilisant la fonction 
+ * Libère la mémoire de l’élément passé en argument en utilisant la fonction
  * ’del’ puis avec free(3). La mémoire de ’next’ ne doit pas être free.
  * @IN L1->L2->L3 L2
- * @OUT L2->content et L2 free 
+ * @OUT L2->content et L2 free
  */
 
+#include "minishell.h"
 #include "libft.h"
 #include <stdlib.h>
 
@@ -27,7 +28,7 @@ void	ft_lstdelone(t_list *lst, void (*del)(void *))
 	if (lst == NULL || del == NULL)
 		return ;
 	del(lst -> content);
-	free(lst);
+	mem_free(lst, "ft_lstdelone", NULL);
 }
 /*
 #include <stdlib.h>
@@ -62,7 +63,7 @@ static void test(int n1, int n2, int n3)
         if (liste1 && liste2)
         {
                 printf("content1=%p:%d\n", liste1, *(int *)liste1->content);
-                printf("content2=%p:%d\n", 
+                printf("content2=%p:%d\n",
 			liste1->next, *(int *)liste1->next->content);
                 printf("content1=%p:%d\n", liste1, *(int *)liste1->content);
                 printf("content3=%p:%d\n", liste3, *(int *)liste3->content);

@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 16:53:46 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/01 18:18:25 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/02 19:12:20 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ void	prs_lstclear(t_cmd **lst)
 	while (*lst)
 	{
 		p = (*lst)->next;
-		mem_free_array(&(*lst)->args, "prs_lstclear.args");
+		mem_free_array(&(*lst)->args, "prs_lstclear");
 		free((*lst)->cmd_abs);
 		prs_lstclear_redir(&(*lst)->redirs);
-		mem_free(*lst, "prs_lstclear");
+		mem_free(*lst, "prs_lstclear", "NULL");
 		*lst = p;
 	}
 }

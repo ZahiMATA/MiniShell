@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 12:41:06 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/01 18:16:02 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/02 18:45:04 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ t_token_list	*lex_lstnew(t_token token, char *val)
 	t_token_list	*liste;
 	char			*value;
 
-	liste = mem_malloc(sizeof(t_token_list), "lex_lstnew");
+	liste = mem_malloc(sizeof(t_token_list), "lex_lstnew", NULL);
 	if (liste == NULL)
 		return (NULL);
-	value = ft_strdup(val);
+	value =  ft_strdup(val);
 	if (value == NULL)
 		return (NULL);
 	liste->token = token;

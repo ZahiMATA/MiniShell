@@ -1,23 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew_bonus.c                                  :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybouroga <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 10:23:26 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/05/15 11:15:22 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/02 19:09:25 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /* @CDOCS t_list *ft_lstnew(void *content);
- * @RETOUR Alloue (avec malloc(3)) et renvoie un nouvel élément. La variable 
- * membre ’content’ est initialisée à l’aide de la valeur du paramètre 
+ * @RETOUR Alloue (avec malloc(3)) et renvoie un nouvel élément. La variable
+ * membre ’content’ est initialisée à l’aide de la valeur du paramètre
  * ’content’. La variable ’next’ est initialisée à NULL.
  * @IN
  * @OUT
  */
 
+#include "minishell.h"
 #include "libft.h"
 #include <stdlib.h>
 
@@ -25,7 +26,7 @@ t_list	*ft_lstnew(void *content)
 {
 	t_list	*liste;
 
-	liste = malloc(sizeof(t_list));
+	liste = mem_malloc(sizeof(t_list), "ft_lstnew", content);
 	if (liste == NULL)
 		return (NULL);
 	liste -> content = content;
@@ -40,7 +41,7 @@ static void test1(int n)
 	t_list *liste = ft_lstnew(&n);
 	if (liste)
 	{
-		printf("content=%p:%p:%d\n", liste, 
+		printf("content=%p:%p:%d\n", liste,
 		(int *)liste->content, *(int *)liste->content);
 		printf("next=%p\n", liste->next);
 	}

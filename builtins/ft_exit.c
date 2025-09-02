@@ -30,6 +30,7 @@ int	ft_exit(t_minishell *m, t_cmd *cmd)
 	ft_printf_fd(STDOUT_FILENO, "exit\n");
 	if(cmd == NULL || cmd->args == NULL || cmd->args[1] == NULL)
 	{
+		debug_var("3");
 		mem_free_all(m);
 		exit(0);
 	}

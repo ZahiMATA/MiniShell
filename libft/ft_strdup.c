@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 12:50:31 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/08 13:40:50 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/02 17:26:39 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
  * @OUT "abc
  */
 
+#include "minishell.h"
 #include "libft.h"
 #include <stddef.h>
 #include <stdlib.h>
@@ -31,7 +32,7 @@ char	*ft_strdup(const char *s)
 	size_t	len;
 
 	len = ft_strlen(s);
-	zone = malloc((len + 1) * sizeof(char));
+	zone = mem_malloc((len + 1) * sizeof(char), "ft_strdup", s);
 	if (zone == NULL)
 		return (NULL);
 	zone[len] = '\0';

@@ -13,12 +13,12 @@
 #include "minishell.h"
 #include "parser.h"
 
-void	mem_free(void *p, char *mes)
+void	mem_free(void *p, const char *key, const char *val)
 {
 	if (DEBUG_MALLOC)
 		if (p)
 		{
-			ft_printf_fd(STDERR_FILENO, "FREE[%d][%s]\n", p, mes);
+			ft_printf_fd(STDERR_FILENO, "FREE  [%d][%s][%s]\n", p, key, val);
 			free(p);
 		}
 }
@@ -28,7 +28,7 @@ void	mem_free_null(char	**p, char *mes)
 	//ft_printf_fd(STDERR_FILENO, "SPECIAL[%d][%s]\n", p, mes);
 	if (p == NULL || *p == NULL)
 		return ;
-	mem_free(*p, mes);
+	mem_free(*p, mes, *p);
 	*p = NULL;
 }
 

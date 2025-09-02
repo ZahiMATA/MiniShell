@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 18:29:42 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/10 14:20:57 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/02 19:40:30 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,17 @@ int	ft_islexer(int c)
 		|| (c == '"') || (c == '\''));
 }
 
-int ft_is_stringword(t_minishell *m)
+int ft_is_stringword(t_token_list *t)
 {
-	return ( m->token_list->token == T_STRING || m->token_list->token == T_WORD);
+	return ( t->token == T_STRING || t->token == T_WORD);
 }
 
-int	ft_is_redir(t_minishell *m)
+int	ft_is_redir(t_token_list *t)
 {
 	return (
-		m->token_list->token == T_REDIRECT_LEFT ||
-		m->token_list->token == T_REDIRECT_RIGHT ||
-		m->token_list->token == T_DOUBLE_REDIRECT_LEFT ||
-		m->token_list->token == T_DOUBLE_REDIRECT_RIGHT
+		t->token == T_REDIRECT_LEFT ||
+		t->token == T_REDIRECT_RIGHT ||
+		t->token == T_DOUBLE_REDIRECT_LEFT ||
+		t->token == T_DOUBLE_REDIRECT_RIGHT
 	);
 }

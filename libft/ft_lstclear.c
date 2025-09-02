@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 17:04:11 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/29 15:20:45 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/02 18:18:14 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
  * @OUT *L1 = NULL
  */
 
+#include "minishell.h"
 #include "libft.h"
 
 void	ft_lstclear(t_list **lst, void (*del)(void *))
@@ -35,7 +36,7 @@ void	ft_lstclear(t_list **lst, void (*del)(void *))
 }
 void	ft_del_content(void *ptr)
 {
-	free(ptr);
+	mem_free(ptr, "ft_del_content", ptr);
 }
 /*
 #include <stdlib.h>

@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 11:23:17 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/02 12:58:25 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/02 18:44:50 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	lexer_string(t_param *_)
 		ft_exit_fail_status(_->m, NULL, EXIT_ALLOC_ERROR);
 	add_token(_, T_STRING, s, 0);
 	_->i++;
-	mem_free(s, "lexer_string.s");
+	mem_free(s, "lexer_string.s", s);
 }
 
 static void	lexer_single_quote(t_param *_)
@@ -78,7 +78,7 @@ static void	lexer_single_quote(t_param *_)
 		ft_exit_fail_status(_->m, NULL, EXIT_ALLOC_ERROR);
 	add_token(_, T_STRING, s, 0);
 	_->i++;
-	free(s);
+	mem_free(s, "lexer_single_quote", s);
 }
 
 /* A voir semble fonctionnel sans
@@ -131,7 +131,7 @@ static void lexer_word(t_param *_)
 	if (s == NULL)
 		ft_exit_fail_status(_->m, NULL, EXIT_ALLOC_ERROR);
 	add_token(_, T_WORD, s, 0);
-	free(s);
+	mem_free(s, "lexer_word", s);
 }
 
 void	lexer(t_minishell *m/*, char *line*/)

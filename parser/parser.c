@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 13:26:51 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/02 12:58:57 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/02 19:59:42 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ test:
  CMD(args=["tr", "b", "B"], redir_out="ficout"))
 */
 
-static void	check_token(t_minishell *m)
+static void	check_token(t_minishell *m, t_token_list **token_list)
 {
 	t_cmd cmd;
 	t_cmd *pcmd;
@@ -32,23 +32,23 @@ static void	check_token(t_minishell *m)
 
 	ft_bzero(&cmd, sizeof(t_cmd));
 	pcmd = NULL;
-	while (m->token_list && m->token_list->token != T_PIPE)
+	while (*token_list && (*token_list)->token != T_PIPE)
 	{
-		if(ft_is_stringword(m))
-			cmd.args = prs_realloc_args(m, cmd.args, cmd.n++, m->token_list->val);
-		else if(ft_is_redir(m))
+		if(ft_is_stringword(*token_list))
+			cmd.args = prs_realloc_args(m, cmd.args, cmd.n++, (*token_list)->val);
+		else if(ft_is_redir(*token_list))
 		{
-			type = prs_get_redir(m->token_list->token);
-			m->token_list = m->token_list->next;
-			if (m->token_list == NULL || ft_is_stringword(m) == 0)
+			type = prs_get_redir((*token_list)->token);
+			*token_list = (*token_list)->next;
+			if (*token_list == NULL || ft_is_stringword(*token_list) == 0)
 				return (ft_return_error(m, MINISHELL, ERROR_NL, RETURN_NL)); // TODO ajouter free cmd
-			redir = prs_lstnew_redir(type, m->token_list->val);
+			redir = prs_lstnew_redir(type, (*token_list)->val);
 			if(redir == NULL)
 				ft_exit_fail_status(m, NULL, EXIT_ALLOC_ERROR);
 
 			prs_lstadd_back_redir(&cmd.redirs, redir);
 		}
-		m->token_list = m->token_list->next;
+		*token_list = (*token_list)->next;
 	}
 	pcmd = prs_lstnew(cmd);
 	if (pcmd == NULL)
@@ -60,16 +60,22 @@ void	parser(t_minishell *m)
 {
 	//printf("avant\n");
 	//debug_show_cmds(m);
-	while (m->token_list)
+	t_token_list	*token_list;
+	//printf("tl=[%p]\n",  m->token_list);
+
+	token_list = m->token_list;
+	while (token_list)
 	{
-		check_token(m);
+		check_token(m, &token_list);
 		if (m->cmds && m->cmds->args && m->cmds->args[0])
 			if (m->last_status)
 				return ;
-		if (m->token_list && m->token_list->token == T_PIPE)
-			m->token_list = m->token_list->next;
+		if (token_list && token_list->token == T_PIPE)
+			token_list = token_list->next;
 	}
+	//printf("tl=[%p]\n",  m->token_list);
 	//printf("apres\n");
 	//debug_show_cmds(m);
 }
+
 
