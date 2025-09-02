@@ -205,20 +205,19 @@ int	decompress_status(int status)
 
 int	set_last_status(t_minishell *m)
 {
-	t_cmd	*tail;
-	tail = m->cmds;
-	if (tail == NULL)
+	t_cmd	*cmd;
+	cmd = m->cmds;
+	if (cmd == NULL)
 	{
 		//printf("tail=0\n");
 		return (1);
 	}
-	while (tail)
+	while (cmd)
 	{
-		tail->status = decompress_status(tail->status_c);
-		m->last_status = tail->status;
-		tail = tail ->next;
+		cmd->status = decompress_status(cmd->status_c);
+		m->last_status = cmd->status;
+		cmd = cmd ->next;
 	}
 	return (0);
 	//printf("cs=[%d]\n", tail->status);
 }
-
