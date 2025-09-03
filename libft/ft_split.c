@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:55:43 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/07 11:46:49 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/03 11:37:43 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,107 @@
  * délimiteur. Le tableau doit être terminé par NULL
  * @IN  ft_split "abxxxcd" "x"
  * @OUT          "ab" "cd"
- *
- * char	**ft_split(char const *s, char c)
- *  -> char	**ft_split_multi(char const *s, char c[2]) pour 2 caracteres
  */
 
-#include <libft.h>
+#include "minishell.h"
+#include "libft.h"
+#include <stdlib.h>
+
+static char	*allouer_mot(char const *s, char c, size_t index, size_t *len)
+{
+	size_t	i;
+	char	*zone;
+
+	*len = 0;
+	while (s[*len + index] && s[*len + index] != c)
+		(*len)++;
+	zone = mem_malloc((*len + 1) * sizeof(char), "allouer_mot", s);
+	if (zone == NULL)
+		return (NULL);
+	i = 0;
+	while (i < *len)
+	{
+		zone[i] = s[i + index];
+		i++;
+	}
+	zone[*len] = '\0';
+	return (zone);
+}
+
+static int	compter_mots(char const *s, char c)
+{
+	size_t	i;
+	size_t	n;
+
+	i = 0;
+	n = 0;
+	while (s[i])
+	{
+		while (s[i] && s[i] == c)
+			i++;
+		if (s[i])
+		{
+			n++;
+			while (s[i] && s[i] != c)
+				i++;
+		}
+	}
+	return (n);
+}
+
+static int	gerer_zone(char **split, char *zone, size_t *n)
+{
+	if (zone == NULL)
+	{
+		while (*n > 0)
+			free(split[--(*n)]);
+		free(split);
+		return (-1);
+	}
+	return (0);
+}
+
+static int	do_split(char const *s, char c, char **split)
+{
+	size_t	next;
+	size_t	n;
+	size_t	i;
+	size_t	len;
+	char	*zone;
+
+	n = 0;
+	i = 0;
+	len = compter_mots(s, c);
+	while (s[i] && len != 0)
+	{
+		while (s[i] && s[i] == c)
+			i++;
+		zone = allouer_mot(s, c, i, &next);
+		if (gerer_zone(split, zone, &n) == -1)
+			return (-1);
+		split[n++] = zone;
+		i += next;
+		while (s[i] && s[i] == c)
+			i++;
+	}
+	split[len] = NULL;
+	return (0);
+}
 
 char	**ft_split(char const *s, char c)
 {
-	char	tab[2];
+	size_t	len;
+	char	**split;
 
-	tab[0] = c;
-	tab[1] = c;
-	return (ft_split_multi(s, tab));
+	len = compter_mots(s, c);
+	split = mem_malloc((len + 1) * sizeof(char *), "ft_split", s);
+	if (split == NULL)
+		return (NULL);
+	{
+		if (do_split(s, c, split) == -1)
+			return (NULL);
+	}
+	return (split);
 }
 /*
 #include <stdio.h>

@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/03 10:47:41 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/03 10:59:37 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 #  define DEBUG_ENV 0
 # endif
 # ifndef DEBUG_MALLOC
-#  define DEBUG_MALLOC 0
+#  define DEBUG_MALLOC 1
 # endif
 # define BUFFER_SIZE 1024
 # define BUFFER_LOG 1024
