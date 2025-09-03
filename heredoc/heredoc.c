@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 10:50:18 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/02 13:00:05 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/03 18:54:31 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,9 @@ static	void ms_launch_child(t_minishell *m, int fd[2], char *limiter, int expand
 	close(fd[0]);
 	while (1)
 	{
-		ft_putstr(PROMPT_HEREDOC);
-		m->line = read_input(m, GOT_SIGNAL);
+		//ft_putstr(PROMPT_HEREDOC);
+		//m->line = read_input(m, GOT_SIGNAL);
+		m->line = readline(PROMPT_HEREDOC);
 		{
 			//debug_var(m->line);
 			if (m->line == NULL)

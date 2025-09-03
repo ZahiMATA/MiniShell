@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/03 18:10:37 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/03 18:48:48 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@
 # define OW O_WRONLY
 # define OC O_CREAT
 # define OT O_TRUNC
+# define OA O_APPEND
 # define FLAG_FIC 0644
 # define GOT_NO_SIGNAL 0
 # define GOT_SIGNAL 1

@@ -22,7 +22,7 @@ static void	redir_in(t_minishell *m, t_cmd *cmd)
 		if (redir->type == N_REDIR_LEFT)
 		{
 			m->fd_in = open(redir->file, O_RDONLY);
-			if (m->fd_in == -1)
+			if (m->fd_in == -1 && m->error)
 			{
 				m->last_status = EXIT_FAILURE;
 				m->error = ft_strdup(redir->file);
@@ -36,7 +36,8 @@ static void	redir_in(t_minishell *m, t_cmd *cmd)
 			m->fd_in = ms_heredoc(m, redir->file, 0);
 			if (m->fd_in == -1)
 				return ;
-			dup2(m->fd_in, STDIN_FILENO);
+			if (dup2(m->fd_in, STDIN_FILENO) == -1)
+				ft_exit_fail(m, ERROR_DUP2);
 			close(m->fd_in);
 		}
 		redir = redir->next;
@@ -53,6 +54,19 @@ static void	redir_out(t_minishell *m, t_cmd *cmd)
 		if (redir->type == N_REDIR_RIGHT)
 		{
 			m->fd_out = open(redir->file, OW | OC | OT, FLAG_FIC);
+			if (m->fd_out == -1)
+			{
+				m->last_status = EXIT_FAILURE; // TODO A voir si on quitte ici ou pas
+				mem_free_null(&m->error, "error");
+				m->error = ft_strdup(redir->file);
+			}
+			else if (dup2(m->fd_out, STDOUT_FILENO) == -1)
+				ft_exit_fail(m, ERROR_DUP2);
+			close(m->fd_out);
+		}
+		else if (redir->type == N_DOUBLE_REDIR_RIGHT)
+		{
+			m->fd_out = open(redir->file, OW | OC | OA, FLAG_FIC);
 			if (m->fd_out == -1)
 			{
 				m->last_status = EXIT_FAILURE; // TODO A voir si on quitte ici ou pas
@@ -82,9 +96,9 @@ static void	launch_process(t_minishell *m, t_cmd *cmd, int n, int pipes[][2])
 	if (n < m->nb_cmd - 1)
 		if (dup2(pipes[n][1], STDOUT_FILENO) == -1)
 			ft_exit_fail(m, ERROR_DUP2);
-	if (n == 0)				// TODO a enlever ?
+	//if (n == 0)				// TODO a enlever ?
 	redir_in(m, cmd);
-	if (n == m->nb_cmd - 1)	// TODO a enlever ?
+	//if (n == m->nb_cmd - 1)	// TODO a enlever ?
 	redir_out(m, cmd);
 	i = 0;
 	while (i < m->nb_cmd - 1)
