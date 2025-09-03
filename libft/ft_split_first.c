@@ -1,30 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prs_lstclear.c                                     :+:      :+:    :+:   */
+/*   ft_split_first.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/06 16:53:46 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/03 14:54:37 by ybouroga         ###   ########.fr       */
+/*   Created: 2025/09/03 16:52:18 by ybouroga          #+#    #+#             */
+/*   Updated: 2025/09/03 17:17:27 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	prs_lstclear(t_cmd **lst)
+char *ft_split_first(const char *s, char **key, char **val, char c)
 {
-	t_cmd	*p;
+	char *i;
 
-	if (lst == NULL)
-		return ;
-	while (*lst)
+	i = ft_strchr(s, c);
+	if (i == NULL)
 	{
-		p = (*lst)->next;
-		mem_free_array(&(*lst)->args, "prs_lstclear");
-		free((*lst)->cmd_abs);
-		prs_lstclear_redir(&(*lst)->redirs);
-		mem_free(*lst, "prs_lstclear", NULL);
-		*lst = p;
+		*key = strdup(s);
+		if (*key == NULL)
+			return NULL;
+		*val = NULL;
+		return (*key);
 	}
+	*key = ft_strndup(s, i -s);
+	if (*key == NULL)
+		return (NULL);
+	*val = ft_strdup(i + 1);
+	if (*val == NULL)
+	{
+		mem_free(*key, "ft_split_first", *key);
+		return (NULL);
+	}
+	return (*key);
 }

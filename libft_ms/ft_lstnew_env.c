@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   ft_lstnew_env.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 10:23:26 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/06 20:33:08 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/03 15:51:43 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ t_env	*ft_lstnew_env(void *key, void *val)
 {
 	t_env	*liste;
 
-	liste = malloc(sizeof(t_env));
+	liste = mem_malloc(sizeof(t_env), "ft_lstnew_env", key);
 	if (liste == NULL)
 		return (NULL);
-	liste -> key = key;
-	liste -> val = val;
+	liste -> key = (key);
+	liste -> val = (val);
 	liste -> next = NULL;
 	return (liste);
 }

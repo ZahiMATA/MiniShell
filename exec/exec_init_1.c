@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 15:28:03 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/29 13:35:04 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/03 17:41:40 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /*static*/ void	exec_init_env_list(t_minishell **m, char **env)
 {
 	int		i;
-	char	**split;
+	char	*split[2];
 	t_env	*tmp;
 
 	if (env == NULL || *env == NULL)
@@ -23,16 +23,18 @@
 		(*m)->path = NULL;
 		return ;
 	}
-
 	i = 0;
 	while (env[i])
 	{
-		split = ft_split(env[i], '=');
-		if (split == NULL)
+		if (ft_split_first(env[i], &split[0], &split[1], '=') == NULL)
 			ft_exit_fail_status(*m, NULL, EXIT_ALLOC_ERROR);
 		tmp = ft_lstnew_env(split[0], split[1]);
 		if (tmp == NULL)
+		{
+			mem_free(split[0], "exec_init_env_list", split[0]);
+			mem_free(split[1], "exec_init_env_list", split[1]);
 			ft_exit_fail_status(*m, NULL, EXIT_ALLOC_ERROR);
+		}
 		ft_lstadd_back_env(&(*m)->env_list, tmp);
 		i++;
 	}

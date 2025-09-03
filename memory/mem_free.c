@@ -41,7 +41,7 @@ void	mem_free_array(char	***tab, char *mes)
 		return ;
 	while ((*tab)[i])
 		mem_free_null(&(*tab)[i++], mes);
-	free(*tab);
+	mem_free(*tab, mes, **tab);
 	*tab = NULL;
 }
 /*

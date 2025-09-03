@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 18:47:45 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/29 15:23:35 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/03 17:21:12 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,14 @@ int		ft_atoi(const char *nptr);
 void	*ft_calloc(size_t nmemb, size_t size);
 char	*ft_strdup(const char *s);
 char	*ft_strdup_null(const char *s);
+char	*ft_strndup(const char *s, size_t n);
 //char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strjoin_2(char **s1, char const *s2);
 //char	*ft_strtrim(char const *s1, char const *set);
 char	**ft_split(char const *s, char c);
 char	**ft_split_multi(char const *s, char c[2]);
+char	*ft_split_first(const char *s, char **key, char **val, char c);
 char	*ft_itoa(int n);
 //char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 //void	ft_striteri(char *s, void (*f)(unsigned int, char*));

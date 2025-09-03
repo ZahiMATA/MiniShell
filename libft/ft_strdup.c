@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 12:50:31 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/02 17:26:39 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/03 17:28:20 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,24 @@ char	*ft_strdup_null(const char *s)
 	if (s == NULL)
 		return (NULL);
 	return (ft_strdup(s));
+}
+
+char	*ft_strndup(const char *s, size_t n)
+{
+	char	*zone;
+	size_t	i;
+
+	if (n > ft_strlen(s))
+		n = ft_strlen(s);
+	zone = mem_malloc((n + 1) * sizeof(char), "ft_strdup", s);
+	if (zone == NULL)
+		return (NULL);
+	i = 0;
+	while (i < n)
+	{
+		zone[i] = s[i];
+		i++;
+	}
+	zone[n] = '\0';
+	return (zone);
 }
