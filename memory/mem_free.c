@@ -15,10 +15,10 @@
 
 void	mem_free(void *p, const char *key, const char *val)
 {
-	if (DEBUG_MALLOC)
 		if (p)
 		{
-			ft_printf_fd(STDERR_FILENO, "FREE  [%d][%s][%s]\n", p, key, val);
+			if (DEBUG_MALLOC)
+				ft_printf_fd(STDERR_FILENO, "FREE  [%d][%s][%s]\n", p, key, val);
 			free(p);
 		}
 }

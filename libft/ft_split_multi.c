@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:55:43 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/07 11:43:35 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/03 10:58:02 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
  *  -> char	**ft_split_multi(char const *s, char c[2]) pour 2 caracteres
  */
 
+#include "minishell.h"
 #include <stdlib.h>
 
 static char	*alloc_word(char const *s, char c[2], int index, int *len)
@@ -124,7 +125,7 @@ char	**ft_split_multi(char const *s, char c[2])
 	char	**split;
 
 	len = count_words(s, c);
-	split = malloc((len + 1) * sizeof(char *));
+	split = mem_malloc((len + 1) * sizeof(char *), "ft_split_multi", s);
 	if (split == NULL)
 		return (NULL);
 	if (do_split(s, c, split) == -1)
