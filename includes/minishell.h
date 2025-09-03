@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/03 17:49:00 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/03 18:10:37 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 #  define DEBUG_ENV 0
 # endif
 # ifndef DEBUG_MALLOC
-#  define DEBUG_MALLOC 1
+#  define DEBUG_MALLOC 0
 # endif
 # define BUFFER_SIZE 1024
 # define BUFFER_LOG 1024
@@ -177,6 +177,9 @@ int		ft_exit(t_minishell *m, t_cmd *cmd);
 int		ft_export(char **args, t_env **env_list);
 int		ft_pwd(void);
 int		ft_unset(char **arg, t_env **env_list);
+char	*ms_env_get(t_env *env, const char *key);
+void	ms_expand_all_cmds(t_minishell *m);
+char	*ms_expand_word(t_minishell *m, const char *s);
 void	ft_print_perror(char *message, char *pmessage);
 void	*ft_perror(char *mes1, char *mes2, char * mes3);
 int		ft_stat(const char *path);

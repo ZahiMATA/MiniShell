@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 19:27:46 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/02 16:40:54 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/03 18:06:04 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ int	exec_builtin(t_minishell *m, t_cmd *cmd)
 
 void	dispatch(t_minishell *m)
 {
+	if (m->cmds && m->cmds->args)
+		ms_expand_all_cmds(m);
 	if (m->cmds && m->cmds->args && m->nb_cmd == 1 && is_builin(m->cmds->args[0]))
 	{
 		m->cmds->status = exec_builtin(m, m->cmds);
