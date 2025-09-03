@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:55:43 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/03 16:03:09 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/03 17:48:03 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 #include "libft.h"
 #include <stdlib.h>
 
-static char	*allouer_mot(char const *s, char c, size_t index, size_t *len)
+static char	*alloc_word(char const *s, char c, size_t index, size_t *len)
 {
 	size_t	i;
 	char	*zone;
@@ -30,7 +30,7 @@ static char	*allouer_mot(char const *s, char c, size_t index, size_t *len)
 	*len = 0;
 	while (s[*len + index] && s[*len + index] != c)
 		(*len)++;
-	zone = mem_malloc((*len + 1) * sizeof(char), "allouer_mot", s + index);
+	zone = mem_malloc((*len + 1) * sizeof(char), "alloc_word", s + index);
 	if (zone == NULL)
 		return (NULL);
 	i = 0;
@@ -64,7 +64,7 @@ static int	compter_mots(char const *s, char c)
 	return (n);
 }
 
-static int	gerer_zone(char **split, char *zone, size_t *n)
+static int	manage_zone(char **split, char *zone, size_t *n)
 {
 	if (zone == NULL)
 	{
@@ -91,8 +91,8 @@ static int	do_split(char const *s, char c, char **split)
 	{
 		while (s[i] && s[i] == c)
 			i++;
-		zone = allouer_mot(s, c, i, &next);
-		if (gerer_zone(split, zone, &n) == -1)
+		zone = alloc_word(s, c, i, &next);
+		if (manage_zone(split, zone, &n) == -1)
 			return (-1);
 		split[n++] = zone;
 		// printf("a=[%s][%zu][%zu][%zu]\n", zone, n, i, len);

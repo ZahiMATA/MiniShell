@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:55:43 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/03 10:58:02 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/03 17:49:47 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static int	count_words(char const *s, char c[2])
 	return (n);
 }
 
-int	ft_gerer_zone(char **split, char *zone, int *n)
+static int	ft_manage_zone(char **split, char *zone, int *n)
 {
 	int	i;
 
@@ -108,7 +108,7 @@ static int	do_split(char const *s, char c[2], char **split)
 		while (s[i] && (s[i] == c[0] || s[i] == c[1]))
 			i++;
 		zone = alloc_word(s, c, i, &next);
-		if (ft_gerer_zone(split, zone, &n) == -1)
+		if (ft_manage_zone(split, zone, &n) == -1)
 			return (-1);
 		split[n++] = zone;
 		i += next;

@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/03 10:59:37 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/03 17:49:00 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,6 @@ void	debug_show_error(char *message);
 int		set_last_status(t_minishell *m);
 void	ft_print_array(char **tab);
 int		ft_strncmp(const char *s1, const char *s2, int n);
-int		ft_gerer_zone(char **split, char *zone, int *n);
 char	*ft_strchr(const char *s, int c);
 t_env	*ft_lstnew_env(void *key, void *val);
 void	ft_lstadd_back_env(t_env **lst, t_env *new);
