@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 18:20:43 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/29 19:35:10 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/04 13:36:46 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct	s_redir
 typedef struct s_cmd
 {
 	char			**args;
+	int				*expand;
 	char			*cmd_abs;
 	int				n;
 	t_redir			*redirs;
