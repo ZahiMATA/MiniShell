@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 11:23:17 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/04 14:17:20 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/04 20:03:21 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,17 @@ static void	add_token(t_param *_, t_token token, char *val, int len)
 	_->i += len;
 }
 
-static void	lexer_string(t_param *_, char c)
+static void	lexer_string(t_param *_, char c, int offset)
 {
 	char	*s;
 	int		start;
-	int		len;
 
-	_->i++;
-	len = 0;
 	start = _->i;
+	_->i += offset;
 	while (_->m->line[_->i] && _->m->line[_->i] != c)
 	{
-		len++;
+		if (ft_strncmp(_->m->line + _->i, "\\\"", 2) == 0)
+			_->i++;
 		_->i++;
 	}
 	if (_->m->line[_->i] == '\0')
@@ -45,28 +44,30 @@ static void	lexer_string(t_param *_, char c)
 		lex_lstclear(&_->m->token_list);
 		return ;
 	}
-	s = ft_substring(_->m->line, start - 1, len + 2);
-	if (!s)
+	s = ft_substring(_->m->line, start , (_->i - start) + 1);
+	if (s == NULL)
 		ft_exit_fail_status(_->m, NULL, EXIT_ALLOC_ERROR);
 	add_token(_, T_STRING, s, 0);
 	_->i++;
 	mem_free(s, "lexer_string.s", s);
 }
 
-static void lexer_word(t_param *_)
+static void lexer_word(t_param *_, int offset)
 {
 	char	*s;
 	int		start;
-	int		len;
 
-	len = 0;
 	start = _->i;
+	_->i += offset;
 	while (_->m->line[_->i] && !ft_islexer(_->m->line[_->i]))
 	{
-		len++;
+		if (ft_strncmp(_->m->line + _->i, "\\\"", 2) == 0)
+			_->i++;
+		if (ft_strncmp(_->m->line + _->i, "\\'", 2) == 0)
+			_->i++;
 		_->i++;
 	}
-	s = ft_substring(_->m->line, start, len);
+	s = ft_substring(_->m->line, start, _->i - start);
 	if (s == NULL)
 		ft_exit_fail_status(_->m, NULL, EXIT_ALLOC_ERROR);
 	add_token(_, T_WORD, s, 0);
@@ -79,7 +80,6 @@ void	lexer(t_minishell *m/*, char *line*/)
 
 	_.m = m;
 	_.i = 0;
-	//_.line = line;
 	while (m->last_status == EXIT_SUCCESS && m->line && m->line[_.i])
 	{
 		while (ft_isspace(m->line[_.i]))
@@ -96,11 +96,15 @@ void	lexer(t_minishell *m/*, char *line*/)
 			add_token(&_, T_REDIRECT_LEFT, "<", 1);
 		else if (m->line[_.i] == '>')
 			add_token(&_, T_REDIRECT_RIGHT, ">", 1);
+		else if (ft_strncmp(m->line + _.i, "\\\"", 2) == 0)
+		 	lexer_word(&_, 2);
+		else if (ft_strncmp(m->line + _.i, "\\'", 2) == 0)
+		 	lexer_word(&_, 2);
 		else if (m->line[_.i] == '"')
-			lexer_string(&_, '"');
+			lexer_string(&_, '"', 1);
 		else if (m->line[_.i] == '\'')
-			lexer_string(&_, '\'');
+			lexer_string(&_, '\'', 1);
 		else
-			lexer_word(&_);
+			lexer_word(&_, 0);
 	}
 }
