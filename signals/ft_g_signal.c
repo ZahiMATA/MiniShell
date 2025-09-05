@@ -1,31 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sig_kill_children.c                                :+:      :+:    :+:   */
+/*   ft_g_signal.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/26 15:57:47 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/02 13:00:36 by ybouroga         ###   ########.fr       */
+/*   Created: 2025/09/05 18:35:53 by ybouroga          #+#    #+#             */
+/*   Updated: 2025/09/05 20:25:51 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int	ft_g_signal(t_minishell *m)
+{
+	if (g_signal)
+	{
+		g_signal &= ~SIG_FLAG;
+		m->status_echo = 128 + SIGINT;
+	}
+	return (0);
+}
+
+
+/*
 int	sig_kill_children(t_minishell *m)
 {
-	t_cmd	*c;
-	int		got_signal;
+	t_cmd    *c;
+	int        got_signal;
 
-	//printf("kill[%d]\n", g_signal);
 	got_signal = GOT_NO_SIGNAL;
 	if (g_signal)
 	{
-		//printf("kill[%d]\n", g_signal);
 		g_signal = 0;
-		// rl_replace_line("", 0);
-		// rl_on_new_line();
-		// rl_redisplay();
 		if (m && m->cmds)
 		{
 			got_signal = GOT_SIGNAL; //TODO A REMOINTER ??
@@ -40,4 +47,4 @@ int	sig_kill_children(t_minishell *m)
 		}
 	}
 	return got_signal;
-}
+}*/

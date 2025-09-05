@@ -42,18 +42,20 @@ void	test1(char **env)
 	//char 		*line;
 	//int			last_status;
 	//t_env		*last_env_list;
-	int			got_signal;
+	//int			got_signal;
 
 	m = NULL;
 	setup_signals();
 	//last_status = 0;
 	//last_env_list = NULL;
-	got_signal = 0;
+	//got_signal = 0;
 	exec_init_minishell(&m/*, last_env_list*/);
+	g_signal = SIG_N_ZERO;
 	while (1)
 	{
 		//if(got_signal == GOT_NO_SIGNAL) ft_putstr(PROMPT);
-		m->line = read_input(m, got_signal);
+		m->line = read_input(m, 0);
+		ft_g_signal(m);
 		//debug_var(m->line);
 		lexer(m);
 		debug_show_tokens(m);
@@ -65,7 +67,7 @@ void	test1(char **env)
 			m->last_status = m->status_echo;
 			exec_feed_minishell(&m, env);
 			dispatch(m);
-			got_signal = sig_kill_children(m);
+			//ft_g_signal(m);
 			//ft_printf_fd(1,"[%c]", got_signal + '0');
 			// set_last_status(m);
 			debug_show_args(m);

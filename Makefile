@@ -6,7 +6,7 @@
 #    By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/28 10:35:37 by ybouroga          #+#    #+#              #
-#    Updated: 2025/09/03 18:09:39 by ybouroga         ###   ########.fr        #
+#    Updated: 2025/09/05 19:00:32 by ybouroga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -96,7 +96,7 @@ SRCS = \
 	ft_printf/ft_printf_2.c \
 	heredoc/heredoc.c \
 	signals/signals.c \
-	signals/sig_kill_children.c \
+	signals/ft_g_signal.c \
 
 HEADER = \
 	includes/minishell.h \

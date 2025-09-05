@@ -196,12 +196,16 @@ void	exec_execve(t_minishell *m)
 	//debug_show_processes(m, "PARENT");
 }
 
-int	decompress_status(int status)
+int	decompress_status(t_minishell *m, int status)
 {
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	else if (WIFSIGNALED(status))
+	{
+		m->ctrl_c = 1;
+		//g_signal = GOT_CHILD_SIG;
 		return (128 + WTERMSIG(status));
+	}
 	return (1);
 }
 
@@ -216,7 +220,7 @@ int	set_last_status(t_minishell *m)
 	}
 	while (cmd)
 	{
-		cmd->status = decompress_status(cmd->status_c);
+		cmd->status = decompress_status(m, cmd->status_c);
 		m->last_status = cmd->status;
 		cmd = cmd ->next;
 	}

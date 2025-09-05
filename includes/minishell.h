@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/05 14:00:38 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/05 20:20:00 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@
 # define ERROR_MALLOC "Error: Malloc failed"
 # define ERROR_NOFILE "Error: Source file does not exist"
 # define ERROR_EXECVE "Error: Execve"
-# define ERROR_ACCESS "Error: Access"
+# define ERROR_ACCESS "Error: Acsetup_signals_for_childrencess"
 # define ERROR_FORK "Error: Fork"
 # define ERROR_DUP2 "Error: Dup2"
 # define ERROR_PIPE "Error: Pipe"
@@ -84,11 +84,15 @@
 # define OT O_TRUNC
 # define OA O_APPEND
 # define FLAG_FIC 0644
-# define GOT_NO_SIGNAL 0
-# define GOT_SIGNAL 1
+ # define SIG_N_ZERO 0
+// # define GOT_SIGNAL 1
+// # define GOT_CHILD_SIG 2
 // # define EXIT_CMDNOEXISTS 1
+#define SIG_FLAG 0x1
+#define RDL_FLAG 0x2
 
 extern volatile sig_atomic_t g_signal;
+//extern volatile sig_atomic_t g_readline_active;
 
 // TODO implementer init et l access et le free et le update data
 
@@ -125,6 +129,7 @@ typedef struct s_minishell
 	char			*error;
 	int				status_echo;
 	int				last_status;
+	int				ctrl_c;
 	t_list			*history;
 }	t_minishell;
 
@@ -187,7 +192,7 @@ int		ft_stat(const char *path);
 int		ft_is_dir(const char *path);
 int		ft_not_dir_but_file(char *path);
 int		ms_heredoc(t_minishell *m, char *limiter, int expand);
-int		sig_kill_children(t_minishell *m);
+int		ft_g_signal(t_minishell *m);
 void	setup_signals(void);
 void	setup_signals_for_children(void);
 int		exec_builtin(t_minishell *m, t_cmd *cmd);
