@@ -12,9 +12,22 @@
 
 #include "minishell.h"
 
+
+
 char	*read_input(t_minishell *m, int got_signal)
 {
 	(void)got_signal;
+
+	if (1)
+		m->line = readline(PROMPT);
+	else{
+	if (got_signal == GOT_NO_SIGNAL)
+		m->line = readline(PROMPT);
+	else
+		 m->line = readline("");
+	}
+
+	/*(void)got_signal;
 	// rl_replace_line(PROMPT, 0);
 	// rl_on_new_line();
 	// rl_redisplay();
@@ -32,7 +45,9 @@ char	*read_input(t_minishell *m, int got_signal)
 		// 	return NULL;
 //	 	m->line = readline("\033[C\b");
 //	 	m->line = readline("\033[D\033[C");
-	}
+	}*/
+
+
 	if (m->line && *m->line)
 		ft_add_history(m, m->line);
 

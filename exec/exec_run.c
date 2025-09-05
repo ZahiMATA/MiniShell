@@ -22,10 +22,12 @@ static void	redir_in(t_minishell *m, t_cmd *cmd)
 		if (redir->type == N_REDIR_LEFT)
 		{
 			m->fd_in = open(redir->file, O_RDONLY);
-			if (m->fd_in == -1 && m->error)
+			if (m->fd_in == -1)
 			{
-				m->last_status = EXIT_FAILURE;
-				m->error = ft_strdup(redir->file);
+				ft_exit_err(m, EXIT_FAILURE, \
+					ft_perror(MINISHELL, redir->file, ERROR_PERMISSION));
+				/*m->last_status = EXIT_FAILURE;
+				m->error = ft_strdup(redir->file);*/
 			}
 			else if (dup2(m->fd_in, STDIN_FILENO) == -1)
 				ft_exit_fail(m, ERROR_DUP2);
@@ -56,9 +58,11 @@ static void	redir_out(t_minishell *m, t_cmd *cmd)
 			m->fd_out = open(redir->file, OW | OC | OT, FLAG_FIC);
 			if (m->fd_out == -1)
 			{
-				m->last_status = EXIT_FAILURE; // TODO A voir si on quitte ici ou pas
+				ft_exit_err(m, EXIT_FAILURE, \
+					ft_perror(MINISHELL, redir->file, ERROR_PERMISSION));
+				/*m->last_status = EXIT_FAILURE; // TODO A voir si on quitte ici ou pas
 				mem_free_null(&m->error, "error");
-				m->error = ft_strdup(redir->file);
+				m->error = ft_strdup(redir->file);*/
 			}
 			else if (dup2(m->fd_out, STDOUT_FILENO) == -1)
 				ft_exit_fail(m, ERROR_DUP2);
@@ -107,11 +111,13 @@ static void	launch_process(t_minishell *m, t_cmd *cmd, int n, int pipes[][2])
 		close(pipes[i][1]);
 		i++;
 	}
-	if (m->last_status != 0)
+
+	/*if (m->last_status != 0)
 	{
 		ft_return_error(m, m->error, S_EMPTY, m->last_status);
 		mem_free_null(&m->error, "error");
-	}
+	}*/
+
 	// debug_var(cmd->args[0]);
 	// debug_var(cmd->args[1]);
 	// debug_var_i(n);
