@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 19:27:46 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/07 16:53:11 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/07 17:01:59 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@ int	is_builin_parent(char *s)
 int	is_builin_child(char *s)
 {
 	return (
+		ft_strcmp(s, "cd") == 0 ||
+		ft_strcmp(s, "exit") == 0 ||
+		ft_strcmp(s, "export") == 0 ||
+		ft_strcmp(s, "unset") == 0 ||
 		ft_strcmp(s, "echo") == 0 ||
 		ft_strcmp(s, "env") == 0 ||
 		ft_strcmp(s, "pwd") == 0 ||
