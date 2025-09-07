@@ -23,12 +23,8 @@ void	redir_in(t_minishell *m, t_cmd *cmd)
 		{
 			m->fd_in = open(redir->file, O_RDONLY);
 			if (m->fd_in == -1)
-			{
 				ft_exit_err(m, EXIT_FAILURE, \
 					ft_perror(MINISHELL, redir->file, ERROR_PERMISSION));
-				/*m->last_status = EXIT_FAILURE;
-				m->error = ft_strdup(redir->file);*/
-			}
 			else if (dup2(m->fd_in, STDIN_FILENO) == -1)
 				ft_exit_fail(m, ERROR_DUP2);
 			close(m->fd_in);
@@ -57,13 +53,8 @@ void	redir_out(t_minishell *m, t_cmd *cmd)
 		{
 			m->fd_out = open(redir->file, OW | OC | OT, FLAG_FIC);
 			if (m->fd_out == -1)
-			{
 				ft_exit_err(m, EXIT_FAILURE, \
 					ft_perror(MINISHELL, redir->file, ERROR_PERMISSION));
-				/*m->last_status = EXIT_FAILURE; // TODO A voir si on quitte ici ou pas
-				mem_free_null(&m->error, "error");
-				m->error = ft_strdup(redir->file);*/
-			}
 			else if (dup2(m->fd_out, STDOUT_FILENO) == -1)
 				ft_exit_fail(m, ERROR_DUP2);
 			close(m->fd_out);
@@ -72,11 +63,8 @@ void	redir_out(t_minishell *m, t_cmd *cmd)
 		{
 			m->fd_out = open(redir->file, OW | OC | OA, FLAG_FIC);
 			if (m->fd_out == -1)
-			{
-				m->last_status = EXIT_FAILURE; // TODO A voir si on quitte ici ou pas
-				mem_free_null(&m->error, "error");
-				m->error = ft_strdup(redir->file);
-			}
+				ft_exit_err(m, EXIT_FAILURE, \
+					ft_perror(MINISHELL, redir->file, ERROR_PERMISSION));
 			else if (dup2(m->fd_out, STDOUT_FILENO) == -1)
 				ft_exit_fail(m, ERROR_DUP2);
 			close(m->fd_out);
@@ -121,6 +109,8 @@ static void	launch_process(t_minishell *m, t_cmd *cmd, int n, int pipes[][2])
 	// debug_var(cmd->args[0]);
 	// debug_var(cmd->args[1]);
 	// debug_var_i(n);
+	if (cmd->args == NULL)
+		ft_exit_error(m, ERROR_NO_COM, NULL, EXIT_COMMAND_NOT_FOUND);
 	if (cmd->args && is_builin_child(cmd->args[0]))
 	{
 		status = exec_builtin(m, cmd/*->args[0]*/);

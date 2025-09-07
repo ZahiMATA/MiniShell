@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/07 16:52:28 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/07 19:07:20 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@
 # define ERROR_PIPE "Error: Pipe"
 # define ERROR_PERMISSION "Permission denied"
 # define ERROR_COM "Command not found"
+# define ERROR_NO_COM "No command"
 # define ERROR_DIR "Is a directory"
 # define ERROR_NOT_DIR "Not a directory"
 # define ERROR_NOSUCH "No such file or directory"
