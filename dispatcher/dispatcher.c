@@ -6,26 +6,33 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 19:27:46 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/07 12:39:16 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/07 16:53:11 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_builin(char *s)
+int	is_builin_parent(char *s)
 {
 	return (
 		ft_strcmp(s, "cd") == 0 ||
-		ft_strcmp(s, "echo") == 0 ||
-		ft_strcmp(s, "env") == 0 ||
 		ft_strcmp(s, "exit") == 0 ||
 		ft_strcmp(s, "export") == 0 ||
+		ft_strcmp(s, "unset") == 0
+	);
+}
+
+int	is_builin_child(char *s)
+{
+	return (
+		ft_strcmp(s, "echo") == 0 ||
+		ft_strcmp(s, "env") == 0 ||
 		ft_strcmp(s, "pwd") == 0 ||
-		ft_strcmp(s, "unset") == 0 ||
 		ft_strcmp(s, "history") == 0 ||
 		ft_strcmp(s, ":") == 0
 	);
 }
+
 
 int	exec_builtin(t_minishell *m, t_cmd *cmd)
 {
@@ -56,7 +63,7 @@ void	dispatch(t_minishell *m)
 {
 	if (m->cmds && m->cmds->args)
 		ms_expand_all_cmds(m);
-	if (m->cmds && m->cmds->args && m->nb_cmd == 1 && is_builin(m->cmds->args[0]))
+	if (m->cmds && m->cmds->args && m->nb_cmd == 1 && is_builin_parent(m->cmds->args[0]))
 	{
 		m->cmds->status = exec_builtin(m, m->cmds);
 		m->last_status = m->cmds->status;

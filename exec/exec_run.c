@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static void	redir_in(t_minishell *m, t_cmd *cmd)
+void	redir_in(t_minishell *m, t_cmd *cmd)
 {
 	t_redir	*redir;
 
@@ -46,7 +46,7 @@ static void	redir_in(t_minishell *m, t_cmd *cmd)
 	}
 }
 
-static void	redir_out(t_minishell *m, t_cmd *cmd)
+void	redir_out(t_minishell *m, t_cmd *cmd)
 {
 	t_redir	*redir;
 
@@ -121,7 +121,7 @@ static void	launch_process(t_minishell *m, t_cmd *cmd, int n, int pipes[][2])
 	// debug_var(cmd->args[0]);
 	// debug_var(cmd->args[1]);
 	// debug_var_i(n);
-	if (cmd->args && is_builin(cmd->args[0]))
+	if (cmd->args && is_builin_child(cmd->args[0]))
 	{
 		status = exec_builtin(m, cmd/*->args[0]*/);
 		//status = cmd->status;

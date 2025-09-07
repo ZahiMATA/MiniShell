@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/07 13:20:38 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/07 16:52:28 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,6 +197,9 @@ int		ft_g_signal(t_minishell *m);
 void	setup_signals(void);
 void	setup_signals_for_children(void);
 int		exec_builtin(t_minishell *m, t_cmd *cmd);
-int		is_builin(char *s);
+int		is_builin_parent(char *s);
+int		is_builin_child(char *s);
+void	redir_in(t_minishell *m, t_cmd *cmd);
+void	redir_out(t_minishell *m, t_cmd *cmd);
 
 #endif

@@ -38,6 +38,7 @@ int verif_arg(char *argv)
 }
 int ft_echo(t_minishell *m, t_cmd *cmd)
 {
+
 	int yes_backslash_n;
 	int i;
 
@@ -69,7 +70,6 @@ int ft_echo(t_minishell *m, t_cmd *cmd)
 	if (yes_backslash_n == 1)
 		return(0);
 	write(1, "\n", 1);
-	//m->status = 0; // TODO a vour ou le placer de facon generale
 	return(0);
 }
 /*
