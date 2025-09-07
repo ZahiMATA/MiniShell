@@ -109,8 +109,9 @@ static void	launch_process(t_minishell *m, t_cmd *cmd, int n, int pipes[][2])
 	// debug_var(cmd->args[0]);
 	// debug_var(cmd->args[1]);
 	// debug_var_i(n);
+	//if ()
 	if (cmd->args == NULL)
-		ft_exit_error(m, ERROR_NO_COM, NULL, EXIT_COMMAND_NOT_FOUND);
+		ft_exit_err(m, EXIT_SUCCESS, NULL);
 	if (cmd->args && is_builin_child(cmd->args[0]))
 	{
 		status = exec_builtin(m, cmd/*->args[0]*/);
