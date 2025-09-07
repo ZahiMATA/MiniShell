@@ -28,8 +28,9 @@ int	ft_exit(t_minishell *m, t_cmd *cmd)
 	if (!cmd || !cmd->args || !cmd->args[1])
 	{
 		ft_printf_fd(STDOUT_FILENO, "exit\n");
+		status = (unsigned char)m->last_status;
 		mem_free_all(m);
-		exit((unsigned char)m->last_status); /* exit avec dernier status */
+		exit(status); /* exit avec dernier status */
 	}
 	if (cmd->args[2]) /* trop d’arguments */
 	{
