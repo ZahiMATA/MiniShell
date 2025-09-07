@@ -198,14 +198,11 @@ void	exec_execve(t_minishell *m)
 
 int	decompress_status(t_minishell *m, int status)
 {
+	(void)m;
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	else if (WIFSIGNALED(status))
-	{
-		m->ctrl_c = 1;
-		//g_signal = GOT_CHILD_SIG;
 		return (128 + WTERMSIG(status));
-	}
 	return (1);
 }
 

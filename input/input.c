@@ -18,56 +18,9 @@ char	*read_input(t_minishell *m, int got_signal)
 {
 	(void)got_signal;
 	g_signal |= RDL_FLAG;
-	//debug_var_i(got_signal);
-	/*if (1)
-		m->line = readline(PROMPT);
-	else
-	{
-		if (got_signal == GOT_NO_SIGNAL)
-			m->line = readline(PROMPT);
-		else
-		{
-			m->line = readline("");
-			//rl_replace_line("", 0);
-			// rl_on_new_line();
-			//if(1) rl_redisplay();
-
-		}
-	}*/
-//	if (m-> ctrl_c == 0)
-		m->line = readline(PROMPT);
-		g_signal &= ~RDL_FLAG;
-		//debug_var("i");
-	// else
-	// 	m->line = readline("");
-	m->ctrl_c = 0;
-	/*(void)got_signal;
-	// rl_replace_line(PROMPT, 0);
-	// rl_on_new_line();
-	// rl_redisplay();
-	//m->line = readline(PROMPT);
-	if (got_signal == GOT_NO_SIGNAL)
-	{
-		m->line = readline(PROMPT);
-		//  if (m->line == NULL && feof(stdin) == 0)
-		//  	return NULL;
-	}
-	else
-	{
-		 m->line = readline("");
-		// if (m->line == NULL && feof(stdin) == 0)
-		// 	return NULL;
-//	 	m->line = readline("\033[C\b");
-//	 	m->line = readline("\033[D\033[C");
-	}*/
-
-
+	m->line = readline(PROMPT);
+	g_signal &= ~RDL_FLAG;
 	if (m->line && *m->line)
 		ft_add_history(m, m->line);
-
-	// rl_replace_line("", 0);
-	// rl_on_new_line();
-	// rl_redisplay();
-
 	return m->line;
 }

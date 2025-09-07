@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 19:27:46 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/03 18:06:04 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/07 12:39:16 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ int	is_builin(char *s)
 		ft_strcmp(s, "export") == 0 ||
 		ft_strcmp(s, "pwd") == 0 ||
 		ft_strcmp(s, "unset") == 0 ||
-		ft_strcmp(s, "history") == 0
+		ft_strcmp(s, "history") == 0 ||
+		ft_strcmp(s, ":") == 0
 	);
 }
 
@@ -46,6 +47,8 @@ int	exec_builtin(t_minishell *m, t_cmd *cmd)
 		 ret = ft_unset(m->cmds->args, &m->env_list);
 	if (ft_strcmp(cmd->args[0], "history") == 0)
 		ret = ft_history(m);
+	if (ft_strcmp(cmd->args[0], ":") == 0)
+		ret = ft_colon(m);
 	return (ret);
 }
 

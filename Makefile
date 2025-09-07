@@ -6,7 +6,7 @@
 #    By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/28 10:35:37 by ybouroga          #+#    #+#              #
-#    Updated: 2025/09/05 19:00:32 by ybouroga         ###   ########.fr        #
+#    Updated: 2025/09/07 12:53:43 by ybouroga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ SRCS = \
 	builtins/ft_pwd.c \
 	builtins/ft_unset.c \
 	builtins/ft_history.c \
+	builtins/ft_colon.c \
 	dispatcher/dispatcher.c \
 	expander/expand_env.c \
 	expander/expand_word.c \

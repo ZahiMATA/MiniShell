@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/05 20:20:00 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/07 13:20:38 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,6 @@ typedef struct s_minishell
 	char			*error;
 	int				status_echo;
 	int				last_status;
-	int				ctrl_c;
 	t_list			*history;
 }	t_minishell;
 
@@ -160,6 +159,7 @@ void	ft_lstclear_env(t_env **lst, void (*del)(void *));
 void	ft_lstiter_env(t_env *lst, void (*f)(void *, void *));
 void	ft_del_env_content(void *ptr);
 void	ft_return_error(t_minishell *m, char *mes1, char *mes2, int status);
+void	ft_return_err(t_minishell *m, int status, void *nop);
 void	ft_return_perror(t_minishell *m, char *message, int status);
 void	ft_exit_fail(t_minishell *m, char *message);
 void	ft_exit_fail_status(t_minishell *m, char *message, int status);
@@ -183,6 +183,7 @@ int		ft_exit(t_minishell *m, t_cmd *cmd);
 int		ft_export(char **args, t_env **env_list);
 int		ft_pwd(void);
 int		ft_unset(char **arg, t_env **env_list);
+int		ft_colon(t_minishell *m);
 char	*ms_env_get(t_env *env, const char *key);
 void	ms_expand_all_cmds(t_minishell *m);
 char	*ms_expand_word(t_minishell *m, const char *s);

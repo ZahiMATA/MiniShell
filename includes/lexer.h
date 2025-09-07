@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 12:18:08 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/02 19:41:05 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/07 14:04:12 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@
 # endif
 # define ERROR_SYNTAX "Syntax error"
 # define ERROR_STRINGNOTCLOSED "String must be closed"
-# define ERROR_NL "Syntax error near unexpected token `newline'"
+# define ERROR_SENUT "Syntax error near unexpected token"
+# define S_NEWLINE "`newline'"
 # define RETURN_NL 2
 
 typedef struct s_minishell	t_minishell;
@@ -76,5 +77,6 @@ int				ft_islexer(int c);
 void			parser(t_minishell *m);
 int 			ft_is_stringword(t_token_list *t);
 int				ft_is_redir(t_token_list *t);
+char			*ft_get_token(t_token_list *t);
 
 #endif

@@ -6,36 +6,30 @@
 #include "minishell.h"
 
 volatile sig_atomic_t	g_signal;
-//volatile sig_atomic_t g_readline_active = 0;
 
 static void sigint_handler(int sig)
 {
 	(void)sig;
 	g_signal |= SIG_FLAG;
-	//int i = g_signal + '0';
-	//write(STDOUT_FILENO, &i, 1);
 	write(STDOUT_FILENO, "\n", 1);
-	 //write(STDOUT_FILENO, PROMPT, strlen(PROMPT));
-	//write(STDOUT_FILENO, "\n", 1);
-
-	//if (rl_line_buffer)
-	//if(!(rl_line_buffer && *rl_line_buffer))
-	//if (g_signal != GOT_CHILD_SIG )
 	if(g_signal & RDL_FLAG)
 	{
-		if(1)rl_replace_line("", 0);
+		rl_replace_line("", 0);
 		rl_on_new_line();
-		if(1) rl_redisplay();
+		rl_redisplay();
 	}
 }
 
 /*static*/ void sigquit_handler(int sig)
 {
 	(void)sig;
+
 	write(STDOUT_FILENO, "\n", 1);
-			if(1)rl_replace_line("", 0);
-		rl_on_new_line();
-		if(1) rl_redisplay();
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
+
+
 	//write(STDOUT_FILENO, "\r  \r", 40);
 	//write(STDOUT_FILENO, "\n", 1);
 	// write(STDOUT_FILENO, "\n", 1);
@@ -46,7 +40,8 @@ void setup_signals(void)
 {
 	signal(SIGINT,  sigint_handler);
 	signal(SIGQUIT, SIG_IGN);
-	//signal(SIGQUIT, sigquit_handler);  TODO A VOIR
+	// signal(SIGQUIT, sigquit_handler); // TODO A VOIR
+	// signal(SIGQUIT, NULL); // TODO A VOIR
 }
 
 void setup_signals_for_children(void)

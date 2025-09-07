@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 18:29:42 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/02 19:40:30 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/07 13:14:37 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,12 @@ int	ft_is_redir(t_token_list *t)
 		t->token == T_DOUBLE_REDIRECT_LEFT ||
 		t->token == T_DOUBLE_REDIRECT_RIGHT
 	);
+}
+
+char	*ft_get_token(t_token_list *t)
+{
+	if (t == NULL || ft_strcmp(t->val, "\n") == 0)
+		return (S_NEWLINE);
+	else
+		return (t->val);
 }
