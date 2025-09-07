@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 10:50:18 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/07 18:54:21 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/07 20:12:44 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ int	ms_heredoc(t_minishell *m, char *limiter, int nop)
 	if (pipe(fd) == -1)
 		ft_exit_fail(m, ERROR_PIPE);
 	ms_launch_read(m, fd, limiter, nop);
+	// debug_var_i(fd[0]);
+	// debug_var_i(fd[1]);
 	//close(fd[1]);
 	return fd[0];
 }

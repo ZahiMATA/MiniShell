@@ -32,8 +32,12 @@ void	redir_in(t_minishell *m, t_cmd *cmd)
 		else if (redir->type == N_DOUBLE_REDIR_LEFT)
 		{
 			m->fd_in = ms_heredoc(m, redir->file, 0);
+			// debug_var("INOUT");
+			// debug_var_i(m->fd_in);
+			// debug_var_i(m->fd_out);
 			if (m->fd_in == -1)
-				return ;
+				ft_exit_err(m, EXIT_FAILURE, \
+					ft_perror(MINISHELL, redir->file, ERROR_PERMISSION));
 			if (dup2(m->fd_in, STDIN_FILENO) == -1)
 				ft_exit_fail(m, ERROR_DUP2);
 			close(m->fd_in);
