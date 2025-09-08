@@ -24,6 +24,7 @@ static void sigint_handler(int sig)
 {
 	(void)sig;
 
+	debug_var("test\n");
 	write(STDOUT_FILENO, "\n", 1);
 	rl_replace_line("", 0);
 	rl_on_new_line();
@@ -48,6 +49,8 @@ void setup_signals_for_children(void)
 {
 	signal(SIGINT,  SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
+	//signal(SIGINT, sigquit_handler); // TODO A VOIR
+	//signal(SIGQUIT, sigquit_handler); // TODO A VOIR
 }
 
 

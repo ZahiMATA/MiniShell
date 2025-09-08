@@ -214,7 +214,9 @@ int	set_last_status(t_minishell *m)
 	{
 		cmd->status = decompress_status(m, cmd->status_c);
 		m->last_status = cmd->status;
-		cmd = cmd ->next;
+		if (cmd->next == NULL && WIFSIGNALED(cmd->status_c) && WTERMSIG(cmd->status_c) == SIGQUIT)
+			ft_perror(S_QUIT, NULL, NULL);
+		cmd = cmd->next;
 	}
 	return (0);
 	//printf("cs=[%d]\n", tail->status);

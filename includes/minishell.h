@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/07 19:07:20 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/08 11:59:26 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@
 # define ERROR_DIR "Is a directory"
 # define ERROR_NOT_DIR "Not a directory"
 # define ERROR_NOSUCH "No such file or directory"
+# define S_QUIT "Quit (core dumped)"
 # define PATH "PATH="
 # define S_EMPTY ""
 # define OFST_FIRST_CMD 2
