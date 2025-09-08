@@ -152,7 +152,7 @@ void	exec_execve(t_minishell *m)
 	int		i;
 	t_cmd	*l;
 
-	ms_heredoc(m, "a", 0);
+	//ms_heredoc(m, "a", 0);
 
 	i = 0;
 	while (i < m->nb_cmd - 1)

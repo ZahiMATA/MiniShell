@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 18:29:42 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/07 13:14:37 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/08 14:34:06 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,12 @@ int	ft_islexer(int c)
 	return (ft_isspace(c) || (c == '|') || (c == '<') || (c == '>')
 		|| (c == '"') || (c == '\''));
 }
+
+int	ft_issublexer(int c)
+{
+	return (ft_isspace(c) || (c == '|') || (c == '<') || (c == '>'));
+}
+
 
 int ft_is_stringword(t_token_list *t)
 {

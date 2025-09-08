@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 11:23:17 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/05 10:47:55 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/08 20:13:26 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,49 @@ static void	add_token(t_param *_, t_token token, char *val, int len)
 	_->i += len;
 }
 
-static void	lexer_string(t_param *_, char c, int offset)
+ void	lexer_quote(t_param *_, char c, int offset)
 {
+
+	char	*s;
+	int		start;
+	int		open_q;
+	int		open_s;
+
+	open_q = 0;
+	open_s = 0;
+	start = _->i;
+	_->i += offset;
+	// debug_var_i(_->i);
+	while (_->m->line[_->i] &&  _->m->line[_->i] != c)
+	{
+		// debug_var_i(_->i);
+		// debug_var_i(_->m->line[_->i]);
+		if (_->m->line[_->i] == '"' && open_q == 0)
+			open_s = !open_s;
+		else if (_->m->line[_->i] == '\'' && open_s == 0)
+			open_q = !open_q;
+		if (ft_strncmp(_->m->line + _->i, "\\\"", 2) == 0)
+			_->i++;
+		_->i++;
+	}
+
+	// debug_var_i(_->i);
+	//if (open_q != 0 || open_s != 0)
+	if (_->m->line[_->i] == '\0')
+	{
+		ft_return_error(_->m, ERROR_SYNTAX, ERROR_STRINGNOTCLOSED, EXIT_FAILURE);
+		lex_lstclear(&_->m->token_list);
+		return ;
+	}
+	s = ft_substring(_->m->line, start , (_->i - start) + 1);
+	if (s == NULL)
+		ft_exit_fail_status(_->m, NULL, EXIT_ALLOC_ERROR);
+	add_token(_, T_WORD, s, 0);
+	_->i++;
+	mem_free(s, "lexer_string.s", s);
+
+
+	/*
 	char	*s;
 	int		start;
 
@@ -49,29 +90,136 @@ static void	lexer_string(t_param *_, char c, int offset)
 		ft_exit_fail_status(_->m, NULL, EXIT_ALLOC_ERROR);
 	add_token(_, T_STRING, s, 0);
 	_->i++;
-	mem_free(s, "lexer_string.s", s);
-}
+	mem_free(s, "lexer_string.s", s);*/
 
-static void lexer_word(t_param *_, int offset)
-{
+	/*
 	char	*s;
 	int		start;
+Expected: [5][echo][5]['hello\"World\']
 
 	start = _->i;
 	_->i += offset;
-	while (_->m->line[_->i] && !ft_islexer(_->m->line[_->i]))
+	while (_->m->line[_->i] && _->m->line[_->i] != c)
 	{
-		if (ft_strncmp(_->m->line + _->i, "\\\"", 2) == 0)
-			_->i++;
-		if (ft_strncmp(_->m->line + _->i, "\\'", 2) == 0)
+		if (_->m->line[_->i] == '\\' && _->m->line[_->i + 1] == c)
 			_->i++;
 		_->i++;
+	}
+	if (_->m->line[_->i] == '\0')
+	{
+		ft_return_error(_->m, ERROR_SYNTAX, ERROR_STRINGNOTCLOSED, EXIT_FAILURE);
+		lex_lstclear(&_->m->token_list);
+		return ;
+	}
+	s = ft_substring(_->m->line, start , (_->i - start) + 1);
+	if (s == NULL)
+		ft_exit_fail_status(_->m, NULL, EXIT_ALLOC_ERROR);
+	add_token(_, T_WORD, s, 0);
+	_->i++;
+	mem_free(s, "lexer_string.s", s);
+
+	char	*s;
+	int		start;
+	int		open_q;
+	int		open_s;
+
+	(void)c;
+	open_q = 0;
+	open_s = 0;
+	start = _->i;
+	_->i += offset;
+	while (_->m->line[_->i])
+	{
+		if (_->m->line[_->i] == '"' && open_q == 0)
+			open_s = !open_s;
+		else if (_->m->line[_->i] == '\'' && open_s == 0)
+			open_q = !open_q;
+		else if (ft_strncmp(_->m->line + _->i, "\\\"", 2) == 0)
+			_->i++;
+		else if (ft_strncmp(_->m->line + _->i, "\\'", 2) == 0)
+			_->i++;
+		else if (open_q == 0 && open_s == 0 && ft_issublexer(_->m->line[_->i]))
+			break;
+		_->i++;
+	}
+	if (open_q != 0 || open_s != 0)
+	{
+		ft_return_error(_->m, ERROR_SYNTAX, ERROR_STRINGNOTCLOSED, EXIT_FAILURE);
+		lex_lstclear(&_->m->token_list);
+		return ;
+	}
+	s = ft_substring(_->m->line, start, _->i - start);
+	if (s == NULL)
+		ft_exit_fail_status(_->m, NULL, EXIT_ALLOC_ERROR);
+	add_token(_, T_WORD, s, 0);
+	mem_free(s, "lexer_word", s);*/
+}
+
+/*static*/ void lexer_word(t_param *_, char c, int offset)
+{
+	char	*s;
+	int		start;
+	int		open_q;
+	int		open_s;
+
+	(void)c;
+	open_q = 0;
+	open_s = 0;
+	start = _->i;
+	_->i += offset;
+	while (_->m->line[_->i])
+	{
+		if (_->m->line[_->i] == '"' && open_q == 0)
+			open_s = !open_s;
+		else if (_->m->line[_->i] == '\'' && open_s == 0)
+			open_q = !open_q;
+		else if (ft_strncmp(_->m->line + _->i, "\\\"", 2) == 0)
+			_->i++;
+		else if (ft_strncmp(_->m->line + _->i, "\\'", 2) == 0)
+			_->i++;
+		else if (open_q == 0 && open_s == 0 && ft_issublexer(_->m->line[_->i]))
+			break;
+		_->i++;
+	}
+	if (open_q != 0 || open_s != 0)
+	{
+		ft_return_error(_->m, ERROR_SYNTAX, ERROR_STRINGNOTCLOSED, EXIT_FAILURE);
+		lex_lstclear(&_->m->token_list);
+		return ;
 	}
 	s = ft_substring(_->m->line, start, _->i - start);
 	if (s == NULL)
 		ft_exit_fail_status(_->m, NULL, EXIT_ALLOC_ERROR);
 	add_token(_, T_WORD, s, 0);
 	mem_free(s, "lexer_word", s);
+/*
+	(void)c;
+	 char *s;
+    int start = _->i;
+    _->i += offset;
+
+    while (_->m->line[_->i] && !ft_issublexer(_->m->line[_->i]))
+    {
+        if (_->m->line[_->i] == '"' || _->m->line[_->i] == '\'')
+        {
+            lexer_quote(_, _->m->line[_->i], 1);
+            start = _->i; // reset start for next segment
+        }
+        else if (_->m->line[_->i] == '\\' && (_->m->line[_->i + 1] == '"' || _->m->line[_->i + 1] == '\''))
+        {
+            _->i++; // skip backslash
+        }
+        _->i++;
+    }
+
+    if (_->i > start)
+    {
+        s = ft_substring(_->m->line, start, _->i - start);
+        if (!s)
+            ft_exit_fail_status(_->m, NULL, EXIT_ALLOC_ERROR);
+        add_token(_, T_WORD, s, 0);
+        mem_free(s, "lexer_word", s);
+    }*/
 }
 
 void	lexer(t_minishell *m/*, char *line*/)
@@ -96,15 +244,23 @@ void	lexer(t_minishell *m/*, char *line*/)
 			add_token(&_, T_REDIRECT_LEFT, "<", 1);
 		else if (m->line[_.i] == '>')
 			add_token(&_, T_REDIRECT_RIGHT, ">", 1);
-		else if (ft_strncmp(m->line + _.i, "\\\"", 2) == 0)
-		 	lexer_word(&_, 2);
-		else if (ft_strncmp(m->line + _.i, "\\'", 2) == 0)
-		 	lexer_word(&_, 2);
-		else if (m->line[_.i] == '"')
-			lexer_string(&_, '"', 1);
+		// else if (ft_strncmp(m->line + _.i, "\\\"", 2) == 0)
+		//  	lexer_word(&_, 2);
+		// else if (ft_strncmp(m->line + _.i, "\\'", 2) == 0)
+		//  	lexer_word(&_, 2);
+		/*else if (m->line[_.i] == '"')
+			//lexer_quote(&_, '"', 1);
+			lexer_word(&_, '"', 0);
 		else if (m->line[_.i] == '\'')
-			lexer_string(&_, '\'', 1);
+			//lexer_quote(&_, '\'', 1);
+			lexer_word(&_, '\'', 0);
 		else
-			lexer_word(&_, 0);
+			lexer_word(&_, m->line[_.i], 0);*/
+		else if (/*m->line[_.i] == '"' ||*/ m->line[_.i] == '\'')
+			lexer_quote(&_, m->line[_.i], 1);
+			//lexer_word(&_, m->line[_.i], 0);
+		else
+			lexer_word(&_, m->line[_.i], 0);
+			//lexer_quote(&_, m->line[_.i], 0);
 	}
 }

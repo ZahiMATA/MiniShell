@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 12:18:08 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/07 14:04:12 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/08 19:03:36 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ typedef enum e_token
 	T_REDIRECT_RIGHT,
 	T_DOUBLE_REDIRECT_LEFT,
 	T_DOUBLE_REDIRECT_RIGHT,
-	T_STRING,
 	T_WORD,
+	T_STRING,
 } t_token;
 
 // [input <] [output >] [heredoc <<] [append >>]
@@ -74,6 +74,7 @@ void			lex_lstadd_back(t_token_list **lst, t_token_list *new);
 void			lex_lstclear(t_token_list **lst);
 void		 	lexer(t_minishell *m/*, char *line*/);
 int				ft_islexer(int c);
+int				ft_issublexer(int c);
 void			parser(t_minishell *m);
 int 			ft_is_stringword(t_token_list *t);
 int				ft_is_redir(t_token_list *t);
