@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zmata <zmata@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 10:50:18 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/09 14:59:04 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/09 15:43:40 by zmata            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,12 @@ static	void ms_launch_read(t_minishell *m, int fd[2], char *limiter, int nop)
 			}
 			if ( m->line && ft_strcmp(m->line, limiter) == 0)
 				break;
-			ft_putstr_fd(m->line, fd[1]);
+			ft_putstr_fd( ms_expand_word(m, m->line), fd[1]);
 			ft_putchar_fd('\n', fd[1]);
 			mem_free_null(&m->line, "ms_launch_child.line");
 		}
 	}
+
 	close(fd[1]);
 	mem_free_null(&m->line, "ms_launch_child.line");
 }
