@@ -52,14 +52,24 @@ char	*ms_expand_word(t_minishell *m, const char *s)
 	while (s[i])
 	{
 		if (s[i] == '\'' && !in_d)
+		{
 			in_s = !in_s;
+			i++;
+			continue ;
+		}
 		else if (s[i] == '\"' && !in_s)
+		{
 			in_d = !in_d;
+			i++;
+			continue ;
+		}
 		else if (s[i] == '$' && !in_s)
 		{
 			if (s[i + 1] == '?')
 			{
-				char *num = ft_itoa(m->last_status);
+				char	*num;
+
+				num = ft_itoa(m->last_status);
 				out = append_str(out, num);
 				free(num);
 				i += 2;
@@ -73,10 +83,11 @@ char	*ms_expand_word(t_minishell *m, const char *s)
 			}
 			if (is_name_start(s[i + 1]))
 			{
-				int		j = i + 1;
+				int		j;
 				char	*name;
 				char	*val;
 
+				j = i + 1;
 				while (is_name_char(s[j]))
 					j++;
 				name = ft_substring(s, i + 1, j - (i + 1));
@@ -92,3 +103,4 @@ char	*ms_expand_word(t_minishell *m, const char *s)
 	}
 	return (out);
 }
+
