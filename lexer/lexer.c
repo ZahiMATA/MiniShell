@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 11:23:17 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/09 10:44:28 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/09 11:05:16 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,19 +30,19 @@ static void	add_token(t_param *_, t_token token, char *val, int len)
 
 	char	*s;
 	int		start;
-	int		open_q;
-	int		open_s;
+	// int		open_q;
+	// int		open_s;
 
-	open_q = 0;
-	open_s = 0;
+	// open_q = 0;
+	// open_s = 0;
 	start = _->i;
 	_->i += offset;
 	while (_->m->line[_->i] &&  _->m->line[_->i] != c)
 	{
-		if (_->m->line[_->i] == '"' && open_q == 0)
+		/*if (_->m->line[_->i] == '"' && open_q == 0)
 			open_s = !open_s;
 		else if (_->m->line[_->i] == '\'' && open_s == 0)
-			open_q = !open_q;
+			open_q = !open_q;*/
 		if (ft_strncmp(_->m->line + _->i, "\\\"", 2) == 0)
 			_->i++;
 		_->i++;

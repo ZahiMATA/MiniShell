@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 10:50:18 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/07 20:12:44 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/09 14:51:38 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,17 @@ static	void ms_launch_read(t_minishell *m, int fd[2], char *limiter, int nop)
 {
 	(void)nop;
 	///close(fd[0]);
+	// int tty_fd = open("/dev/tty", O_RDWR);
+	// if (tty_fd == -1)
+	// ft_exit_fail(m, "ERROR_OPEN_TTY");
+
 	while (1)
 	{
-		m->line = readline(PROMPT_HEREDOC);
+		//m->line = readline(PROMPT_HEREDOC);
+		ft_printf_fd(STDERR_FILENO, "%s", PROMPT_HEREDOC);
+		m->line = read_line(m, STDERR_FILENO);
+		if (m->line && ft_strlen(m->line) >= 1)
+			m->line[ft_strlen(m->line) - 1] = 0;
 		//debug_var(m->line);
 		{
 			//debug_var(m->line);
@@ -33,6 +41,7 @@ static	void ms_launch_read(t_minishell *m, int fd[2], char *limiter, int nop)
 			{
 				break;
 			}
+			// ft_printf_fd(fd[1], "fd0=%d:fd1=%d:in=%d:out=%d\n", fd[0], fd[1], STDIN_FILENO, STDOUT_FILENO);
 			ft_putstr_fd(m->line, fd[1]);
 			ft_putchar_fd('\n', fd[1]);
 			mem_free_null(&m->line, "ms_launch_child.line");
