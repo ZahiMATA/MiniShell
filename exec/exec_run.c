@@ -63,7 +63,7 @@ void	redir_out(t_minishell *m, t_cmd *cmd)
 				ft_exit_fail(m, ERROR_DUP2);
 			close(m->fd_out);
 		}
-		/*else if (redir->type == N_DOUBLE_REDIR_RIGHT)
+		else if (redir->type == N_DOUBLE_REDIR_RIGHT)
 		{
 			m->fd_out = open(redir->file, OW | OC | OA, FLAG_FIC);
 			if (m->fd_out == -1)
@@ -72,7 +72,7 @@ void	redir_out(t_minishell *m, t_cmd *cmd)
 			else if (dup2(m->fd_out, STDOUT_FILENO) == -1)
 				ft_exit_fail(m, ERROR_DUP2);
 			close(m->fd_out);
-		}*/
+		}
 		redir = redir->next;
 	}
 }
