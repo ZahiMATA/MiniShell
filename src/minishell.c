@@ -22,7 +22,7 @@ void	test0(char **env)
 	{
 		exec_init_minishell(&m);
 		ft_putstr_fd(PROMPT, STDOUT_FILENO);
-		line = read_input(m, STDIN_FILENO);
+		line = read_input(m, PROMPT/*, STDIN_FILENO*/);
 		if (line == NULL)
 			continue;
 		if (*line == '\0')
@@ -54,7 +54,7 @@ void	test1(char **env)
 	while (1)
 	{
 		//if(got_signal == GOT_NO_SIGNAL) ft_putstr(PROMPT);
-		m->line = read_input(m, 0);
+		m->line = read_input(m, PROMPT/*, STDIN_FILENO*/);
 		ft_g_signal(m);
 		//debug_var(m->line);
 		lexer(m);

@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/09 14:53:50 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/09 19:46:57 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "lexer.h"
 # include "parser.h"
 # include "libft.h"
+# include "get_next_line.h"
 # include "ft_printf.h"
 # include <unistd.h>
 # include <stdio.h>
@@ -68,6 +69,7 @@
 # define ERROR_EXECVE "Error: Execve"
 # define ERROR_ACCESS "Error: Acsetup_signals_for_childrencess"
 # define ERROR_FORK "Error: Fork"
+# define ERROR_DUP "Error: Dup"
 # define ERROR_DUP2 "Error: Dup2"
 # define ERROR_PIPE "Error: Pipe"
 # define ERROR_PERMISSION "Permission denied"
@@ -170,8 +172,8 @@ void	ft_exit_error(t_minishell *m, char *mes1, char *mes2, int status);
 void	ft_exit_err(t_minishell *m, int status, void *nop);
 void	ft_exit_with_status(t_minishell *m, char *message, int status);
 char 	*ft_substring(const char *s, int start, int len);
-char	*read_input(t_minishell *m, int fd);
-char	*read_line(t_minishell *m, int fd);
+char	*read_input(t_minishell *m, char * prompt);
+char	*get_input(void);
 char	**env_list_to_tab(t_minishell *m, t_env *env);
 void	 debug_pointer(void *p);
 void	debug_var(const char *s);
