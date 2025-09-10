@@ -29,7 +29,7 @@ char	*get_input(void)
 	{
 		//debug_var("2");
 		line = get_next_line(STDIN_FILENO);
-		if (line && line[ft_strlen(line) - 1] == '\n')
+		if (line && *line && line[ft_strlen(line) - 1] == '\n')
 			line[ft_strlen(line) - 1] = '\0';
 	}
 	return (line);

@@ -21,7 +21,8 @@ static int  atoll_overflow(const char *s, long long *out)
     }
     /* limite absolue selon le signe (LLONG_MIN = -9223372036854775808) */
     cut = (sign == 1) ? (unsigned long long)LLONG_MAX
-                      : (unsigned long long)(-(LLONG_MIN + 0LL));
+                      :     (unsigned long long)LLONG_MAX + 1ULL;
+                          //: (unsigned long long)(-(LLONG_MIN + 0LL));
     while (s[i])
     {
         dig = (unsigned int)(s[i] - '0');

@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/09 19:46:57 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/10 16:36:28 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@
 # define ERROR_FORK "Error: Fork"
 # define ERROR_DUP "Error: Dup"
 # define ERROR_DUP2 "Error: Dup2"
+# define ERROR_TTY "Cannot open /dev/tty"
 # define ERROR_PIPE "Error: Pipe"
 # define ERROR_PERMISSION "Permission denied"
 # define ERROR_COM "Command not found"
