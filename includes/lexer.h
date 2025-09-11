@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 12:18:08 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/11 12:31:24 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/11 14:47:48 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #  define DEBUG_LEX 0
 # endif
 # define ERROR_SYNTAX "Syntax error"
+# define ERROR_QUOTENOTCLOSED "Quote must be closed"
 # define ERROR_STRINGNOTCLOSED "String must be closed"
 # define ERROR_SENUT "Syntax error near unexpected token"
 # define S_NEWLINE "`newline'"
@@ -62,6 +63,8 @@ typedef struct s_param
 	//t_token_list	*token_list;
 	int				i;
 	int				start;
+	int				open_q;
+	int				open_s;
 	//char			*line;
 	//int				ret;
 } t_param;
