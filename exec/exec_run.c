@@ -114,6 +114,9 @@ static void	launch_process(t_minishell *m, t_cmd *cmd, int n, int pipes[][2])
 	// debug_var(cmd->args[1]);
 	// debug_var_i(n);
 	//if ()
+	// debug_var(cmd->cmd_abs);
+	// debug_var(cmd->args[0]);
+	// debug_var(cmd->args[1]);
 	if (cmd->args == NULL)
 		ft_exit_err(m, EXIT_SUCCESS, NULL);
 	if (cmd->args && is_builin_child(cmd->args[0]))
@@ -135,6 +138,8 @@ static void	launch_process(t_minishell *m, t_cmd *cmd, int n, int pipes[][2])
 		ft_exit_err(m, EXIT_PERMISSION, ft_perror(MINISHELL, cmd->cmd_abs, ERROR_PERMISSION));
 	else
 	{
+		// debug_var(cmd->cmd_abs);
+		// debug_var(cmd->args[0]);
 		env_tab = env_list_to_tab(m, m->env_list);
 		execve(cmd->cmd_abs, cmd->args, env_tab);
 		mem_free_array(&env_tab, "env_tab");
