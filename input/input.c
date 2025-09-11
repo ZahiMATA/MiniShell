@@ -37,7 +37,7 @@ char	*get_input(void)
 
 static void	*readinput(t_minishell *m, char * prompt)
 {
-	int	test = 0;
+	int	test = 1;
 	if (test)
 		m->line = get_input();
 	else

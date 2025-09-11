@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/10 16:36:28 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/11 11:20:28 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@
 # include <limits.h>
 # include <sys/stat.h>
 
+# ifndef DEBUG_TEST
+#  define DEBUG_TEST 1
+# endif
 # ifndef DEBUG
 #  define DEBUG 0
 # endif

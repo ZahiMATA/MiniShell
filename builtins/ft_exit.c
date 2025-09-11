@@ -63,7 +63,8 @@ int ft_exit(t_minishell *m, t_cmd *cmd)
 
     if (!cmd || !cmd->args || !cmd->args[1])
     {
-        ft_printf_fd(STDOUT_FILENO, "exit\n");
+        if (!DEBUG_TEST)
+            ft_printf_fd(STDOUT_FILENO, "exit\n");
         status = (unsigned char)m->last_status;
         mem_free_all(m);
         exit(status);
