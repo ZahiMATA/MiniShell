@@ -1,4 +1,5 @@
 #include "minishell.h"
+#include <limits.h>
 
 void	ft_add_history(t_minishell *m, char *s)
 {
@@ -17,7 +18,6 @@ void	ft_add_history(t_minishell *m, char *s)
 	}
 	ft_lstadd_back(&m->history, lst);
 }
-
 
 static int	is_numeric(const char *s)
 {
@@ -90,8 +90,58 @@ static void	free_split(char **tab)
 	free(tab);
 }
 
+static void	print_history_usage(void)
+{
+	ft_putstr_fd(
+		"history: usage: history [-c] [-d offset] [n] or history -anrw [filename] or history -ps arg [arg...]\n",
+		2);
+}
+
+static int	atoll_overflow(const char *s, long long *out)
+{
+	size_t				i;
+	int					sign;
+	unsigned long long	acc;
+	unsigned long long	limit;
+	unsigned int		d;
+
+	i = 0;
+	sign = 1;
+	acc = 0;
+	if (s[i] == '+' || s[i] == '-')
+	{
+		if (s[i] == '-')
+			sign = -1;
+		i++;
+	}
+	if (sign == 1)
+		limit = (unsigned long long)LLONG_MAX;
+	else
+		limit = (unsigned long long)(-LLONG_MIN);
+	while (s[i] != '\0')
+	{
+		d = (unsigned int)(s[i] - '0');
+		if (acc > (limit / 10))
+			return (1);
+		if (acc == (limit / 10) && d > (unsigned int)(limit % 10))
+			return (1);
+		acc = acc * 10 + d;
+		i++;
+	}
+	if (out != NULL)
+	{
+		if (sign == 1)
+			*out = (long long)acc;
+		else
+			*out = -(long long)acc;
+	}
+	return (0);
+}
+
 static int	parse_tokens(t_minishell *m, char **tok, int *n)
 {
+	long long	ll;
+
 	if (!tok || !tok[0] || ft_strcmp(tok[0], "history") != 0)
 	{
 		*n = -1;
@@ -102,13 +152,22 @@ static int	parse_tokens(t_minishell *m, char **tok, int *n)
 		*n = -1;
 		return (0);
 	}
+	if (tok[1][0] == '-' && tok[1][1] != '\0')
+	{
+		ft_putstr_fd("minishell: history: ", 2);
+		ft_putstr_fd(tok[1], 2);
+		ft_putstr_fd(": invalid option\n", 2);
+		print_history_usage();
+		m->last_status = 2;
+		return (1);
+	}
 	if (tok[2] != NULL)
 	{
 		ft_putstr_fd("minishell: history: too many arguments\n", 2);
 		m->last_status = 2;
 		return (1);
 	}
-	if (!is_numeric(tok[1]))
+	if (!is_numeric(tok[1]) || atoll_overflow(tok[1], &ll))
 	{
 		ft_putstr_fd("minishell: history: ", 2);
 		ft_putstr_fd(tok[1], 2);
@@ -116,10 +175,9 @@ static int	parse_tokens(t_minishell *m, char **tok, int *n)
 		m->last_status = 2;
 		return (1);
 	}
-	*n = ft_atoi(tok[1]);
+	*n = (int)ll;
 	return (0);
 }
-
 
 int	ft_history(t_minishell *m)
 {

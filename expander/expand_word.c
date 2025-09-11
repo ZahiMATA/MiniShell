@@ -51,6 +51,12 @@ char	*ms_expand_word(t_minishell *m, const char *s)
 		return (NULL);
 	while (s[i])
 	{
+		if (s[i] == '$' && s[i + 1] == '\"' && !in_s)
+		{
+			in_d = !in_d;
+			i += 2;
+			continue ;
+		}
 		if (s[i] == '\'' && !in_d)
 		{
 			in_s = !in_s;
@@ -103,4 +109,3 @@ char	*ms_expand_word(t_minishell *m, const char *s)
 	}
 	return (out);
 }
-
