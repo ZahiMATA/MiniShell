@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 11:23:17 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/09 11:05:16 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/11 12:32:58 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,16 @@ static void	add_token(t_param *_, t_token token, char *val, int len)
 	_->i += len;
 }
 
- void	lexer_quote(t_param *_, char c, int offset)
+void	lexer_subquote(t_param *_, char c, int offset)
 {
-
-	char	*s;
-	int		start;
+	//char	*s;
+	//int		start;
 	// int		open_q;
 	// int		open_s;
 
 	// open_q = 0;
 	// open_s = 0;
-	start = _->i;
+	_->start = _->i;
 	_->i += offset;
 	while (_->m->line[_->i] &&  _->m->line[_->i] != c)
 	{
@@ -47,13 +46,22 @@ static void	add_token(t_param *_, t_token token, char *val, int len)
 			_->i++;
 		_->i++;
 	}
+}
+
+ void	lexer_quote(t_param *_, char c, int offset)
+{
+	char	*s;
+	//int		start;
+
+	lexer_subquote(_, c, offset);
 	if (_->m->line[_->i] == '\0')
 	{
 		ft_return_error(_->m, ERROR_SYNTAX, ERROR_STRINGNOTCLOSED, EXIT_FAILURE);
 		lex_lstclear(&_->m->token_list);
-		return ;
+		return;
 	}
-	s = ft_substring(_->m->line, start , (_->i - start) + 1);
+
+	s = ft_substring(_->m->line, _->start , (_->i - _->start) + 1);
 	if (s == NULL)
 		ft_exit_fail_status(_->m, NULL, EXIT_ALLOC_ERROR);
 	add_token(_, T_WORD, s, 0);

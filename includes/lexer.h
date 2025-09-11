@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 12:18:08 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/08 19:03:36 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/11 12:31:24 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ typedef struct s_param
 	t_minishell		*m;
 	//t_token_list	*token_list;
 	int				i;
+	int				start;
 	//char			*line;
 	//int				ret;
 } t_param;
