@@ -63,7 +63,8 @@ int ft_exit(t_minishell *m, t_cmd *cmd)
 
     if (!cmd || !cmd->args || !cmd->args[1])
     {
-        ft_printf_fd(STDERR_FILENO, "exit\n");
+        //fou la merde sur le testeur
+        //ft_printf_fd(STDERR_FILENO, "exit\n");
         status = (unsigned char)m->last_status;
         mem_free_all(m);
         exit(status);
@@ -77,12 +78,12 @@ int ft_exit(t_minishell *m, t_cmd *cmd)
     {
         ft_printf_fd(STDERR_FILENO, "%s: exit: %s: numeric argument required\n",
             MINISHELL, cmd->args[1]);
-        ft_printf_fd(STDERR_FILENO, "exit\n");
+        //ft_printf_fd(STDERR_FILENO, "exit\n");
         mem_free_all(m);
         exit(2);
     }
     status = (int)(unsigned char)ll;
-    ft_printf_fd(STDERR_FILENO, "exit\n");
+    //ft_printf_fd(STDERR_FILENO, "exit\n");
     mem_free_all(m);
     exit(status);
 }
