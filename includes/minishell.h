@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/11 17:50:48 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/12 15:06:56 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,6 +198,7 @@ void	*ft_perror(char *mes1, char *mes2, char * mes3);
 int		ft_stat(const char *path);
 int		ft_is_dir(const char *path);
 int		ft_not_dir_but_file(char *path);
+int		ft_same_edges(char *s, int c);
 int		ms_heredoc(t_minishell *m, char *limiter, int expand);
 int		ft_g_signal(t_minishell *m);
 void	setup_signals(void);

@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 15:09:59 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/10 18:24:38 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/12 14:57:26 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,10 @@ int	ft_not_dir_but_file(char *path)
 		return (0);
 	if (path && *path && (path[ft_strlen(path) - 1] == '/'))
 	{
-		path[strlen(path) - 1] = 0;
+		path[ft_strlen(path) - 1] = 0;
 		if (ft_is_file(path))
 			is_file = 1;
-		path[strlen(path) - 1] = '/';
+		path[ft_strlen(path) - 1] = '/';
 	}
 	return (is_file);
 }

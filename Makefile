@@ -6,7 +6,7 @@
 #    By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/28 10:35:37 by ybouroga          #+#    #+#              #
-#    Updated: 2025/09/09 18:22:33 by ybouroga         ###   ########.fr        #
+#    Updated: 2025/09/12 15:06:28 by ybouroga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,6 +64,7 @@ SRCS = \
 	libft/ft_lstmap.c \
 	libft/ft_lstnew.c \
 	libft/ft_lstsize.c \
+	libft/ft_strtrim.c \
 	libft_ms/ft_exit.c \
 	libft_ms/ft_return.c \
 	libft_ms/ft_lstnew_env.c \
@@ -74,6 +75,7 @@ SRCS = \
 	libft_ms/ft_substring.c \
 	libft_ms/ft_print_err.c \
 	libft_ms/ft_files.c \
+	libft_ms/ft_string_utils.c \
 	memory/mem_free.c \
 	memory/mem_fd.c \
 	memory/mem_malloc.c \
