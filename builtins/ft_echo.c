@@ -1,103 +1,53 @@
 #include "minishell.h"
 #include <limits.h>
-# include <stdio.h>
-# include <stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <errno.h>
-#include <string.h> //TODO supp include
-// TODO FAIRE lexpand ???
-/*
-void	ft_putstr_fd(char *s, int fd) //TODO supp
+#include <string.h>
+
+int	verif_arg(char *arg)
 {
 	int	i;
 
-	i = 0;
-	if(!s)
-		return;
-	while (s[i])
-	{
-		write(fd, &s[i], 1);
+	if (!arg || arg[0] != '-')
+		return (1);
+	i = 1;
+	if (arg[i] == '\0')
+		return (1);
+	while (arg[i] == 'n')
 		i++;
-	}
+	if (arg[i] == '\0')
+		return (0);
+	return (1);
 }
-*/
-int verif_arg(char *argv)
+
+int	ft_echo(t_minishell *m, t_cmd *cmd)
 {
-	int i;
+	int	yes_backslash_n;
+	int	i;
 
-	i = 0;
-
-	if(argv[i] == '-')
-		i++;
-	while(argv[i] == 'n')
-		i++;
-	if(argv[i] == '\0')
-		return(0); //-n
-	else
-		return(1); // pas de -n
-}
-int ft_echo(t_minishell *m, t_cmd *cmd)
-{
-
-	int yes_backslash_n;
-	int i;
-
+	(void)m;
 	i = 1;
 	yes_backslash_n = 0;
-
-	while(cmd->args[i])
+	while (cmd->args[i] && verif_arg(cmd->args[i]) == 0)
 	{
-		if(verif_arg(cmd->args[i]) == 0)
-		{
-			yes_backslash_n = 1;
-			i++;
-		}
-		else
-			break;
+		yes_backslash_n = 1;
+		i++;
 	}
-	while(cmd->args[i])
+	while (cmd->args[i])
 	{
 		if (ft_strcmp(cmd->args[i], "$?") == 0)
-		{
 			ft_printf_fd(1, "%d", m->last_status);
-		}
 		else
 			ft_putstr_fd(cmd->args[i], 1);
 		if (cmd->args[i + 1])
 			write(1, " ", 1);
 		i++;
 	}
-	if (yes_backslash_n == 1)
-		return(0);
-	write(1, "\n", 1);
-	return(0);
+	if (yes_backslash_n == 0)
+		write(1, "\n", 1);
+	return (0);
 }
-/*
-int main(void)
-{
-    // Cas 1 : echo seul
-    char *test1[] = {"echo", NULL};
-    ft_echo(test1);
 
-    // Cas 2 : echo bonjour
-    char *test2[] = {"echo", "bonjour", NULL};
-    ft_echo(test2);
 
-    // Cas 3 : echo -n bonjour
-    char *test3[] = {"echo", "-n", "bonjour", NULL};
-    ft_echo(test3);
-
-    // Cas 4 : echo -nnn bonjour
-    char *test4[] = {"echo", "-nnn", "bonjour", NULL};
-    ft_echo(test4);
-
-    // Cas 5 : echo -n -n -n hello
-    char *test5[] = {"echo", "-n", "-n", "-n", "hello", NULL};
-    ft_echo(test5);
-
-    // Cas 6 : echo -n -p test
-    char *test6[] = {"echo", "-n", "-p", "test", NULL};
-    ft_echo(test6);
-
-    return 0;
-}*/

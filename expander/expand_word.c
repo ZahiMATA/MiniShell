@@ -35,12 +35,12 @@ static char	*append_str(char *dst, const char *s)
 	return (dst);
 }
 
-
 char	*ms_expand_word(t_minishell *m, const char *s)
 {
 	int		in_s;
 	int		in_d;
 	int		i;
+	int		handled;
 	char	*out;
 
 	in_s = 0;
@@ -51,23 +51,55 @@ char	*ms_expand_word(t_minishell *m, const char *s)
 		return (NULL);
 	while (s[i])
 	{
-		if (s[i] == '$' && s[i + 1] == '\"' && !in_s)
+		handled = 0;
+		if (s[i] == '\\')
 		{
-			in_d = !in_d;
-			i += 2;
-			continue ;
+			if (!in_s && s[i + 1])
+			{
+				if (in_d && (s[i + 1] == '$' || s[i + 1] == '\"'
+						|| s[i + 1] == '\\' || s[i + 1] == '`'))
+				{
+					out = append_char(out, s[i + 1]);
+					i += 2;
+					handled = 1;
+				}
+				else if (!in_d)
+				{
+					out = append_char(out, s[i + 1]);
+					i += 2;
+					handled = 1;
+				}
+			}
+			if (!handled)
+			{
+				out = append_char(out, s[i]);
+				i++;
+				handled = 1;
+			}
 		}
-		if (s[i] == '\'' && !in_d)
+		else if (s[i] == '$' && s[i + 1] == '\"' && !in_s && !in_d)
+		{
+			in_d = 1;
+			i += 2;
+			handled = 1;
+		}
+		else if (s[i] == '$' && s[i + 1] == '\"' && !in_s && in_d)
+		{
+			out = append_char(out, '$');
+			i += 1;
+			handled = 1;
+		}
+		else if (s[i] == '\'' && !in_d)
 		{
 			in_s = !in_s;
 			i++;
-			continue ;
+			handled = 1;
 		}
 		else if (s[i] == '\"' && !in_s)
 		{
 			in_d = !in_d;
 			i++;
-			continue ;
+			handled = 1;
 		}
 		else if (s[i] == '$' && !in_s)
 		{
@@ -79,15 +111,15 @@ char	*ms_expand_word(t_minishell *m, const char *s)
 				out = append_str(out, num);
 				free(num);
 				i += 2;
-				continue ;
+				handled = 1;
 			}
-			if (s[i + 1] == '0')
+			else if (s[i + 1] == '0')
 			{
 				out = append_str(out, MINISHELL);
 				i += 2;
-				continue ;
+				handled = 1;
 			}
-			if (is_name_start(s[i + 1]))
+			else if (is_name_start(s[i + 1]))
 			{
 				int		j;
 				char	*name;
@@ -101,11 +133,20 @@ char	*ms_expand_word(t_minishell *m, const char *s)
 				out = append_str(out, val);
 				free(name);
 				i = j;
-				continue ;
+				handled = 1;
+			}
+			else
+			{
+				out = append_char(out, '$');
+				i++;
+				handled = 1;
 			}
 		}
-		out = append_char(out, s[i]);
-		i++;
+		if (!handled)
+		{
+			out = append_char(out, s[i]);
+			i++;
+		}
 	}
 	return (out);
 }

@@ -137,21 +137,46 @@ static int	atoll_overflow(const char *s, long long *out)
 	}
 	return (0);
 }
+static int	is_meta(const char *s)
+{
+	if (!s)
+		return (0);
+	if (ft_strcmp(s, "|") == 0)
+		return (1);
+	if (ft_strcmp(s, "<") == 0)
+		return (1);
+	if (ft_strcmp(s, ">") == 0)
+		return (1);
+	if (ft_strcmp(s, "<<") == 0)
+		return (1);
+	if (ft_strcmp(s, ">>") == 0)
+		return (1);
+	return (0);
+}
 
 static int	parse_tokens(t_minishell *m, char **tok, int *n)
 {
 	long long	ll;
+	int			i;
+	int			argc;
 
 	if (!tok || !tok[0] || ft_strcmp(tok[0], "history") != 0)
 	{
 		*n = -1;
 		return (0);
 	}
-	if (tok[1] == NULL)
+
+	i = 1;
+	while (tok[i] && !is_meta(tok[i]))
+		i++;
+	argc = i;
+
+	if (argc == 1)
 	{
 		*n = -1;
 		return (0);
 	}
+
 	if (tok[1][0] == '-' && tok[1][1] != '\0')
 	{
 		ft_putstr_fd("minishell: history: ", 2);
@@ -161,12 +186,14 @@ static int	parse_tokens(t_minishell *m, char **tok, int *n)
 		m->last_status = 2;
 		return (1);
 	}
-	if (tok[2] != NULL)
+
+	if (argc > 2)
 	{
 		ft_putstr_fd("minishell: history: too many arguments\n", 2);
 		m->last_status = 2;
 		return (1);
 	}
+
 	if (!is_numeric(tok[1]) || atoll_overflow(tok[1], &ll))
 	{
 		ft_putstr_fd("minishell: history: ", 2);
@@ -178,6 +205,7 @@ static int	parse_tokens(t_minishell *m, char **tok, int *n)
 	*n = (int)ll;
 	return (0);
 }
+
 
 int	ft_history(t_minishell *m)
 {
