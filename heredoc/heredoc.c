@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 10:50:18 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/12 15:10:59 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/12 16:39:27 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,8 +139,6 @@ static	void ms_launch_read(t_minishell *m, int fd[2], char *limiter, int expand)
 			}
 			if ( m->line && ft_strcmp(m->line, limiter) == 0)
 				break;
-			if (expand)
-				ft_putstr_fd( ms_expand_word(m, m->line), fd[1]);
 			if (expand)
 				ft_putstr_fd( ms_expand_word(m, m->line), fd[1]);
 			ft_putchar_fd('\n', fd[1]);
