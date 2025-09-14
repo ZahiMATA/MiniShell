@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 17:16:20 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/02 14:26:41 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/14 15:15:53 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_print_list(void *s1, void *s2)
 {
-	if (DEBUG)
+	if (DEBUG || DEBUG_ENV)
 		printf("Env.key=%s val=%s\n", (char *) s1, (char *) s2);
 }
 

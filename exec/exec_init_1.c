@@ -6,13 +6,13 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 15:28:03 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/03 17:41:40 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/14 15:26:34 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*static*/ void	exec_init_env_list(t_minishell **m, char **env)
+static void	exec_init_env_list(t_minishell **m, char **env)
 {
 	int		i;
 	char	*split[2];
@@ -45,17 +45,10 @@ void	exec_feed_minishell(t_minishell **m, char **env)
 	(*m)->nb_cmd = prs_lstget_nb(*m);
 	(*m)->is_here_doc = 0;
 	//(*m)->env = env;
-	exec_init_path(m, env);
 	if ((*m)->env_list == NULL)
 		exec_init_env_list(m, env);
-	//exec_init_cmds_and_cmd_args(m, args, nbcom);
+	exec_init_path(m);
 	exec_init_cmd_path(m/*, nbcom*/);
-	//(*m)->fd_in = open(args[1], O_RDONLY); // TODO pas besoin normalement on init apres
-	//if ((*m)->fd_in == -1)
-	//	perror(args[1]);
-	//(*m)->fd_out = open(args[nbcom + OFST_FIRST_CMD], OW | OC | OT, FLAG_FIC); //TODO
-	//if ((*m)->fd_out == -1)
-	//	perror(args[nbcom + OFST_FIRST_CMD]);
 }
 
 void exec_init_minishell(t_minishell **m/*, t_env *last_env_list*/)

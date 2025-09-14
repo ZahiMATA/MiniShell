@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/12 18:25:30 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/14 15:20:42 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,8 @@
 # define ERROR_NOT_DIR "Not a directory"
 # define ERROR_NOSUCH "No such file or directory"
 # define S_QUIT "Quit (core dumped)"
-# define PATH "PATH="
+//# define PATH "PATH="
+# define S_PATH "PATH"
 # define S_EMPTY ""
 # define OFST_FIRST_CMD 2
 # define NB_NOT_ARG 3
@@ -149,7 +150,7 @@ void	mem_close_fds(t_minishell *m);
 void	*mem_malloc(size_t size, const char *key, const char *val);
 void 	exec_init_minishell(t_minishell **m/*, t_env *last_env_list*/);
 void	exec_feed_minishell(t_minishell **m, char **env);
-void	exec_init_path(t_minishell **p, char **env);
+void	exec_init_path(t_minishell **p);
 void	exec_init_cmds_and_cmd_args(t_minishell **p, char **cmd, int nbcom);
 void	exec_init_cmd_path(t_minishell **p/*, int nbcom*/);
 char	*exec_find_command(t_minishell *m, char *cmd);
@@ -157,6 +158,7 @@ void	exec_execve(t_minishell *m);
 void	debug_show_args(t_minishell *m);
 void	debug_show_processes(t_minishell *m, char *message);
 void	debug_show_error(char *message);
+void	ft_print_list(void *s1, void *s2);
 int		set_last_status(t_minishell *m);
 void	ft_print_array(char **tab);
 int		ft_strncmp(const char *s1, const char *s2, int n);

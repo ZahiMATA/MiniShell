@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 12:50:08 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/11 20:57:28 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/14 15:27:01 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,52 +18,25 @@
 #include <errno.h>
 #include <unistd.h>
 
-void	exec_init_path(t_minishell **m, char **env)
+void	exec_init_path(t_minishell **m)
 {
-	int	i;
+	t_env	*l;
 
-	if (env == NULL || *env == NULL)
+	l = (*m)->env_list;
+	if (l == NULL)
 	{
 		(*m)->path = NULL;
 		return ;
 	}
-	i = 0;
-	while (env[i] && ft_strncmp(env[i], PATH, ft_strlen(PATH)))
-		i++;
-	if (env[i] == NULL)
+	while(l && ft_strcmp(l->key, S_PATH) != 0)
+		l = l->next;
+	if (l && ft_strcmp(l->key, S_PATH) == 0)
 	{
-		(*m)->path = NULL;
-		return ;
-	}
-	(*m)->path = ft_split_multi(env[i] + ft_strlen(PATH), "=:");
-	if ((*m)->path == NULL)
-		ft_exit_fail_status(*m, NULL, EXIT_ALLOC_ERROR);
-}
-/*
-void	exec_init_cmds_and_cmd_args(t_minishell **m, char **cmd, int nbcom)
-{
-	int	i;
-
-	if (cmd == NULL || *cmd == NULL)
-		ft_exit_fail(*m, ERROR_NOCOMS); // TODO A voir comment on genere les cmd
-	(*m)->cmds = malloc(sizeof(t_cmd) * (nbcom + 1));
-	if ((*m)->cmds == NULL)
-		ft_exit_fail_status(*m, NULL, EXIT_ALLOC_ERROR);
-	i = 0;
-	while (i < nbcom)
-	{
-		(*m)->cmds[i].args = ft_split_multi(cmd[i + OFST_FIRST_CMD], "  ");
-		if ((*m)->cmds[i].args == NULL)
+		(*m)->path  = ft_split(l->val, ':');
+		if ((*m)->path == NULL)
 			ft_exit_fail_status(*m, NULL, EXIT_ALLOC_ERROR);
-
-		(*m)->cmds[i].pid = -1;
-		(*m)->cmds[i].status = -1;
-		(*m)->fd_in = -1;
-		(*m)->fd_out = -1;
-		i++;
 	}
-	(*m)->cmds[i].args = NULL;
-}*/
+}
 
 char	*exec_find_command(t_minishell *m, char *cmd)
 {
