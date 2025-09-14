@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 13:26:51 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/07 14:06:52 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/14 18:33:19 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ static void	check_token(t_minishell *m, t_token_list **tl)
 			if (*tl == NULL || ft_is_stringword(*tl) == 0)
 			{
 				ft_printf_fd(STDERR_FILENO, "%s: %s %s\n", MINISHELL, ERROR_SENUT, ft_get_token(*tl));
+				mem_free_array(&cmd.args, "check_token");
+				prs_lstclear_redir(&cmd.redirs);
 				return (ft_return_err(m, RETURN_NL, NULL));
 			}
 			redir = prs_lstnew_redir(type, (*tl)->val);
