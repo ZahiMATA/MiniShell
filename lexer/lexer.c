@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 11:23:17 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/14 17:20:18 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/14 17:57:52 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,15 @@ void	lexer(t_minishell *m)
 		if (m->line[_.i] == '\0')
 			break ;
 		else if (m->line[_.i] == '|')
+		{
+			if ( _.i == 0 || m->line[_.i + 1] == '|')
+			{
+				ft_return_err(_.m, EXIT_FAILURE, ft_perror(MINISHELL, ERROR_SE_PIPE, NULL));
+				lex_lstclear(&m->token_list);
+				return;
+			}
 			add_token(&_, T_PIPE, "|", 1);
+		}
 		else if (m->line[_.i] == '<' && m->line[_.i + 1] == '<')
 			add_token(&_, T_DOUBLE_REDIRECT_LEFT, "<<", 2);
 		else if (m->line[_.i] == '>' && m->line[_.i + 1] == '>')
@@ -141,5 +149,11 @@ void	lexer(t_minishell *m)
 			lexer_quote(&_);
 		else
 			lexer_word(&_);
+	}
+	if (_.i - 1 >= 0 && m->line[_.i - 1] == '|')
+	{
+		ft_return_err(_.m, EXIT_FAILURE, ft_perror(MINISHELL, ERROR_SE_PIPE, NULL));
+		lex_lstclear(&m->token_list);
+		return;
 	}
 }
