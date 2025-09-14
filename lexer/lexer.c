@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 11:23:17 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/11 21:21:01 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/14 11:39:42 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,11 @@ static void	lexer_quote(t_param *_)
 			break;
 		}
 		//debug_var("NOB");
-		if (_->m->line[_->i + 1] == '\'')
+		/*if (_->m->line[_->i + 1] == '\'')
 		{
 			_->i++;
 			break;
-		}
+		}*/
 		_->i++;
 		lexer_subword(_);
 		if (ft_issublexer(_->m->line[_->i]))
