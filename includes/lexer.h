@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 12:18:08 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/14 17:34:36 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/14 19:05:49 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@
 # ifndef DEBUG_LEX
 #  define DEBUG_LEX 0
 # endif
-# define ERROR_SYNTAX "Syntax error"
-# define ERROR_QUOTENOTCLOSED "Quote must be closed"
-# define ERROR_STRINGNOTCLOSED "String must be closed"
+# define ERROR_SYNTAX "syntax error"
+# define ERROR_QUOTENOTCLOSED "quote must be closed"
+# define ERROR_STRINGNOTCLOSED "string must be closed"
 # define ERROR_SE_PIPE "syntax error near unexpected token `|'"
-# define ERROR_SENUT "Syntax error near unexpected token"
+# define ERROR_SENUT "syntax error near unexpected token"
 # define S_NEWLINE "`newline'"
 # define RETURN_NL 2
 
