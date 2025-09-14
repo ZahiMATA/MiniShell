@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/14 19:06:28 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/14 19:51:17 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@
 # define EXIT_IS_A_DIRECTORY 126
 # define EXIT_IS_NOT_A_DIRECTORY 126
 # define EXIT_PERMISSION 126
+# define EXIT_126 126
 # define EXIT_COMMAND_NOT_FOUND 127
 # define EXIT_NO_SUCH_FILE 127
 # define EXIT_SYNTAX_ERROR 258

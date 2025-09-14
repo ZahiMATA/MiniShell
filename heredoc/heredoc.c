@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 10:50:18 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/12 16:39:27 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/14 19:58:44 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static	void ms_launch_read(t_minishell *m, int fd[2], char *limiter, int expand)
 		{
 			if (m->line == NULL)
 			{
-				ft_printf_fd( STDOUT_FILENO, WARNING_HEREDOC, limiter);
+				ft_printm->line = hd_readline(m)f_fd( STDOUT_FILENO, WARNING_HEREDOC, limiter);
 				//ft_printf_fd( STDERR_FILENO, WARNING_HEREDOC, limiter);
 				break;
 			}

@@ -83,8 +83,6 @@ static void	launch_process(t_minishell *m, t_cmd *cmd, int n, int pipes[][2])
 	int			i;
 	int			status;
 
-	//debug_show_cmd(cmd, n);
-	//printf("n=[%d],pipe.n-1.0=[%d] pipe.n.1=[%d]\n", n, pipes[n-1][0], pipes[n][1]);
 	setup_signals_for_children();
 	if (n > 0)
 		if (dup2(pipes[n - 1][0] , STDIN_FILENO) == -1)
@@ -92,40 +90,27 @@ static void	launch_process(t_minishell *m, t_cmd *cmd, int n, int pipes[][2])
 	if (n < m->nb_cmd - 1)
 		if (dup2(pipes[n][1], STDOUT_FILENO) == -1)
 			ft_exit_fail(m, ERROR_DUP2);
-	//if (n == 0)				// TODO a enlever ?
 	redir_in(m, cmd);
-	//if (n == m->nb_cmd - 1)	// TODO a enlever ?
 	redir_out(m, cmd);
 	i = 0;
+	// debug_var(cmd->args[0]);
+	// debug_var(cmd->cmd_abs);
 	while (i < m->nb_cmd - 1)
 	{
 		close(pipes[i][0]);
 		close(pipes[i][1]);
 		i++;
 	}
-
-	/*if (m->last_status != 0)
-	{
-		ft_return_error(m, m->error, S_EMPTY, m->last_status);
-		mem_free_null(&m->error, "error");
-	}*/
-
-	// debug_var(cmd->args[0]);
-	// debug_var(cmd->args[1]);
-	// debug_var_i(n);
-	//if ()
-	// debug_var(cmd->cmd_abs);
-	// debug_var(cmd->args[0]);
-	// debug_var(cmd->args[1]);
 	if (cmd->args == NULL)
 		ft_exit_err(m, EXIT_SUCCESS, NULL);
 	if (cmd->args && is_builin_child(cmd->args[0]))
 	{
-		status = exec_builtin(m, cmd/*->args[0]*/);
-		//status = cmd->status;
+		status = exec_builtin(m, cmd);
 		mem_free_all(m);
 		exit(status);
 	}
+	// else if (/*ft_strchr(cmd->args[0], '/') == NULL && */cmd->cmd_abs == NULL /*|| *cmd->cmd_abs == 0*/)
+	// 	ft_exit_error(m, cmd->args[0], ERROR_COM, EXIT_126);
 	else if (ft_not_dir_but_file(cmd->args[0]))
 		ft_exit_err(m, EXIT_IS_NOT_A_DIRECTORY, ft_perror(MINISHELL, cmd->cmd_abs, ERROR_NOT_DIR));
 	else if (ft_strchr(cmd->args[0], '/') == 0 && cmd->cmd_abs == NULL)
@@ -138,17 +123,11 @@ static void	launch_process(t_minishell *m, t_cmd *cmd, int n, int pipes[][2])
 		ft_exit_err(m, EXIT_PERMISSION, ft_perror(MINISHELL, cmd->cmd_abs, ERROR_PERMISSION));
 	else
 	{
-		// debug_var(cmd->cmd_abs);
-		// debug_var(cmd->args[0]);
 		env_tab = env_list_to_tab(m, m->env_list);
 		execve(cmd->cmd_abs, cmd->args, env_tab);
 		mem_free_array(&env_tab, "env_tab");
 		ft_exit_perror(m, cmd->cmd_abs);
 	}
-	/*else
-	{
-		ft_exit_error(m, cmd->args[0], ERROR_COM, EXIT_COMMAND_NOT_FOUND);
-	}*/
 }
 
 void	exec_execve(t_minishell *m)
