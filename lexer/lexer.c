@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 11:23:17 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/14 11:39:42 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/14 17:20:18 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,20 +73,11 @@ static void	lexer_quote(t_param *_)
 			lex_lstclear(&_->m->token_list);
 			return;
 		}
-		//break;
-		//printf("[%d]:[%c]\n", _->i, _->m->line[_->i]);
-		//printf("[%d]:[%c]\n", _->i + 1, _->m->line[_->i + 1]);
 		if (_->m->line[_->i + 1] == 0)
 		{
 			_->i++;
 			break;
 		}
-		//debug_var("NOB");
-		/*if (_->m->line[_->i + 1] == '\'')
-		{
-			_->i++;
-			break;
-		}*/
 		_->i++;
 		lexer_subword(_);
 		if (ft_issublexer(_->m->line[_->i]))
@@ -95,25 +86,11 @@ static void	lexer_quote(t_param *_)
 				_->i--;
 			break;
 		}
-
-		//_->i++;
-		//if (_->m->line[_->i] == '\0')
-		//	_->i--;
-		// if (_->open_q != 0 || _->open_s != 0)
-		// {
-		// 	ft_return_error(_->m, ERROR_SYNTAX, ERROR_STRINGNOTCLOSED, EXIT_FAILURE);
-		// 	lex_lstclear(&_->m->token_list);
-		// 	return ;
-		// }
-		//_->i++;
-		//offset = 1;
 	}
-	//printf("len=[%d]:[%d]:[%d]\n", _->i - _->start, _->i, _->start);
 	s = ft_substring(_->m->line, _->start , (_->i - _->start));
 	if (s == NULL)
 		ft_exit_fail_status(_->m, NULL, EXIT_ALLOC_ERROR);
 	add_token(_, T_WORD, s, 0);
-	//_->i++;
 	mem_free(s, "lexer_string.s", s);
 }
 
