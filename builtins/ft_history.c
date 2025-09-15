@@ -117,7 +117,7 @@ static int	atoll_overflow(const char *s, long long *out)
 	if (sign == 1)
 		limit = (unsigned long long)LLONG_MAX;
 	else
-		limit = (unsigned long long)(-LLONG_MIN);
+		limit = (unsigned long long)LLONG_MAX + 1ULL;
 	while (s[i] != '\0')
 	{
 		d = (unsigned int)(s[i] - '0');
