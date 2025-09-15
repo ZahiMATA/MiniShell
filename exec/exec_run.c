@@ -31,21 +31,16 @@ void	redir_in(t_minishell *m, t_cmd *cmd)
 		}
 		else if (redir->type == N_DOUBLE_REDIR_LEFT)
 		{
-			m->fd_in = ms_heredoc(m, redir->file, 0);
-			// debug_var("INOUT");
-			// debug_var_i(m->fd_in);
-			// debug_var_i(m->fd_out);
-			if (m->fd_in == -1)
+			if (cmd->fd_in == -1)
 				ft_exit_err(m, EXIT_FAILURE, \
 					ft_perror(MINISHELL, redir->file, ERROR_PERMISSION));
-			if (dup2(m->fd_in, STDIN_FILENO) == -1)
+			if (dup2(cmd->fd_in, STDIN_FILENO) == -1)
 				ft_exit_fail(m, ERROR_DUP2);
-			close(m->fd_in);
+			close(cmd->fd_in);
 		}
 		redir = redir->next;
 	}
 }
-
 void	redir_out(t_minishell *m, t_cmd *cmd)
 {
 	t_redir	*redir;
@@ -76,7 +71,6 @@ void	redir_out(t_minishell *m, t_cmd *cmd)
 		redir = redir->next;
 	}
 }
-
 static void	launch_process(t_minishell *m, t_cmd *cmd, int n, int pipes[][2])
 {
 	char		**env_tab;
@@ -136,6 +130,38 @@ static void	launch_process(t_minishell *m, t_cmd *cmd, int n, int pipes[][2])
 	}
 }
 
+
+void	redir_heredoc(t_minishell *m, t_cmd *cmd)
+{
+	t_redir	*redir;
+
+	redir = cmd->redirs;
+	while (redir)
+	{
+		if (redir->type == N_DOUBLE_REDIR_LEFT)
+		{
+			cmd->fd_in = ms_heredoc(m, redir->file, 0);
+			if (cmd->fd_in == -1)
+				ft_exit_err(m, EXIT_FAILURE, \
+					ft_perror(MINISHELL, redir->file, ERROR_PERMISSION));
+			//close(cmd->fd_in);
+		}
+		redir = redir->next;
+	}
+}
+
+void	run_heredoc(t_minishell *m)
+{
+	t_cmd	*l;
+
+	l = m->cmds;
+	while (l)
+	{
+		redir_heredoc(m, m->cmds);
+		l = l->next;
+	}
+}
+
 void	exec_execve(t_minishell *m)
 {
 	int		pipes[m->nb_cmd - 1][2];
@@ -155,6 +181,7 @@ void	exec_execve(t_minishell *m)
 			ft_exit_fail(m, ERROR_PIPE);
 		i++;
 	}
+	run_heredoc(m);
 	i = 0;
 	l = m->cmds;
 	while (l)
