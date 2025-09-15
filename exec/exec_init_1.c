@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 15:28:03 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/14 15:26:34 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/15 15:52:52 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	exec_feed_minishell(t_minishell **m, char **env)
 	//(*m)->env = env;
 	if ((*m)->env_list == NULL)
 		exec_init_env_list(m, env);
+	ms_expand_all_cmds(*m);
 	exec_init_path(m);
 	exec_init_cmd_path(m/*, nbcom*/);
 }

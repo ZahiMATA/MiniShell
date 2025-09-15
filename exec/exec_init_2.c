@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 12:50:08 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/15 15:11:20 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/15 15:41:52 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ char	*exec_find_command(t_minishell *m, char *cmd)
 	char	*cmd_abs;
 	int		i;
 
+	//ms_expand_all_cmds(m);
 	if (cmd == NULL)
 		return (NULL);
 	cmd_abs = NULL;
@@ -57,6 +58,8 @@ char	*exec_find_command(t_minishell *m, char *cmd)
 	while (m->path && m->path[i])
 	{
 		cmd_abs = ft_strjoin_with_char(m->path[i], '/', cmd);
+		// debug_var(cmd);
+		// debug_var(cmd_abs);
 		if (cmd_abs == NULL)
 			ft_exit_fail_status(m, NULL, EXIT_ALLOC_ERROR);
 		if (access(cmd_abs, X_OK) == 0)
@@ -64,7 +67,6 @@ char	*exec_find_command(t_minishell *m, char *cmd)
 		mem_free_null(&cmd_abs, "cmd_abs");
 		i++;
 	}
-	//debug_var(cmd_abs);
 	return (cmd_abs);
 }
 
@@ -77,7 +79,7 @@ void	exec_init_cmd_path(t_minishell **m/*, int nbcom*/)
 
 	while (l)
 	{
-		//cmd_abs = exec_find_command(*m, prs_getcmd(*m, l->cmd));
+		// cmd_abs = exec_find_command(*m, prs_getcmd(*m, l->cmd));
 		cmd_abs = exec_find_command(*m, prs_getcmd_from_args(*m, l->args));
 		if (cmd_abs)
 			l->cmd_abs = cmd_abs;

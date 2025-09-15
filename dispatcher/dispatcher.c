@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 19:27:46 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/15 14:37:12 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/15 15:46:00 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ int	exec_builtin(t_minishell *m, t_cmd *cmd)
 
 void	dispatch(t_minishell *m)
 {
-	if (m->cmds && m->cmds->args)
-		ms_expand_all_cmds(m);
+	// if (m->cmds && m->cmds->args)
+	// 	ms_expand_all_cmds(m);
 	if (m->cmds && m->cmds->args && m->nb_cmd == 1 && is_builin_parent(m->cmds->args[0]))
 	{
 		m->cmds->status = exec_builtin(m, m->cmds);
@@ -74,8 +74,6 @@ void	dispatch(t_minishell *m)
 	}
 	else if (m->cmds)
 	{
-		//debug_show_args(m);
-		//ms_expand_all_cmds(m);
 		exec_execve(m);
 	}
 }

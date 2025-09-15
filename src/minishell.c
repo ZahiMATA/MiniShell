@@ -56,6 +56,8 @@ void	test1(char **env)
 		if (m->last_status == 0)
 		{
 			m->last_status = m->status_echo;
+			//if (m->cmds && m->cmds->args)
+			//ms_expand_all_cmds(m);
 			exec_feed_minishell(&m, env);
 			dispatch(m);
 			debug_show_args(m);
