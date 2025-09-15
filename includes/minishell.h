@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/15 16:43:07 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/15 17:21:50 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,7 @@ void	mem_reset_m(t_minishell *m);
 void	mem_free_array(char	***tab, char *mes);
 void	mem_free_null(char	**p, char *mes);
 void	mem_free(void *p, const char *key, const char *val);
+void	mem_close_fd(int fd);
 void	mem_close_fds(t_minishell *m);
 void	*mem_malloc(size_t size, const char *key, const char *val);
 void 	exec_init_minishell(t_minishell **m/*, t_env *last_env_list*/);

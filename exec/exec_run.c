@@ -36,7 +36,7 @@ void	redir_in(t_minishell *m, t_cmd *cmd)
 					ft_perror(MINISHELL, redir->file, ERROR_PERMISSION));
 			if (dup2(cmd->fd_in, STDIN_FILENO) == -1)
 				ft_exit_fail(m, ERROR_DUP2);
-			close(cmd->fd_in);
+			//mem_close_fd(cmd->fd_in);
 		}
 		redir = redir->next;
 	}
@@ -139,11 +139,11 @@ void	redir_heredoc(t_minishell *m, t_cmd *cmd)
 	{
 		if (redir->type == N_DOUBLE_REDIR_LEFT)
 		{
+			mem_close_fd(cmd->fd_in);
 			cmd->fd_in = ms_heredoc(m, redir->file, 0);
 			if (cmd->fd_in == -1)
 				ft_exit_err(m, EXIT_FAILURE, \
 					ft_perror(MINISHELL, redir->file, ERROR_PERMISSION));
-			//close(cmd->fd_in);
 		}
 		redir = redir->next;
 	}
@@ -153,10 +153,13 @@ void	run_heredoc(t_minishell *m)
 {
 	t_cmd	*l;
 
+	mem_free_null(&m->line, "run_heredoc");
 	l = m->cmds;
 	while (l)
 	{
-		redir_heredoc(m, m->cmds);
+		l->fd_in = -1;
+		l->fd_out = -1;
+		redir_heredoc(m, l);
 		l = l->next;
 	}
 }

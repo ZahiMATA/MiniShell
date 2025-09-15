@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 10:50:18 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/15 12:32:46 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/15 17:36:36 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ static	void ms_launch_read(t_minishell *m, int fd[2], char *limiter, int expand)
 			if ( m->line && ft_strcmp(m->line, limiter) == 0)
 				break;
 			if (expand)
-				ft_putstr_fd( ms_expand_word(m, m->line), fd[1]);
+				ft_putstr_fd(ms_expand_word(m, m->line), fd[1]);
 			ft_putchar_fd('\n', fd[1]);
 			mem_free_null(&m->line, "ms_launch_child.line");
 		}
@@ -158,10 +158,8 @@ char *ms_unquote(char *s)
 {
 	char	*ret;
 
-	//if (/*s && *s &&*/ s[0] == '"')
 	if (ft_strchr(s, '\"'))
 		ret = ft_strtrim_all(s, "\"");
-	//else if (/*s && *s &&*/ s[0] == '\'')
 	else if (ft_strchr(s, '\''))
 		ret = ft_strtrim_all(s, "'");
 	else

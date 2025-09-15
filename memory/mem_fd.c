@@ -12,23 +12,27 @@
 
 #include "minishell.h"
 
-void mem_close_fds(t_minishell *p)
+void	mem_close_fd(int fd)
 {
-	/*int	i;
+	if (fd != -1)
+		close(fd);
+}
 
-	i = 0;
-	 while (i < p->nb_cmd)
+void mem_close_fds(t_minishell *m)
+{
+	t_cmd	*cmd;
+
+	cmd = m->cmds;
+	while (cmd)
 	{
-		if (p->cmds[i].fd_pipe[0] != -1)
-			close(p->cmds[i].fd_pipe[0]);
-		if (p->cmds[i].fd_pipe[1] != -1)
-			close(p->cmds[i].fd_pipe[1]);
-		i++;
-	}*/
-	if (p->fd_in != -1)
-		close(p->fd_in);
-	if (p->fd_out != -1)
-		close(p->fd_out);
-	p->fd_in = -1;
-	p->fd_out = -1;
+		mem_close_fd(cmd->fd_in);
+		mem_close_fd(cmd->fd_out);
+		cmd->fd_in = -1;
+		cmd->fd_out = -1;
+		cmd = cmd->next;
+	}
+	mem_close_fd(m->fd_in);
+	mem_close_fd(m->fd_out);
+	m->fd_in = -1;
+	m->fd_out = -1;
 }

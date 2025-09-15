@@ -6,34 +6,16 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 10:50:18 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/15 13:35:53 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/15 18:15:41 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*static*/ char	*hd_readline(t_minishell *m)
-{
-	char *line;
-	int	fd_tty;
-
-	//if (isatty(STDIN_FILENO) ||  1)
-	{
-		fd_tty = open("/dev/tty", O_RDONLY);
-		if (fd_tty == -1)
-			ft_exit_fail(m, ERROR_TTY);
-		line = get_next_line(fd_tty);
-		close(fd_tty);
-	}
-	//else
-	//	line = get_next_line(STDIN_FILENO);
-	if (line && *line && line[ft_strlen(line) - 1] == '\n')
-		line[ft_strlen(line) - 1] = 0;
-	return (line);
-}
-
 static	void ms_launch_read(t_minishell *m, int fd[2], char *limiter, int expand)
 {
+	char	*s;
+
 	while (1)
 	{
 		//m->line = readline(PROMPT_HEREDOC);
@@ -42,24 +24,27 @@ static	void ms_launch_read(t_minishell *m, int fd[2], char *limiter, int expand)
 		//ft_printf_fd(STDERR_FILENO, PROMPT_HEREDOC);
 		//m->line = hd_readline(m);
 		m->line = readline(PROMPT_HEREDOC);
-
 		{
 			if (m->line == NULL)
 			{
 				//ft_printf_fd( STDOUT_FILENO, WARNING_HEREDOC, limiter);
-				ft_printf_fd( STDERR_FILENO, WARNING_HEREDOC, limiter);
+				ft_printf_fd( STDOUT_FILENO, WARNING_HEREDOC, limiter);
 				break;
 			}
 			if ( m->line && ft_strcmp(m->line, limiter) == 0)
 				break;
 			if (expand)
-				ft_putstr_fd( ms_expand_word(m, m->line), fd[1]);
+			{
+				s = ms_expand_word(m, m->line);
+				ft_putstr_fd(s, fd[1]);
+				mem_free_null(&s, "ms_launch_read");
+			}
+			else
+				ft_putstr_fd(m->line, fd[1]);
 			ft_putchar_fd('\n', fd[1]);
 			mem_free_null(&m->line, "ms_launch_child.line");
 		}
 	}
-	// if (dup2(dup_tmp, STDOUT_FILENO) == -1)
-	// 	ft_exit_fail(m, ERROR_DUP2);
 	close(fd[1]);
 	mem_free_null(&m->line, "ms_launch_child.line");
 
