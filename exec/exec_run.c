@@ -94,6 +94,8 @@ static void	launch_process(t_minishell *m, t_cmd *cmd, int n, int pipes[][2])
 		close(pipes[i][1]);
 		i++;
 	}
+	// debug_var(cmd->args[0]);
+	// debug_var(cmd->cmd_abs);
 	if (cmd->args == NULL)
 		ft_exit_err(m, EXIT_SUCCESS, NULL);
 	if (cmd->args && is_builin_child(cmd->args[0]))

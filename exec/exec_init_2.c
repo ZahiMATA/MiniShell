@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 12:50:08 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/15 15:41:52 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/15 16:49:10 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,7 @@ char	*exec_find_command(t_minishell *m, char *cmd)
 	char	*cmd_abs;
 	int		i;
 
-	//ms_expand_all_cmds(m);
-	if (cmd == NULL)
+	if (cmd == NULL || *cmd == 0 || ft_strcmp(cmd, "..") == 0)
 		return (NULL);
 	cmd_abs = NULL;
 	if (/*access(cmd, X_OK) == 0 && */ft_strchr(cmd, '/'))

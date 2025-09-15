@@ -6,9 +6,11 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 12:01:03 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/07/07 14:17:28 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/15 16:41:36 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft.h"
 
 /* @CDOC ft_strncmp
  * @RETOUR Compare que les n premiers octets (au maximum) de s1 et s2.
@@ -37,6 +39,12 @@ int	ft_strncmp(const char *s1, const char *s2, int n)
 	}
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
+
+int	ft_strncmp_s2len(const char *s1, const char *s2)
+{
+	return (ft_strncmp(s1, s2, ft_strlen(s2)));
+}
+
 /*
 #include <stdio.h>
 #include <stdlib.h>
