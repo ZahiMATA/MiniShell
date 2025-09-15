@@ -6,13 +6,13 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 10:50:18 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/14 19:58:44 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/15 11:21:31 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*hd_readline(t_minishell *m)
+/*static*/ char	*hd_readline(t_minishell *m)
 {
 	char *line;
 	int	fd_tty;
@@ -68,9 +68,8 @@ static	void ms_launch_read(t_minishell *m, int fd[2], char *limiter, int expand)
 	mem_free_null(&m->line, "ms_launch_child.line");
 */
 
-/* FONCTIONNE MAIS PAS avec les tester
-	(void)nop;
-
+// FONCTIONNE MAIS PAS avec les tester
+/*
 	int tmp_in = dup(STDIN_FILENO);
 	int tty_fd = open("/dev/tty", O_RDONLY);
 	dup2(tty_fd, STDIN_FILENO);
@@ -95,7 +94,8 @@ static	void ms_launch_read(t_minishell *m, int fd[2], char *limiter, int expand)
 			}
 			if ( m->line && ft_strcmp(m->line, limiter) == 0)
 				break;
-			ft_putstr_fd( ms_expand_word(m, m->line), fd[1]);
+			if (expand)
+				ft_putstr_fd( ms_expand_word(m, m->line), fd[1]);
 			ft_putchar_fd('\n', fd[1]);
 			mem_free_null(&m->line, "ms_launch_child.line");
 		}
@@ -106,7 +106,7 @@ static	void ms_launch_read(t_minishell *m, int fd[2], char *limiter, int expand)
 		ft_exit_fail(m, ERROR_DUP2);
 	close(fd[1]);
 	mem_free_null(&m->line, "ms_launch_child.line");
-*/
+
 
 
 
@@ -122,6 +122,8 @@ static	void ms_launch_read(t_minishell *m, int fd[2], char *limiter, int expand)
 	// 	ft_exit_fail(m, ERROR_DUP);
 	// if (dup2(STDERR_FILENO, STDOUT_FILENO) == -1)
 	//  	ft_exit_fail(m, ERROR_DUP2);
+*/
+
 	while (1)
 	{
 		//m->line = readline(PROMPT_HEREDOC);
@@ -149,6 +151,7 @@ static	void ms_launch_read(t_minishell *m, int fd[2], char *limiter, int expand)
 	// 	ft_exit_fail(m, ERROR_DUP2);
 	close(fd[1]);
 	mem_free_null(&m->line, "ms_launch_child.line");
+
 }
 
 char *ms_unquote(char *s)

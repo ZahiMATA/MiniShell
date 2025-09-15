@@ -114,7 +114,8 @@ static void	launch_process(t_minishell *m, t_cmd *cmd, int n, int pipes[][2])
 	else if (ft_not_dir_but_file(cmd->args[0]))
 		ft_exit_err(m, EXIT_IS_NOT_A_DIRECTORY, ft_perror(MINISHELL, cmd->cmd_abs, ERROR_NOT_DIR));
 	else if (ft_strchr(cmd->args[0], '/') == 0 && cmd->cmd_abs == NULL)
-		ft_exit_error(m, cmd->args[0], ERROR_COM, EXIT_COMMAND_NOT_FOUND);
+		//ft_exit_error(m, cmd->args[0], ERROR_COM, EXIT_COMMAND_NOT_FOUND);
+		ft_exit_err(m, EXIT_COMMAND_NOT_FOUND, ft_perror(MINISHELL, cmd->args[0], ERROR_COM));
 	else if ((ft_strchr(cmd->args[0], '/') && cmd->cmd_abs == NULL) || (ft_stat(cmd->cmd_abs) == -1))
 		ft_exit_err(m, EXIT_NO_SUCH_FILE, ft_perror(MINISHELL, cmd->args[0], ERROR_NOSUCH));
 	else if (ft_is_dir(cmd->cmd_abs))
