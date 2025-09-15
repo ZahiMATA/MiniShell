@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 12:50:08 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/15 15:04:36 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/15 15:11:20 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	*exec_find_command(t_minishell *m, char *cmd)
 		mem_free_null(&cmd_abs, "cmd_abs");
 		i++;
 	}
-	debug_var(cmd_abs);
+	//debug_var(cmd_abs);
 	return (cmd_abs);
 }
 
