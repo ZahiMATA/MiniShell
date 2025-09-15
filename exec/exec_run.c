@@ -94,6 +94,7 @@ static void	launch_process(t_minishell *m, t_cmd *cmd, int n, int pipes[][2])
 		close(pipes[i][1]);
 		i++;
 	}
+	mem_close_fds(m);
 	// debug_var(cmd->args[0]);
 	// debug_var(cmd->cmd_abs);
 	if (cmd->args == NULL)
@@ -204,6 +205,7 @@ void	exec_execve(t_minishell *m)
 		close(pipes[i][1]);
 		i++;
 	}
+	mem_close_fds(m);
 	i = 0;
 	l = m->cmds;
 	while (l)

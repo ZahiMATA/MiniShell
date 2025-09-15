@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 10:50:18 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/15 18:15:41 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/15 18:42:04 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ static	void ms_launch_read(t_minishell *m, int fd[2], char *limiter, int expand)
 		//ft_printf_fd(STDOUT_FILENO, PROMPT_HEREDOC);
 		//ft_printf_fd(STDERR_FILENO, PROMPT_HEREDOC);
 		//m->line = hd_readline(m);
-		m->line = readline(PROMPT_HEREDOC);
+		//m->line = readline(PROMPT_HEREDOC);
+		m->line = read_input(m, PROMPT_HEREDOC);
 		{
 			if (m->line == NULL)
 			{

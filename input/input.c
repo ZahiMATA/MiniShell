@@ -37,8 +37,7 @@ char	*get_input(void)
 
 static void	*readinput(t_minishell *m, char * prompt)
 {
-	int	test = 1;
-	if (test)
+	if (DEBUG_TEST)
 		m->line = get_input();
 	else
 		m->line = readline(prompt);
@@ -47,7 +46,7 @@ static void	*readinput(t_minishell *m, char * prompt)
 
 char	*read_input(t_minishell *m, char * prompt)
 {
-	//if (ft_strcmp(prompt, PROMPT) == 0) // TODO A VOIR
+	if (ft_strcmp(prompt, PROMPT) == 0) // TODO A VOIR
 	{
 		g_signal |= RDL_FLAG;
 		readinput(m, prompt);
@@ -55,7 +54,7 @@ char	*read_input(t_minishell *m, char * prompt)
 		if (m->line && *m->line)
 			ft_add_history(m, m->line);
 	}
-	//else
-	//	readinput(m, prompt);
+	else
+		readinput(m, prompt);
 	return m->line;
 }
