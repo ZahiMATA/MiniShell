@@ -89,6 +89,12 @@ char	*ms_expand_word(t_minishell *m, const char *s)
 			i += 1;
 			handled = 1;
 		}
+		else if (s[i] == '$' && s[i + 1] == '\'' && !in_s && !in_d)
+		{
+			in_s = 1;
+			i += 2;
+			handled = 1;
+		}
 		else if (s[i] == '\'' && !in_d)
 		{
 			in_s = !in_s;

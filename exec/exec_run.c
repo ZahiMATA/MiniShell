@@ -87,10 +87,7 @@ static void	launch_process(t_minishell *m, t_cmd *cmd, int n, int pipes[][2])
 	redir_in(m, cmd);
 	redir_out(m, cmd);
 	i = 0;
-	// debug_var(cmd->args[0]);
-	// debug_var(cmd->cmd_abs);
-	// if (/*ft_strchr(cmd->args[0], '/') == NULL && */cmd->cmd_abs == 0 /*|| *cmd->cmd_abs == 0*/)
-	// 	debug_var("ok");
+
 	while (i < m->nb_cmd - 1)
 	{
 		close(pipes[i][0]);

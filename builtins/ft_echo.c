@@ -37,10 +37,7 @@ int	ft_echo(t_minishell *m, t_cmd *cmd)
 	}
 	while (cmd->args[i])
 	{
-		if (ft_strcmp(cmd->args[i], "$?") == 0)
-			ft_printf_fd(1, "%d", m->last_status);
-		else
-			ft_putstr_fd(cmd->args[i], 1);
+		ft_putstr_fd(cmd->args[i], 1);
 		if (cmd->args[i + 1])
 			write(1, " ", 1);
 		i++;
