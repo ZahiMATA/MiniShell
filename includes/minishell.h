@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/16 17:31:56 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/16 19:04:11 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,6 +216,7 @@ int		ft_same_edges(char *s, int c);
 int		ms_heredoc(t_minishell *m, char *limiter, int expand);
 int		ft_g_signal(t_minishell *m);
 void	setup_signals(void);
+void	setup_signals_off(void);
 void	setup_signals_for_children(void);
 void	setup_signals_for_heredoc(void);
 int		exec_builtin(t_minishell *m, t_cmd *cmd);

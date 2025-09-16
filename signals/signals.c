@@ -69,7 +69,13 @@ static void sigint_handler_hd(int sig)
 
 void setup_signals(void)
 {
-	signal(SIGINT,  sigint_handler);
+	signal(SIGINT, sigint_handler);
+	signal(SIGQUIT, SIG_IGN);
+}
+
+void setup_signals_off(void)
+{
+	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 }
 

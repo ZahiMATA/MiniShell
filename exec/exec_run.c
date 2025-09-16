@@ -215,12 +215,14 @@ void	exec_execve(t_minishell *m)
 	mem_close_fds(m);
 	i = 0;
 	l = m->cmds;
+	setup_signals_off();
 	while (l)
 	{
 		waitpid(l->pid, &l->status_c, 0);
 		l = l->next;
 		i++;
 	}
+	setup_signals();
 	set_last_status(m);
 	//debug_show_processes(m, "PARENT");
 }
