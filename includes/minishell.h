@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/16 15:18:25 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/16 17:09:47 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@
 # define EXIT_SYNTAX_ERROR 258
 # define EXIT "exit"
 # define ERROR "Error"
+# define PERROR "perror"
 # define ERROR_WRONGARGS "Error: Wrong arguments"
 # define ERROR_NOENV "Error: No environment"
 # define ERROR_NOPATH "Error: No PATH"

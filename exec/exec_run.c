@@ -24,7 +24,7 @@ void	redir_in(t_minishell *m, t_cmd *cmd)
 			m->fd_in = open(redir->file, O_RDONLY);
 			if (m->fd_in == -1)
 				ft_exit_err(m, EXIT_FAILURE, \
-					ft_perror(MINISHELL, redir->file, ERROR_PERMISSION));
+					ft_perror(MINISHELL, redir->file, PERROR));
 			else if (dup2(m->fd_in, STDIN_FILENO) == -1)
 				ft_exit_fail(m, ERROR_DUP2);
 			close(m->fd_in);
@@ -33,7 +33,7 @@ void	redir_in(t_minishell *m, t_cmd *cmd)
 		{
 			if (cmd->fd_in == -1)
 				ft_exit_err(m, EXIT_FAILURE, \
-					ft_perror(MINISHELL, redir->file, ERROR_PERMISSION));
+					ft_perror(MINISHELL, redir->file, PERROR));
 			if (dup2(cmd->fd_in, STDIN_FILENO) == -1)
 				ft_exit_fail(m, ERROR_DUP2);
 			//mem_close_fd(cmd->fd_in);
@@ -53,7 +53,7 @@ void	redir_out(t_minishell *m, t_cmd *cmd)
 			m->fd_out = open(redir->file, OW | OC | OT, FLAG_FIC);
 			if (m->fd_out == -1)
 				ft_exit_err(m, EXIT_FAILURE, \
-					ft_perror(MINISHELL, redir->file, ERROR_PERMISSION));
+					ft_perror(MINISHELL, redir->file, PERROR));
 			else if (dup2(m->fd_out, STDOUT_FILENO) == -1)
 				ft_exit_fail(m, ERROR_DUP2);
 			close(m->fd_out);
@@ -63,7 +63,7 @@ void	redir_out(t_minishell *m, t_cmd *cmd)
 			m->fd_out = open(redir->file, OW | OC | OA, FLAG_FIC);
 			if (m->fd_out == -1)
 				ft_exit_err(m, EXIT_FAILURE, \
-					ft_perror(MINISHELL, redir->file, ERROR_PERMISSION));
+					ft_perror(MINISHELL, redir->file, PERROR));
 			else if (dup2(m->fd_out, STDOUT_FILENO) == -1)
 				ft_exit_fail(m, ERROR_DUP2);
 			close(m->fd_out);

@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 11:33:16 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/15 12:22:42 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/16 17:14:13 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ void	*ft_perror(char *mes1, char *mes2, char * mes3)
 		ft_printf_fd(STDERR_FILENO, "%s\n", mes1);
 	else if (mes3 == NULL /*|| *mes3 == 0*/)
 		ft_printf_fd(STDERR_FILENO, "%s: %s\n", mes1, mes2);
+	else if(ft_strcmp(mes3, PERROR) == 0)
+		ft_printf_fd(STDERR_FILENO, "%s: %s: %s\n", mes1, mes2, strerror(errno));
 	else
 		ft_printf_fd(STDERR_FILENO, "%s: %s: %s\n", mes1, mes2, mes3);
 
