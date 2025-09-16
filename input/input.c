@@ -35,12 +35,48 @@ char	*get_input(void)
 	return (line);
 }
 
+char	*read_line(t_minishell *m, char *prompt)
+{
+	char	buffer[BUFFER_SIZE + 1];
+	int		n;
+
+	ft_printf_fd(STDOUT_FILENO, "%s", prompt);
+	m->line = NULL;
+	n = 1;
+	while (n > 0)
+	{
+		n = read(STDIN_FILENO, buffer, BUFFER_SIZE);
+		if (n < 0)
+		{
+			//ft_return_perror(m, NULL, EXIT_FAILURE);
+			m->status_heredoc = EXIT_1;
+			return (NULL);
+		}
+		buffer[n] = '\0';
+		m->line = ft_strjoin_2(&m->line, buffer);
+		if (m->line == NULL)
+			ft_exit_fail_status(m, NULL, EXIT_ALLOC_ERROR);
+		if (ft_strchr(m->line, '\n'))
+			return (m->line);
+	}
+	if (m->line[0] == '\0')
+		return NULL;
+	return m->line;
+}
+
 static void	*readinput(t_minishell *m, char * prompt)
 {
 	if (DEBUG_TEST)
 		m->line = get_input();
-	else
+	else if (ft_strcmp(prompt, PROMPT) == 0)
 		m->line = readline(prompt);
+	else
+	{
+		//printf("%s", prompt);
+		m->line = read_line(m, prompt);
+		if (m->line && *m->line && m->line[ft_strlen(m->line) - 1] == '\n')
+		 	m->line[ft_strlen(m->line) - 1] = '\0';
+	}
 	return (m->line);
 }
 
@@ -55,6 +91,6 @@ char	*read_input(t_minishell *m, char * prompt)
 			ft_add_history(m, m->line);
 	}
 	else
-		readinput(m, prompt);
+	 	readinput(m, prompt);
 	return m->line;
 }

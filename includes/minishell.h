@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/16 19:04:11 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/16 22:29:04 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,14 @@
 # define WARNING_HEREDOC "\nminishell: warning: here-document delimited by end-of-file (wanted `%s')\n"
 // # define EXIT_FAILURE 1
 # define EXIT_ALLOC_ERROR 2
+# define EXIT_1 1
 # define EXIT_2 2
 # define EXIT_PERMISSION_DENIED 126
 # define EXIT_IS_A_DIRECTORY 126
 # define EXIT_IS_NOT_A_DIRECTORY 126
 # define EXIT_PERMISSION 126
 # define EXIT_126 126
+# define EXIT_130 130
 # define EXIT_COMMAND_NOT_FOUND 127
 # define EXIT_NO_SUCH_FILE 127
 # define EXIT_SYNTAX_ERROR 258
@@ -137,7 +139,7 @@ typedef struct s_minishell
 	t_cmd			*cmds;
 	t_token_list	*token_list;
 	int				nb_cmd;
-	int				is_here_doc;
+	//int				is_here_doc;
 	char			*limiter;
 	char			**path;
 	t_env			*env_list; //gere le free
@@ -145,6 +147,7 @@ typedef struct s_minishell
 	char			*error;
 	int				status_echo;
 	int				last_status;
+	int				status_heredoc;
 	t_list			*history;
 }	t_minishell;
 

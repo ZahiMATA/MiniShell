@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 10:50:18 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/16 15:41:22 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/16 22:25:38 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,14 @@ static	void ms_launch_read(t_minishell *m, int fd[2], char *limiter, int expand)
 
 	while (1)
 	{
-		//m->line = readline(PROMPT_HEREDOC);
+		//ft_printf_fd(1, "[%i]\n", m->last_status);
+		//debug_var("ZZZZ");
 		m->line = read_input(m, PROMPT_HEREDOC);
-		////ft_putstr("test2\n");
 		{
-			if (m->line == NULL)
+
+			if (m->status_heredoc != 0)
+				break;
+			else if (m->line == NULL)
 			{
 				ft_printf_fd( STDOUT_FILENO, WARNING_HEREDOC, limiter);
 				break;
@@ -82,6 +85,7 @@ int	ms_heredoc(t_minishell *m, char *limiter, int nop)
 	mem_free(new_limiter, "ms_heredoc", new_limiter);
 	// sig off
 	setup_signals();
+	//ft_printf_fd(1, "s[%i]\n", m->last_status);
 	g_signal &= ~HEREDOC_FLAG;
 	/*if (g_signal & SIG_FLAG)
 	{

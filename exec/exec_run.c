@@ -148,7 +148,9 @@ void	redir_heredoc(t_minishell *m, t_cmd *cmd)
 			cmd->fd_in = ms_heredoc(m, redir->file, 0);
 			if (cmd->fd_in == -1)
 				ft_exit_err(m, EXIT_FAILURE, \
-					ft_perror(MINISHELL, redir->file, ERROR_PERMISSION));
+					ft_perror(MINISHELL, redir->file, PERROR));
+			if (m->status_heredoc != 0)
+				return;
 		}
 		redir = redir->next;
 	}
@@ -158,6 +160,7 @@ void	run_heredoc(t_minishell *m)
 {
 	t_cmd	*l;
 
+
 	mem_free_null(&m->line, "run_heredoc");
 	l = m->cmds;
 	while (l)
@@ -165,8 +168,35 @@ void	run_heredoc(t_minishell *m)
 		l->fd_in = -1;
 		l->fd_out = -1;
 		redir_heredoc(m, l);
+		if (m->status_heredoc != 0)
+			return;
 		l = l->next;
 	}
+}
+void	exec_exit(t_minishell *m, int (*pipes)[2], t_cmd *l)
+{
+	int		i;
+
+	i = 0;
+	while (i < m->nb_cmd - 1)
+	{
+		close(pipes[i][0]);
+		close(pipes[i][1]);
+		i++;
+	}
+	mem_close_fds(m);
+	i = 0;
+	l = m->cmds;
+	setup_signals_off();
+	while (l)
+	{
+		waitpid(l->pid, &l->status_c, 0);
+		l = l->next;
+		i++;
+	}
+	setup_signals();
+	set_last_status(m);
+	//debug_show_processes(m, "PARENT");
 }
 
 void	exec_execve(t_minishell *m)
@@ -189,9 +219,15 @@ void	exec_execve(t_minishell *m)
 			ft_exit_fail(m, ERROR_PIPE);
 		i++;
 	}
+	m->status_heredoc = 0;
 	run_heredoc(m);
-
-
+	if (m->status_heredoc != 0)
+	{
+		exec_exit(m , pipes, NULL);
+		printf("\n");
+		m->last_status = EXIT_130;
+		return ;
+	}
 	i = 0;
 	l = m->cmds;
 	while (l)
@@ -205,26 +241,7 @@ void	exec_execve(t_minishell *m)
 		l = l->next;
 		i++;
 	}
-	i = 0;
-	while (i < m->nb_cmd - 1)
-	{
-		close(pipes[i][0]);
-		close(pipes[i][1]);
-		i++;
-	}
-	mem_close_fds(m);
-	i = 0;
-	l = m->cmds;
-	setup_signals_off();
-	while (l)
-	{
-		waitpid(l->pid, &l->status_c, 0);
-		l = l->next;
-		i++;
-	}
-	setup_signals();
-	set_last_status(m);
-	//debug_show_processes(m, "PARENT");
+	exec_exit(m , pipes, l);
 }
 
 int	decompress_status(t_minishell *m, int status)

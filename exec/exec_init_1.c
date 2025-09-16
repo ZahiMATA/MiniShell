@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 15:28:03 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/16 13:35:26 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/16 22:16:46 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	exec_init_env_list(t_minishell **m, char **env)
 void	exec_feed_minishell(t_minishell **m, char **env)
 {
 	(*m)->nb_cmd = prs_lstget_nb(*m);
-	(*m)->is_here_doc = 0;
+	//(*m)->is_here_doc = 0;
 	//(*m)->env = env;
 	if ((*m)->env_list == NULL)
 		exec_init_env_list(m, env);
