@@ -166,7 +166,7 @@ static int	inject_tokens(t_cmd *cmd, int i, char **tok)
 	return (1);
 }
 
-static void	ms_expand_argv_of_cmd(t_minishell *m, t_cmd *cmd)
+static void	ms_expand_argv_of_cmd(t_minishell *m, t_cmd *cmd, int x)
 {
 	int		i;
 	char	*orig;
@@ -180,7 +180,7 @@ static void	ms_expand_argv_of_cmd(t_minishell *m, t_cmd *cmd)
 	while (cmd->args[i])
 	{
 		orig = cmd->args[i];
-		neww = ms_expand_word(m, orig);
+		neww = ms_expand_word(m, orig, x);
 		did_inject = 0;
 		if (neww)
 		{
@@ -214,7 +214,7 @@ void	ms_expand_all_cmds(t_minishell *m)
 	cur = m->cmds;
 	while (cur)
 	{
-		ms_expand_argv_of_cmd(m, cur);
+		ms_expand_argv_of_cmd(m, cur, WITH_QUOTES);
 		cur = cur->next;
 	}
 }

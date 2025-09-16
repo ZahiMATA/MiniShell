@@ -35,7 +35,7 @@ static char	*append_str(char *dst, const char *s)
 	return (dst);
 }
 
-char	*ms_expand_word(t_minishell *m, const char *s)
+char	*ms_expand_word(t_minishell *m, const char *s, int x)
 {
 	int		in_s;
 	int		in_d;
@@ -52,12 +52,12 @@ char	*ms_expand_word(t_minishell *m, const char *s)
 	while (s[i])
 	{
 		handled = 0;
-		if (s[i] == '\\')
+		if ((s[i] == '\\'  && x))
 		{
 			if (!in_s && s[i + 1])
 			{
-				if (in_d && (s[i + 1] == '$' || s[i + 1] == '\"'
-						|| s[i + 1] == '\\' || s[i + 1] == '`'))
+				if (in_d && (s[i + 1] == '$' || (s[i + 1] == '\"' && x)
+						|| (s[i + 1] == '\\' && x) || s[i + 1] == '`'))
 				{
 					out = append_char(out, s[i + 1]);
 					i += 2;
@@ -77,31 +77,31 @@ char	*ms_expand_word(t_minishell *m, const char *s)
 				handled = 1;
 			}
 		}
-		else if (s[i] == '$' && s[i + 1] == '\"' && !in_s && !in_d)
+		else if (s[i] == '$' && (s[i + 1] == '\"' && x) && !in_s && !in_d)
 		{
 			in_d = 1;
 			i += 2;
 			handled = 1;
 		}
-		else if (s[i] == '$' && s[i + 1] == '\"' && !in_s && in_d)
+		else if (s[i] == '$' && (s[i + 1] == '\"' && x) && !in_s && in_d)
 		{
 			out = append_char(out, '$');
 			i += 1;
 			handled = 1;
 		}
-		else if (s[i] == '$' && s[i + 1] == '\'' && !in_s && !in_d)
+		else if (s[i] == '$' && (s[i + 1] == '\'' && x) && !in_s && !in_d)
 		{
 			in_s = 1;
 			i += 2;
 			handled = 1;
 		}
-		else if (s[i] == '\'' && !in_d)
+		else if ((s[i] == '\'' && x) && !in_d)
 		{
 			in_s = !in_s;
 			i++;
 			handled = 1;
 		}
-		else if (s[i] == '\"' && !in_s)
+		else if ((s[i] == '\"' && x) && !in_s)
 		{
 			in_d = !in_d;
 			i++;

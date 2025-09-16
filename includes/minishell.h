@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/16 13:39:55 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/16 15:18:25 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,13 +94,15 @@
 # define OT O_TRUNC
 # define OA O_APPEND
 # define FLAG_FIC 0644
- # define SIG_N_ZERO 0
+# define SIG_N_ZERO 0
 // # define GOT_SIGNAL 1
 // # define GOT_CHILD_SIG 2
 // # define EXIT_CMDNOEXISTS 1
 #define SIG_FLAG 0x1
 #define RDL_FLAG 0x2
 #define HEREDOC_FLAG 0x4
+#define WITH_QUOTES 1
+#define WITHOUT_QUOTES 0
 
 extern volatile sig_atomic_t g_signal;
 //extern volatile sig_atomic_t g_readline_active;
@@ -201,7 +203,7 @@ int		ft_unset(char **arg, t_env **env_list);
 int		ft_colon(t_minishell *m);
 char	*ms_env_get(t_env *env, const char *key);
 void	ms_expand_all_cmds(t_minishell *m);
-char	*ms_expand_word(t_minishell *m, const char *s);
+char	*ms_expand_word(t_minishell *m, const char *s, int x);
 void	ft_print_perror(char *message, char *pmessage);
 void	*ft_perror(char *mes1, char *mes2, char * mes3);
 int		ft_stat(const char *path);
