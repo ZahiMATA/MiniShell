@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/16 17:09:47 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/16 17:31:56 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@
 # define WARNING_HEREDOC "\nminishell: warning: here-document delimited by end-of-file (wanted `%s')\n"
 // # define EXIT_FAILURE 1
 # define EXIT_ALLOC_ERROR 2
+# define EXIT_2 2
 # define EXIT_PERMISSION_DENIED 126
 # define EXIT_IS_A_DIRECTORY 126
 # define EXIT_IS_NOT_A_DIRECTORY 126
@@ -84,6 +85,7 @@
 # define ERROR_DIR "Is a directory"
 # define ERROR_NOT_DIR "Not a directory"
 # define ERROR_NOSUCH "No such file or directory"
+# define ERROR_FILE "filename argument required\n.: usage: . filename [arguments]"
 # define S_QUIT "Quit (core dumped)"
 //# define PATH "PATH="
 # define S_PATH "PATH"

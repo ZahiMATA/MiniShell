@@ -95,8 +95,8 @@ static void	launch_process(t_minishell *m, t_cmd *cmd, int n, int pipes[][2])
 		i++;
 	}
 	mem_close_fds(m);
-	// debug_var(cmd->args[0]);
-	// debug_var(cmd->cmd_abs);
+	//debug_var(cmd->args[0]);
+	//debug_var(cmd->cmd_abs);
 	if (cmd->args == NULL)
 		ft_exit_err(m, EXIT_SUCCESS, NULL);
 	if (cmd->args && is_builin_child(cmd->args[0]))
@@ -105,7 +105,11 @@ static void	launch_process(t_minishell *m, t_cmd *cmd, int n, int pipes[][2])
 		mem_free_all(m);
 		exit(status);
 	}
-	 else if (/*ft_strchr(cmd->args[0], '/') == NULL && */cmd->cmd_abs == 0 /*|| *cmd->cmd_abs == 0*/)
+	else if (ft_strcmp(cmd->args[0], ".") == 0)
+		ft_exit_err(m, EXIT_2, ft_perror(MINISHELL, ".", ERROR_FILE));
+	else if (ft_strcmp(cmd->args[0], "~") == 0)
+		ft_exit_err(m, EXIT_126, ft_perror(MINISHELL, cmd->args[0], ERROR_DIR));
+	else if (cmd->cmd_abs == 0)
 	 	//ft_exit_error(m, cmd->args[0], ERROR_COM, EXIT_126);
 		{
 		ft_exit_err(m, EXIT_COMMAND_NOT_FOUND, ft_perror(MINISHELL, cmd->args[0], ERROR_COM));
