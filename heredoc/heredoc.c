@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 10:50:18 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/15 22:00:12 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/16 14:47:02 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static	void ms_launch_read(t_minishell *m, int fd[2], char *limiter, int expand)
 	{
 		//m->line = readline(PROMPT_HEREDOC);
 		m->line = read_input(m, PROMPT_HEREDOC);
-		ft_putstr("test2\n");
+		////ft_putstr("test2\n");
 		{
 			if (m->line == NULL)
 			{
@@ -29,7 +29,7 @@ static	void ms_launch_read(t_minishell *m, int fd[2], char *limiter, int expand)
 			}
 			if ( (m->line && ft_strcmp(m->line, limiter) == 0) || (g_signal & SIG_FLAG))
 			{
-				ft_putstr("test\n");
+				////ft_putstr("test\n");
 				break;
 			}
 			if (expand)
