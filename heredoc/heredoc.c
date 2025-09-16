@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 10:50:18 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/15 18:42:04 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/15 22:00:12 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,19 @@ static	void ms_launch_read(t_minishell *m, int fd[2], char *limiter, int expand)
 	while (1)
 	{
 		//m->line = readline(PROMPT_HEREDOC);
-		//m->line = read_input(m, PROMPT_HEREDOC);
-		//ft_printf_fd(STDOUT_FILENO, PROMPT_HEREDOC);
-		//ft_printf_fd(STDERR_FILENO, PROMPT_HEREDOC);
-		//m->line = hd_readline(m);
-		//m->line = readline(PROMPT_HEREDOC);
 		m->line = read_input(m, PROMPT_HEREDOC);
+		ft_putstr("test2\n");
 		{
 			if (m->line == NULL)
 			{
-				//ft_printf_fd( STDOUT_FILENO, WARNING_HEREDOC, limiter);
 				ft_printf_fd( STDOUT_FILENO, WARNING_HEREDOC, limiter);
 				break;
 			}
-			if ( m->line && ft_strcmp(m->line, limiter) == 0)
+			if ( (m->line && ft_strcmp(m->line, limiter) == 0) || (g_signal & SIG_FLAG))
+			{
+				ft_putstr("test\n");
 				break;
+			}
 			if (expand)
 			{
 				s = ms_expand_word(m, m->line);
@@ -72,6 +70,8 @@ int	ms_heredoc(t_minishell *m, char *limiter, int nop)
 
 	(void)nop;
 	// sig on
+	setup_signals_for_heredoc();
+	g_signal |= HEREDOC_FLAG;
 	expand = 1;
 	if (ft_strchr(limiter, '\'') || ft_strchr(limiter, '"'))
 		expand = 0;
@@ -81,5 +81,13 @@ int	ms_heredoc(t_minishell *m, char *limiter, int nop)
 	ms_launch_read(m, fd, new_limiter, expand);
 	mem_free(new_limiter, "ms_heredoc", new_limiter);
 	// sig off
+	setup_signals();
+	g_signal &= ~HEREDOC_FLAG;
+	/*if (g_signal & SIG_FLAG)
+	{
+		g_signal &= ~SIG_FLAG;
+		close(fd[0]);
+		return (-1);
+	}*/
 	return (fd[0]);
 }

@@ -46,7 +46,7 @@ static void	*readinput(t_minishell *m, char * prompt)
 
 char	*read_input(t_minishell *m, char * prompt)
 {
-	if (ft_strcmp(prompt, PROMPT) == 0) // TODO A VOIR
+	if (ft_strcmp(prompt, PROMPT) == 0)
 	{
 		g_signal |= RDL_FLAG;
 		readinput(m, prompt);

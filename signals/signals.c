@@ -12,15 +12,51 @@ static void sigint_handler(int sig)
 	(void)sig;
 	g_signal |= SIG_FLAG;
 	write(STDOUT_FILENO, "\n", 1);
-	if(g_signal & RDL_FLAG)
+	if (g_signal & RDL_FLAG)
 	{
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
 	}
 }
+#include <sys/ioctl.h>
+static void sigint_handler_hd(int sig)
+{
+	(void)sig;
+	g_signal |= SIG_FLAG;
 
-/*static*/ void sigquit_handler(int sig)
+	write(STDOUT_FILENO, "\n", 1);
+	int i = g_signal + '0';
+	write(1, &i, 1);
+
+	rl_done = 1;
+	//write(STDOUT_FILENO, "\n", 1);
+	ioctl(STDOUT_FILENO, TIOCSTI, "\n");
+	        ioctl(STDOUT_FILENO, TIOCSTI, "\n");
+        rl_on_new_line();
+        rl_replace_line("", 0);
+	//write(STDOUT_FILENO, "\n", 1);
+	//if (g_signal & HEREDOC_FLAG)
+	/*{
+		//rl_replace_line("", 0);
+		ioctl(STDOUT_FILENO, TIOCSTI, "\n");
+
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}*/
+        /*rl_done = 1;
+        ioctl(STDOUT_FILENO, TIOCSTI, "\n");
+        g_signal = SIGINT;
+        write(1, "\n", 1);
+        rl_replace_line("", 0);
+        rl_on_new_line();
+        rl_redisplay();*/
+
+	//rl_done = 1;
+}
+
+/*static* / void sigquit_handler(int sig)
 {
 	(void)sig;
 
@@ -29,37 +65,22 @@ static void sigint_handler(int sig)
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
-
-
-	//write(STDOUT_FILENO, "\r  \r", 40);
-	//write(STDOUT_FILENO, "\n", 1);
-	// write(STDOUT_FILENO, "\n", 1);
-	///write(STDOUT_FILENO, PROMPT, ft_strlen(PROMPT));
-}
+}*/
 
 void setup_signals(void)
 {
 	signal(SIGINT,  sigint_handler);
 	signal(SIGQUIT, SIG_IGN);
-	// signal(SIGQUIT, sigquit_handler); // TODO A VOIR
-	// signal(SIGQUIT, NULL); // TODO A VOIR
 }
 
 void setup_signals_for_children(void)
 {
 	signal(SIGINT,  SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
-	//signal(SIGINT, sigquit_handler); // TODO A VOIR
-	//signal(SIGQUIT, sigquit_handler); // TODO A VOIR
 }
 
-
-/* pas un sig
-void handle_ctrl_d(char *line)
+void setup_signals_for_heredoc(void)
 {
-    if (!line)
-    {
-        write(STDOUT_FILENO, "exit\n", 5);
-        exit(0);
-    }
-}*/
+	signal(SIGINT,  sigint_handler_hd);
+	signal(SIGQUIT, SIG_IGN);
+}

@@ -169,6 +169,7 @@ void	exec_execve(t_minishell *m)
 {
 	int		pipes[m->nb_cmd - 1][2];
 	int		i;
+	//int		pid;
 	t_cmd	*l;
 
 	// debug_var("1");
@@ -185,6 +186,8 @@ void	exec_execve(t_minishell *m)
 		i++;
 	}
 	run_heredoc(m);
+
+
 	i = 0;
 	l = m->cmds;
 	while (l)

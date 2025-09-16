@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 12:41:06 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/10 19:42:42 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/16 14:18:16 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ t_cmd	*prs_lstnew(t_cmd cmd)
 		list->args = cmd.args;
 	list->n = cmd.n;
 	list->redirs = cmd.redirs;
+	list->fd_in = -1;
+	list->fd_out = -1;
 	list-> next = NULL;
 	return (list);
 }
