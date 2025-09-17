@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_export.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zmata <zmata@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/04 16:37:41 by ybouroga          #+#    #+#             */
+/*   Updated: 2025/09/17 14:24:05 by zmata            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 #include <stdlib.h>
 #include <stdio.h>
@@ -11,15 +23,15 @@ int	is_valid_export_key(const char *str)
 	if (!str)
 		return (0);
 	if (!((str[0] >= 'A' && str[0] <= 'Z')
-		|| (str[0] >= 'a' && str[0] <= 'z')
-		|| str[0] == '_'))
+			|| (str[0] >= 'a' && str[0] <= 'z')
+			|| str[0] == '_'))
 		return (0);
 	while (str[i] && str[i] != '=')
 	{
 		if (!((str[i] >= 'A' && str[i] <= 'Z')
-			|| (str[i] >= 'a' && str[i] <= 'z')
-			|| (str[i] >= '0' && str[i] <= '9')
-			|| str[i] == '_'))
+				|| (str[i] >= 'a' && str[i] <= 'z')
+				|| (str[i] >= '0' && str[i] <= '9')
+				|| str[i] == '_'))
 			return (0);
 		i++;
 	}
@@ -37,7 +49,8 @@ t_env	*find_env_var(t_env *env_list, const char *key)
 	return (NULL);
 }
 
-void	add_or_update_env_var(t_env **env_list, const char *key, const char *value)
+void	add_or_update_env_var(t_env **env_list, const char *key
+	, const char *value)
 {
 	t_env	*var;
 	t_env	*new_node;
@@ -49,18 +62,18 @@ void	add_or_update_env_var(t_env **env_list, const char *key, const char *value)
 		if (value)
 			var->val = strdup(value);
 		else
-			var->val = NULL;
+			var->val = strdup("");
 	}
 	else
 	{
 		new_node = malloc(sizeof(t_env));
 		if (!new_node)
-			return;
+			return ;
 		new_node->key = strdup(key);
 		if (value)
 			new_node->val = strdup(value);
 		else
-			new_node->val = NULL;
+			new_node->val = strdup("");
 		new_node->next = *env_list;
 		*env_list = new_node;
 	}
@@ -72,12 +85,10 @@ void	print_export_env(t_env *env_list)
 	{
 		ft_putstr("declare -x ");
 		ft_putstr(env_list->key);
+		ft_putstr("=\"");
 		if (env_list->val)
-		{
-			ft_putstr("=\"");
 			ft_putstr(env_list->val);
-			ft_putstr("\"");
-		}
+		ft_putstr("\"");
 		ft_putstr("\n");
 		env_list = env_list->next;
 	}
@@ -87,7 +98,6 @@ int	ft_export(char **args, t_env **env_list)
 {
 	int		i;
 	int		had_error;
-	char	*equal_sign;
 
 	i = 1;
 	had_error = 0;
@@ -98,25 +108,7 @@ int	ft_export(char **args, t_env **env_list)
 	}
 	while (args[i])
 	{
-		if (!is_valid_export_key(args[i]))
-		{
-			ft_putstr_fd("minishell: export: `", 2);
-			ft_putstr_fd(args[i], 2);
-			ft_putstr_fd("': not a valid identifier\n", 2);
-			had_error = 1;
-		}
-		else
-		{
-			equal_sign = strchr(args[i], '=');
-			if (equal_sign)
-			{
-				*equal_sign = '\0';
-				add_or_update_env_var(env_list, args[i], equal_sign + 1);
-				*equal_sign = '=';
-			}
-			else
-				add_or_update_env_var(env_list, args[i], NULL);
-		}
+		had_error |= handle_export_arg(args[i], env_list);
 		i++;
 	}
 	return (had_error);

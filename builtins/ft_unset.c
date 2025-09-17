@@ -1,72 +1,82 @@
-#include <limits.h>
-# include <stdio.h>
-# include <stdlib.h>
-#include <unistd.h>
-#include <errno.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_unset.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zmata <zmata@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/04 16:37:41 by ybouroga          #+#    #+#             */
+/*   Updated: 2025/09/17 14:55:46 by zmata            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
 #include <string.h>
+#include <stdlib.h>
 
-
-typedef struct s_env { //TODO supp
-    char *key;
-    char *value;
-    struct s_env *next;
-} t_env;
-
-void remove_env_var(t_env **env_list, const char *key)
+static void	remove_env_var(t_env **env_list, const char *key)
 {
-    t_env *current = *env_list;
-    t_env *prev = NULL;
+	t_env	*cur;
+	t_env	*prev;
 
-    while (current)
-    {
-        if (strcmp(current->key, key) == 0)
-        {
-            if (prev)
-                prev->next = current->next;
-            else
-                *env_list = current->next;
-
-            free(current->key);
-            free(current->value);
-            free(current);
-            return;
-        }
-        prev = current;
-        current = current->next;
-    }
+	cur = *env_list;
+	prev = NULL;
+	while (cur)
+	{
+		if (strcmp(cur->key, key) == 0)
+		{
+			if (prev)
+				prev->next = cur->next;
+			else
+				*env_list = cur->next;
+			free(cur->key);
+			free(cur->val);
+			free(cur);
+			return ;
+		}
+		prev = cur;
+		cur = cur->next;
+	}
 }
 
-int is_valid_identifier(const char *str)
+static int	is_valid_identifier(const char *s)
 {
-    if (!str || !str[0])
-        return (0);
-    if (!(str[0] == '_' || (str[0] >= 'A' && str[0] <= 'Z') || (str[0] >= 'a' && str[0] <= 'z')))
-        return (0);
-    for (int i = 1; str[i]; i++)
-    {
-        if (!(str[i] == '_' || (str[i] >= 'A' && str[i] <= 'Z') ||
-              (str[i] >= 'a' && str[i] <= 'z') || (str[i] >= '0' && str[i] <= '9')))
-            return (0);
-    }
-    return (1);
+	int	i;
+
+	if (!s || !s[0])
+		return (0);
+	if (!(s[0] == '_' || (s[0] >= 'A' && s[0] <= 'Z')
+			|| (s[0] >= 'a' && s[0] <= 'z')))
+		return (0);
+	i = 1;
+	while (s[i])
+	{
+		if (!(s[i] == '_' || (s[i] >= 'A' && s[i] <= 'Z')
+				|| (s[i] >= 'a' && s[i] <= 'z')
+				|| (s[i] >= '0' && s[i] <= '9')))
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
-int ft_unset(char **arg, t_env **env_list)
+int	ft_unset(char **arg, t_env **env_list)
 {
-    int i = 1;
-    int error = 0;
+	int	i;
+	int	error;
 
-    while (arg[i])
-    {
-        if (is_valid_identifier(arg[i]))
-            remove_env_var(env_list, arg[i]);
-        else
-        {
-            dprintf(2, "unset: `%s': not a valid identifier\n", arg[i]);
-            error = 1;
-        }
-        i++;
-    }
-    return (error);
+	i = 1;
+	error = 0;
+	while (arg[i])
+	{
+		if (is_valid_identifier(arg[i]))
+			remove_env_var(env_list, arg[i]);
+		else
+		{
+			ft_printf_fd(2, "unset: `%s': not a valid identifier\n", arg[i]);
+			error = 1;
+		}
+		i++;
+	}
+	return (error);
 }
-

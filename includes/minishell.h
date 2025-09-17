@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/17 14:59:43 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/17 15:15:36 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,5 +221,20 @@ void	redir_in(t_minishell *m, t_cmd *cmd);
 void	redir_out(t_minishell *m, t_cmd *cmd);
 void	redir_heredoc(t_minishell *m, t_cmd *cmd);
 void	run_heredoc(t_minishell *m);
+int		atoll_overflow(const char *s, long long *out);
+int		ft_is_numeric(char *str);
+int		handle_export_arg(char *arg, t_env **env_list);
+char    *dup_or_null(const char *val);
+int     env_insert_front(t_env **lst, const char *key, const char *val);
+int		args_count(char **av);
+int		cd_print_err(const char *path);
+int		cd_get_road_home(t_minishell *m, char **road);
+int		cd_get_road_tilde(t_minishell *m, t_cmd *cmd, char **road);
+int		cd_get_road_oldpwd(t_minishell *m, char **road);
+int		cd_apply_chdir_update(char *road, char old_pwd[PATH_MAX], t_env **penv);
+char	*get_env_value(char *key, t_env *env_list);
+void	set_env_kv(t_env **lst, const char *key, const char *val);
+char	*expand_tilde(char *arg, t_env *env_list);
+void	update_pwd_and_oldpwd(char *old_pwd, char *new_pwd, t_env **env_list);
 
 #endif

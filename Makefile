@@ -6,7 +6,7 @@
 #    By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/28 10:35:37 by ybouroga          #+#    #+#              #
-#    Updated: 2025/09/17 14:20:58 by ybouroga         ###   ########.fr        #
+#    Updated: 2025/09/17 15:13:35 by ybouroga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,13 +15,20 @@ NAME = minishell
 SRCS = \
 	src/minishell.c \
 	builtins/ft_cd.c \
+	builtins/ft_cd_2.c \
+	builtins/ft_utils.c \
+	builtins/ft_utils_2.c \
 	builtins/ft_echo.c \
 	builtins/ft_env.c \
 	builtins/ft_exit.c \
+	builtins/ft_exit_2.c \
 	builtins/ft_export.c \
+	builtins/ft_export_2.c \
 	builtins/ft_pwd.c \
 	builtins/ft_unset.c \
 	builtins/ft_history.c \
+	builtins/ft_history_2.c \
+	builtins/ft_history_3.c \
 	builtins/ft_colon.c \
 	dispatcher/dispatcher.c \
 	expander/expand_env.c \
