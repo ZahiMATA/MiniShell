@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 17:04:11 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/02 18:18:14 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/17 14:50:00 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	ft_lstclear(t_list **lst, void (*del)(void *))
 		*lst = p;
 	}
 }
+
 void	ft_del_content(void *ptr)
 {
 	mem_free(ptr, "ft_del_content", ptr);

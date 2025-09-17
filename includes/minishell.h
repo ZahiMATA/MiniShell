@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/16 22:29:04 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/17 14:59:43 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@
 # define CTRL_C "^C"
 # define PROMPT_HEREDOC "> "
 # define WARNING_HEREDOC "\nminishell: warning: here-document delimited by end-of-file (wanted `%s')\n"
-// # define EXIT_FAILURE 1
 # define EXIT_ALLOC_ERROR 2
+// raccourci pour EXIT_FAILURE
 # define EXIT_1 1
 # define EXIT_2 2
 # define EXIT_PERMISSION_DENIED 126
@@ -89,30 +89,23 @@
 # define ERROR_NOSUCH "No such file or directory"
 # define ERROR_FILE "filename argument required\n.: usage: . filename [arguments]"
 # define S_QUIT "Quit (core dumped)"
-//# define PATH "PATH="
 # define S_PATH "PATH"
 # define S_EMPTY ""
 # define OFST_FIRST_CMD 2
-# define NB_NOT_ARG 3
+# define MAX_PIPES 1024
 # define OW O_WRONLY
 # define OC O_CREAT
 # define OT O_TRUNC
 # define OA O_APPEND
 # define FLAG_FIC 0644
 # define SIG_N_ZERO 0
-// # define GOT_SIGNAL 1
-// # define GOT_CHILD_SIG 2
-// # define EXIT_CMDNOEXISTS 1
 #define SIG_FLAG 0x1
 #define RDL_FLAG 0x2
-#define HEREDOC_FLAG 0x4
 #define WITH_QUOTES 1
 #define WITHOUT_QUOTES 0
 
 extern volatile sig_atomic_t g_signal;
-//extern volatile sig_atomic_t g_readline_active;
-
-// TODO implementer init et l access et le free et le update data
+//volatile sig_atomic_t	g_signal;
 
 typedef struct s_err
 {
@@ -130,8 +123,6 @@ typedef struct s_env
 	struct	s_env	*next;
 } t_env;
 
-// **env is the system env (envp)
-// *env_list is our modifiable env
 typedef struct s_minishell
 {
 	int				fd_in;
@@ -139,12 +130,11 @@ typedef struct s_minishell
 	t_cmd			*cmds;
 	t_token_list	*token_list;
 	int				nb_cmd;
-	//int				is_here_doc;
 	char			*limiter;
 	char			**path;
-	t_env			*env_list; //gere le free
+	t_env			*env_list;
 	char			*line;
-	char			*error;
+	char			*dummy;
 	int				status_echo;
 	int				last_status;
 	int				status_heredoc;
@@ -166,6 +156,8 @@ void	exec_init_cmds_and_cmd_args(t_minishell **p, char **cmd, int nbcom);
 void	exec_init_cmd_path(t_minishell **p/*, int nbcom*/);
 char	*exec_find_command(t_minishell *m, char *cmd);
 void	exec_execve(t_minishell *m);
+int		exec_set_last_status(t_minishell *m);
+void	exec_launch_process(t_minishell *m, t_cmd *cmd, int n, int pipes[][2]);
 void	debug_show_args(t_minishell *m);
 void	debug_show_processes(t_minishell *m, char *message);
 void	debug_show_error(char *message);
@@ -227,5 +219,7 @@ int		is_builin_parent(char *s);
 int		is_builin_child(char *s);
 void	redir_in(t_minishell *m, t_cmd *cmd);
 void	redir_out(t_minishell *m, t_cmd *cmd);
+void	redir_heredoc(t_minishell *m, t_cmd *cmd);
+void	run_heredoc(t_minishell *m);
 
 #endif

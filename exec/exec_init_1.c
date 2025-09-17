@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 15:28:03 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/16 22:16:46 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/17 13:03:54 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,43 +43,18 @@ static void	exec_init_env_list(t_minishell **m, char **env)
 void	exec_feed_minishell(t_minishell **m, char **env)
 {
 	(*m)->nb_cmd = prs_lstget_nb(*m);
-	//(*m)->is_here_doc = 0;
-	//(*m)->env = env;
 	if ((*m)->env_list == NULL)
 		exec_init_env_list(m, env);
 	ms_expand_all_cmds(*m);
 	exec_init_path(m);
-	exec_init_cmd_path(m/*, nbcom*/);
+	exec_init_cmd_path(m);
 }
 
-void exec_init_minishell(t_minishell **m/*, t_env *last_env_list*/)
+void	exec_init_minishell(t_minishell **m)
 {
 	*m = ft_calloc(1, sizeof(t_minishell));
 	if (*m == NULL)
 		ft_exit_fail_status(*m, NULL, EXIT_ALLOC_ERROR);
-	// if (last_env_list)
-	// 	(*m)->env_list = last_env_list;
-	//(*m)->cmds = ft_calloc(1, sizeof(t_cmd));
-	/*if ((*m)->cmds == NULL)
-		ft_exit_fail_status(*m, NULL, EXIT_ALLOC_ERROR);*/
-
-	/*(*m)->cmds->redirs  = ft_calloc(1, sizeof(t_redir));
-	if((*m)->cmds->redirs == NULL)
-		ft_exit_fail_status(*m, NULL, EXIT_ALLOC_ERROR);*/
-
 	(*m)->fd_in = -1;
 	(*m)->fd_out = -1;
-	//(*m)->cmds = NULL;
-	// (*m)->cmds2 = NULL;
-	// (*m)->cmds2->cmd = NULL;
-	// (*m)->token_list = NULL;
-	// (*m)->nb_cmd = 0;
-	// (*m)->is_here_doc = 0;
-	// (*m)->limiter = NULL;
-	// (*m)->path = NULL;
-	// (*m)->env_list = NULL;
-	// (*m)->last_status = 0;
-	//exec_feed_pipex(m, NULL, 0, env); //TODO
 }
-
-

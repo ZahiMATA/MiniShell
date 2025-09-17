@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 12:50:08 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/15 16:49:10 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/17 13:05:35 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@ void	exec_init_path(t_minishell **m)
 		(*m)->path = NULL;
 		return ;
 	}
-	while(l && ft_strcmp(l->key, S_PATH) != 0)
+	while (l && ft_strcmp(l->key, S_PATH) != 0)
 		l = l->next;
 	if (l && ft_strcmp(l->key, S_PATH) == 0)
 	{
-		(*m)->path  = ft_split(l->val, ':');
+		(*m)->path = ft_split(l->val, ':');
 		if ((*m)->path == NULL)
 			ft_exit_fail_status(*m, NULL, EXIT_ALLOC_ERROR);
 	}
@@ -46,7 +46,7 @@ char	*exec_find_command(t_minishell *m, char *cmd)
 	if (cmd == NULL || *cmd == 0 || ft_strcmp(cmd, "..") == 0)
 		return (NULL);
 	cmd_abs = NULL;
-	if (/*access(cmd, X_OK) == 0 && */ft_strchr(cmd, '/'))
+	if (ft_strchr(cmd, '/'))
 	{
 		cmd_abs = ft_strdup(cmd);
 		if (cmd_abs == NULL)
@@ -57,8 +57,6 @@ char	*exec_find_command(t_minishell *m, char *cmd)
 	while (m->path && m->path[i])
 	{
 		cmd_abs = ft_strjoin_with_char(m->path[i], '/', cmd);
-		// debug_var(cmd);
-		// debug_var(cmd_abs);
 		if (cmd_abs == NULL)
 			ft_exit_fail_status(m, NULL, EXIT_ALLOC_ERROR);
 		if (access(cmd_abs, X_OK) == 0)
@@ -69,20 +67,17 @@ char	*exec_find_command(t_minishell *m, char *cmd)
 	return (cmd_abs);
 }
 
-void	exec_init_cmd_path(t_minishell **m/*, int nbcom*/)
+void	exec_init_cmd_path(t_minishell **m)
 {
 	t_cmd	*l;
 	char	*cmd_abs;
 
 	l = (*m)->cmds;
-
 	while (l)
 	{
-		// cmd_abs = exec_find_command(*m, prs_getcmd(*m, l->cmd));
 		cmd_abs = exec_find_command(*m, prs_getcmd_from_args(*m, l->args));
 		if (cmd_abs)
 			l->cmd_abs = cmd_abs;
 		l = l->next;
 	}
 }
-

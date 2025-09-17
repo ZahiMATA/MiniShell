@@ -6,7 +6,7 @@
 #    By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/28 10:35:37 by ybouroga          #+#    #+#              #
-#    Updated: 2025/09/15 15:29:56 by ybouroga         ###   ########.fr        #
+#    Updated: 2025/09/17 14:20:58 by ybouroga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,8 @@ SRCS = \
 	exec/exec_init_2.c \
 	exec/exec_redir.c \
 	exec/exec_run.c \
+	exec/exec_status.c \
+	exec/exec_children.c \
 	input/input.c \
 	libft/ft_atoi.c \
 	libft/ft_split.c \
@@ -98,6 +100,7 @@ SRCS = \
 	ft_printf/ft_printf.c \
 	ft_printf/ft_printf_2.c \
 	heredoc/heredoc.c \
+	heredoc/heredoc_2.c \
 	signals/signals.c \
 	signals/ft_g_signal.c \
 	get_next_line/get_next_line.c \

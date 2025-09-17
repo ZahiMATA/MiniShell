@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 18:53:47 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/02 12:55:17 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/17 14:41:53 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,10 @@ void	debug_serial_token(t_minishell *m, char *buffer, size_t size)
 			ft_exit_fail_status(m, NULL, EXIT_ALLOC_ERROR);
 		ft_strlcat(buffer, n, size);
 		ft_strlcat(buffer, "][", size);
-		ft_strlcat(buffer, l->val,  size);
+		ft_strlcat(buffer, l->val, size);
 		ft_strlcat(buffer, "]", size);
 		free(n);
 		l = l-> next;
 	}
 	ft_strlcat(buffer, "\n", size);
 }
-

@@ -1,8 +1,15 @@
-// Handle ctrl-C, ctrl-D and ctrl-\ which should behave like in bash.
-/* signals.c — version simple */
-/*#include <signal.h>
-#include <unistd.h>
-#include <stdlib.h>*/
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   signals.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/17 14:53:40 by ybouroga          #+#    #+#             */
+/*   Updated: 2025/09/17 14:53:40 by ybouroga         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 volatile sig_atomic_t	g_signal;

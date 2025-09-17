@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 13:06:25 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/12 14:42:38 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/17 14:50:51 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ char	*ft_strtrim_all(char const *s, char const *set)
 
 	if (s[0] == '\0')
 		return (ft_strdup(""));
-
 	len = ft_strlen(s);
 	ret = malloc(len + 1);
 	if (ret == NULL)

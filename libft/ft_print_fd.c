@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 13:03:15 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/28 14:47:10 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/17 14:49:18 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,21 +23,15 @@ int	ft_putstr_fd( char *s, int fd)
 		return (0);
 	return (write(fd, s, ft_strlen(s)));
 }
-/*
-void	ft_putnbr_fd(int n, int fd)
-{
-	long	l;
 
-	l = n;
-	if (l < 0)
-	{
-		ft_putchar_fd('-', fd);
-		l *= -1;
-	}
-	if (l > 9)
-		ft_putnbr_fd(l / 10, fd);
-	ft_putchar_fd((l % 10) + '0', fd);
-}*/
+int	ft_putstr_fd_nl( char *s, int fd)
+{
+	int	i;
+
+	i = ft_putstr_fd(s, fd);
+	i += ft_putchar_fd('\n', fd);
+	return (i);
+}
 
 int	ft_putnbr_fd(int n, int fd)
 {
@@ -54,7 +48,5 @@ int	ft_putnbr_fd(int n, int fd)
 	if (l >= 10)
 		ret += ft_putnbr_fd(l / 10, fd);
 	ret += ft_putchar_fd(l % 10 + '0', fd);
-
 	return (ret);
 }
-

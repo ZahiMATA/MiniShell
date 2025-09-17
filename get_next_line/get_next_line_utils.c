@@ -6,13 +6,12 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 15:57:22 by zmata             #+#    #+#             */
-/*   Updated: 2025/09/09 18:21:10 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/17 12:20:11 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include "minishell.h"
-
 
 char	*gnl_strjoin(char *s1, char *s2, int *newline_position)
 {

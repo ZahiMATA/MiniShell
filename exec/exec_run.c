@@ -12,168 +12,9 @@
 
 #include "minishell.h"
 
-void	redir_in(t_minishell *m, t_cmd *cmd)
-{
-	t_redir	*redir;
+static void	exec_execve_2(t_minishell *m, int pipes[][2]);
 
-	redir = cmd->redirs;
-	while (redir)
-	{
-		if (redir->type == N_REDIR_LEFT)
-		{
-			m->fd_in = open(redir->file, O_RDONLY);
-			if (m->fd_in == -1)
-				ft_exit_err(m, EXIT_FAILURE, \
-					ft_perror(MINISHELL, redir->file, PERROR));
-			else if (dup2(m->fd_in, STDIN_FILENO) == -1)
-				ft_exit_fail(m, ERROR_DUP2);
-			close(m->fd_in);
-		}
-		else if (redir->type == N_DOUBLE_REDIR_LEFT)
-		{
-			if (cmd->fd_in == -1)
-				ft_exit_err(m, EXIT_FAILURE, \
-					ft_perror(MINISHELL, redir->file, PERROR));
-			if (dup2(cmd->fd_in, STDIN_FILENO) == -1)
-				ft_exit_fail(m, ERROR_DUP2);
-			//mem_close_fd(cmd->fd_in);
-		}
-		redir = redir->next;
-	}
-}
-void	redir_out(t_minishell *m, t_cmd *cmd)
-{
-	t_redir	*redir;
-
-	redir = cmd->redirs;
-	while (redir)
-	{
-		if (redir->type == N_REDIR_RIGHT)
-		{
-			m->fd_out = open(redir->file, OW | OC | OT, FLAG_FIC);
-			if (m->fd_out == -1)
-				ft_exit_err(m, EXIT_FAILURE, \
-					ft_perror(MINISHELL, redir->file, PERROR));
-			else if (dup2(m->fd_out, STDOUT_FILENO) == -1)
-				ft_exit_fail(m, ERROR_DUP2);
-			close(m->fd_out);
-		}
-		else if (redir->type == N_DOUBLE_REDIR_RIGHT)
-		{
-			m->fd_out = open(redir->file, OW | OC | OA, FLAG_FIC);
-			if (m->fd_out == -1)
-				ft_exit_err(m, EXIT_FAILURE, \
-					ft_perror(MINISHELL, redir->file, PERROR));
-			else if (dup2(m->fd_out, STDOUT_FILENO) == -1)
-				ft_exit_fail(m, ERROR_DUP2);
-			close(m->fd_out);
-		}
-		redir = redir->next;
-	}
-}
-static void	launch_process(t_minishell *m, t_cmd *cmd, int n, int pipes[][2])
-{
-	char		**env_tab;
-	int			i;
-	int			status;
-
-	setup_signals_for_children();
-	if (n > 0)
-		if (dup2(pipes[n - 1][0] , STDIN_FILENO) == -1)
-			ft_exit_fail(m, ERROR_DUP2);
-	if (n < m->nb_cmd - 1)
-		if (dup2(pipes[n][1], STDOUT_FILENO) == -1)
-			ft_exit_fail(m, ERROR_DUP2);
-	redir_in(m, cmd);
-	redir_out(m, cmd);
-	i = 0;
-
-	while (i < m->nb_cmd - 1)
-	{
-		close(pipes[i][0]);
-		close(pipes[i][1]);
-		i++;
-	}
-	mem_close_fds(m);
-	//debug_var(cmd->args[0]);
-	//debug_var(cmd->cmd_abs);
-	if (cmd->args == NULL)
-		ft_exit_err(m, EXIT_SUCCESS, NULL);
-	if (cmd->args && is_builin_child(cmd->args[0]))
-	{
-		status = exec_builtin(m, cmd);
-		mem_free_all(m);
-		exit(status);
-	}
-	else if (ft_strcmp(cmd->args[0], ".") == 0)
-		ft_exit_err(m, EXIT_2, ft_perror(MINISHELL, ".", ERROR_FILE));
-	else if (ft_strcmp(cmd->args[0], "~") == 0)
-		ft_exit_err(m, EXIT_126, ft_perror(MINISHELL, cmd->args[0], ERROR_DIR));
-	else if (cmd->cmd_abs == 0)
-	 	//ft_exit_error(m, cmd->args[0], ERROR_COM, EXIT_126);
-		{
-		ft_exit_err(m, EXIT_COMMAND_NOT_FOUND, ft_perror(MINISHELL, cmd->args[0], ERROR_COM));
-		}
-	else if (ft_not_dir_but_file(cmd->args[0]))
-		ft_exit_err(m, EXIT_IS_NOT_A_DIRECTORY, ft_perror(MINISHELL, cmd->cmd_abs, ERROR_NOT_DIR));
-	else if (ft_strchr(cmd->args[0], '/') == 0 && cmd->cmd_abs == NULL)
-		//ft_exit_error(m, cmd->args[0], ERROR_COM, EXIT_COMMAND_NOT_FOUND);
-		ft_exit_err(m, EXIT_COMMAND_NOT_FOUND, ft_perror(MINISHELL, cmd->args[0], ERROR_COM));
-	else if ((ft_strchr(cmd->args[0], '/') && cmd->cmd_abs == NULL) || (ft_stat(cmd->cmd_abs) == -1))
-		ft_exit_err(m, EXIT_NO_SUCH_FILE, ft_perror(MINISHELL, cmd->args[0], ERROR_NOSUCH));
-	else if (ft_is_dir(cmd->cmd_abs))
-		ft_exit_err(m, EXIT_IS_A_DIRECTORY, ft_perror(MINISHELL, cmd->cmd_abs, ERROR_DIR));
-	if (access(cmd->cmd_abs, X_OK) == -1)
-		ft_exit_err(m, EXIT_PERMISSION, ft_perror(MINISHELL, cmd->cmd_abs, ERROR_PERMISSION));
-	else
-	{
-		env_tab = env_list_to_tab(m, m->env_list);
-		execve(cmd->cmd_abs, cmd->args, env_tab);
-		mem_free_array(&env_tab, "env_tab");
-		ft_exit_perror(m, cmd->cmd_abs);
-	}
-}
-
-
-void	redir_heredoc(t_minishell *m, t_cmd *cmd)
-{
-	t_redir	*redir;
-
-	redir = cmd->redirs;
-	while (redir)
-	{
-		if (redir->type == N_DOUBLE_REDIR_LEFT)
-		{
-			mem_close_fd(cmd->fd_in);
-			cmd->fd_in = ms_heredoc(m, redir->file, 0);
-			if (cmd->fd_in == -1)
-				ft_exit_err(m, EXIT_FAILURE, \
-					ft_perror(MINISHELL, redir->file, PERROR));
-			if (m->status_heredoc != 0)
-				return;
-		}
-		redir = redir->next;
-	}
-}
-
-void	run_heredoc(t_minishell *m)
-{
-	t_cmd	*l;
-
-
-	mem_free_null(&m->line, "run_heredoc");
-	l = m->cmds;
-	while (l)
-	{
-		l->fd_in = -1;
-		l->fd_out = -1;
-		redir_heredoc(m, l);
-		if (m->status_heredoc != 0)
-			return;
-		l = l->next;
-	}
-}
-void	exec_exit(t_minishell *m, int (*pipes)[2], t_cmd *l)
+static void	exec_exit(t_minishell *m, int pipes[][2], t_cmd *l)
 {
 	int		i;
 
@@ -195,22 +36,13 @@ void	exec_exit(t_minishell *m, int (*pipes)[2], t_cmd *l)
 		i++;
 	}
 	setup_signals();
-	set_last_status(m);
-	//debug_show_processes(m, "PARENT");
+	exec_set_last_status(m);
 }
 
 void	exec_execve(t_minishell *m)
 {
-	int		pipes[m->nb_cmd - 1][2];
+	int		pipes[MAX_PIPES][2];
 	int		i;
-	//int		pid;
-	t_cmd	*l;
-
-	// debug_var("1");
-	// ms_heredoc(m, "a", 0);
-	// debug_var("2");
-	// ms_heredoc(m, "b", 0);
-	// debug_var("c");
 
 	i = 0;
 	while (i < m->nb_cmd - 1)
@@ -221,9 +53,17 @@ void	exec_execve(t_minishell *m)
 	}
 	m->status_heredoc = 0;
 	run_heredoc(m);
+	exec_execve_2(m, pipes);
+}
+
+static void	exec_execve_2(t_minishell *m, int pipes[][2])
+{
+	int		i;
+	t_cmd	*l;
+
 	if (m->status_heredoc != 0)
 	{
-		exec_exit(m , pipes, NULL);
+		exec_exit(m, pipes, NULL);
 		printf("\n");
 		m->last_status = EXIT_130;
 		return ;
@@ -232,45 +72,13 @@ void	exec_execve(t_minishell *m)
 	l = m->cmds;
 	while (l)
 	{
-		//printf("EX=[%s]\n", l->args[0]);
 		l->pid = fork();
 		if (l->pid == -1)
 			ft_exit_fail(m, ERROR_FORK);
 		if (l->pid == 0)
-			launch_process(m, l, i, pipes);
+			exec_launch_process(m, l, i, pipes);
 		l = l->next;
 		i++;
 	}
-	exec_exit(m , pipes, l);
-}
-
-int	decompress_status(t_minishell *m, int status)
-{
-	(void)m;
-	if (WIFEXITED(status))
-		return (WEXITSTATUS(status));
-	else if (WIFSIGNALED(status))
-		return (128 + WTERMSIG(status));
-	return (1);
-}
-
-int	set_last_status(t_minishell *m)
-{
-	t_cmd	*cmd;
-	cmd = m->cmds;
-	if (cmd == NULL)
-	{
-		//printf("tail=0\n");
-		return (1);
-	}
-	while (cmd)
-	{
-		cmd->status = decompress_status(m, cmd->status_c);
-		m->last_status = cmd->status;
-		if (cmd->next == NULL && WIFSIGNALED(cmd->status_c) && WTERMSIG(cmd->status_c) == SIGQUIT)
-			ft_perror(S_QUIT, NULL, NULL);
-		cmd = cmd->next;
-	}
-	return (0);
-	//printf("cs=[%d]\n", tail->status);
+	exec_exit(m, pipes, l);
 }

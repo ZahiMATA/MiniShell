@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:55:43 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/03 17:48:03 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/17 14:48:07 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ static int	do_split(char const *s, char c, char **split)
 		if (manage_zone(split, zone, &n) == -1)
 			return (-1);
 		split[n++] = zone;
-		// printf("a=[%s][%zu][%zu][%zu]\n", zone, n, i, len);
 		i += next;
 		while (s[i] && s[i] == c)
 			i++;

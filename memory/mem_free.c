@@ -74,7 +74,7 @@ void	mem_free_all(t_minishell *m)
 	ft_lstclear_env(&m->env_list, ft_del_env_content);
 	lex_lstclear(&m->token_list);
 	mem_free_null(&m->line, "line");
-	mem_free_null(&m->error, "error");
+	mem_free_null(&m->dummy, "error");
 	ft_lstclear(&m->history, ft_del_content);
 	rl_clear_history();
 	free(m);
@@ -91,7 +91,7 @@ void	mem_reset_m(t_minishell *m)
 	//ft_lstclear_env(&m->env_list, del_env_content);
 	lex_lstclear(&m->token_list);
 	mem_free_null(&m->line, "line");
-	mem_free_null(&m->error, "error");
+	mem_free_null(&m->dummy, "error");
 	//free(m);
 	m->status_echo = m->last_status;
 	m->last_status = 0;
