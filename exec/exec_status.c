@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 13:47:41 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/17 13:49:06 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/18 17:00:00 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,18 @@ int	exec_set_last_status(t_minishell *m)
 		cmd = cmd->next;
 	}
 	return (0);
+}
+
+void	on_ctrl_c(t_minishell *m)
+{
+	t_cmd	*l;
+
+	l = m->cmds;
+	if (l)
+	{
+		while (l->next)
+			l = l->next;
+		if (WIFSIGNALED(l->status_c) && WTERMSIG(l->status_c) == SIGINT)
+			write(STDOUT_FILENO, "\n", 1);
+	}
 }

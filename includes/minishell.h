@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zmata <zmata@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/18 13:01:43 by zmata            ###   ########.fr       */
+/*   Updated: 2025/09/18 17:00:50 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,6 +157,7 @@ char	*exec_find_command(t_minishell *m, char *cmd);
 void	exec_execve(t_minishell *m);
 int		exec_set_last_status(t_minishell *m);
 void	exec_launch_process(t_minishell *m, t_cmd *cmd, int n, int pipes[][2]);
+void	on_ctrl_c(t_minishell *m);
 void	debug_show_args(t_minishell *m);
 void	debug_show_processes(t_minishell *m, char *message);
 void	debug_show_error(char *message);

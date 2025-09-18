@@ -13,6 +13,7 @@
 #include "minishell.h"
 
 static void	exec_execve_2(t_minishell *m, int pipes[][2]);
+void		on_ctrl_c(t_minishell *m);
 
 static void	exec_exit(t_minishell *m, int pipes[][2], t_cmd *l)
 {
@@ -81,6 +82,5 @@ static void	exec_execve_2(t_minishell *m, int pipes[][2])
 		i++;
 	}
 	exec_exit(m, pipes, l);
-	if (m->last_status)
-		write(STDOUT_FILENO, "\n", 1);
+	on_ctrl_c(m);
 }
