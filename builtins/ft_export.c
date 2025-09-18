@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 16:37:41 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/18 15:35:30 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/18 16:37:31 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	add_or_update_env_var(t_env **env_list, const char *key
 	t_env	*var;
 	t_env	*new_node;
 
-	var = find_env_var(env_list, key);
+	var = find_env_var(*env_list, key);
 	if (var)
 	{
 		free(var->val);
