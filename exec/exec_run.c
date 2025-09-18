@@ -82,5 +82,5 @@ static void	exec_execve_2(t_minishell *m, int pipes[][2])
 	}
 	exec_exit(m, pipes, l);
 	if (m->last_status)
-	write(STDOUT_FILENO, "\n", 1);
+		write(STDOUT_FILENO, "\n", 1);
 }
