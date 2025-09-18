@@ -6,17 +6,12 @@
 /*   By: zmata <zmata@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 16:37:41 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/17 12:13:41 by zmata            ###   ########.fr       */
+/*   Updated: 2025/09/18 11:31:56 by zmata            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <limits.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <unistd.h>
-#include <errno.h>
-#include <string.h>
 
 int	verif_arg(char *arg)
 {
@@ -34,27 +29,55 @@ int	verif_arg(char *arg)
 	return (1);
 }
 
-int	ft_echo(t_minishell *m, t_cmd *cmd)
+static void	echo_put_arg(t_minishell *m, char *s)
 {
-	int	yes_backslash_n;
+	char	*home;
+
+	if (s && s[0] == '~')
+	{
+		home = get_env_value("HOME", m->env_list);
+		if (home)
+		{
+			if (s[1] == '\0')
+				return ((void)ft_putstr_fd(home, 1));
+			if (s[1] == '/')
+			{
+				ft_putstr_fd(home, 1);
+				return ((void)ft_putstr_fd(s + 1, 1));
+			}
+		}
+	}
+	ft_putstr_fd(s, 1);
+}
+
+static int	echo_skip_opts(t_cmd *cmd, int *no_nl)
+{
 	int	i;
 
-	(void)m;
+	*no_nl = 0;
 	i = 1;
-	yes_backslash_n = 0;
 	while (cmd->args[i] && verif_arg(cmd->args[i]) == 0)
 	{
-		yes_backslash_n = 1;
+		*no_nl = 1;
 		i++;
 	}
+	return (i);
+}
+
+int	ft_echo(t_minishell *m, t_cmd *cmd)
+{
+	int	no_nl;
+	int	i;
+
+	i = echo_skip_opts(cmd, &no_nl);
 	while (cmd->args[i])
 	{
-		ft_putstr_fd(cmd->args[i], 1);
+		echo_put_arg(m, cmd->args[i]);
 		if (cmd->args[i + 1])
 			write(1, " ", 1);
 		i++;
 	}
-	if (yes_backslash_n == 0)
+	if (!no_nl)
 		write(1, "\n", 1);
 	return (0);
 }

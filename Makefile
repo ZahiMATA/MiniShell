@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+         #
+#    By: zmata <zmata@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/28 10:35:37 by ybouroga          #+#    #+#              #
-#    Updated: 2025/09/17 19:45:38 by ybouroga         ###   ########.fr        #
+#    Updated: 2025/09/18 11:31:46 by zmata            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,13 @@ SRCS = \
 	dispatcher/dispatcher.c \
 	expander/expand_env.c \
 	expander/expand_word.c \
+	expander/expand_word_utils.c \
+	expander/expand_word_2.c \
+	expander/expand_word_3.c \
 	expander/expand_args.c \
+	expander/expand_args_2.c \
+	expander/expand_args_3.c \
+	expander/expand_args_4.c \
 	debug/debug_display.c \
 	debug/debug_token.c \
 	debug/debug_cmd.c \

@@ -6,7 +6,7 @@
 /*   By: zmata <zmata@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 16:37:41 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/17 14:09:44 by zmata            ###   ########.fr       */
+/*   Updated: 2025/09/18 12:51:50 by zmata            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,6 @@ int	ft_exit(t_minishell *m, t_cmd *cmd)
 		mem_free_all(m);
 		exit((unsigned char)m->last_status);
 	}
-	if (cmd->args[2])
-	{
-		ft_printf_fd(STDERR_FILENO, "%s: exit: too many arguments\n", MINISHELL);
-		return (1);
-	}
 	if (!ft_is_numeric(cmd->args[1]) || atoll_overflow(cmd->args[1], &ll))
 	{
 		ft_printf_fd(STDERR_FILENO, "%s: exit: %s: numeric argument required\n",
@@ -62,6 +57,11 @@ int	ft_exit(t_minishell *m, t_cmd *cmd)
 		exit_maybe_print();
 		mem_free_all(m);
 		exit(2);
+	}
+	if (cmd->args[2])
+	{
+		ft_printf_fd(STDERR_FILENO, "%s: exit: too many arguments\n", MINISHELL);
+		return (1);
 	}
 	exit_maybe_print();
 	mem_free_all(m);

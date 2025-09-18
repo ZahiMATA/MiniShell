@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zmata <zmata@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/17 20:25:39 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/18 13:01:43 by zmata            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@
 #  define DEBUG_MALLOC 0
 # endif
 # ifndef DEBUG_TEST
-#  define DEBUG_TEST 1
+#  define DEBUG_TEST 0
 # endif
 # define BUFFER_SIZE 1024
 # define BUFFER_LOG 1024
@@ -235,5 +235,11 @@ char	*get_env_value(char *key, t_env *env_list);
 void	set_env_kv(t_env **lst, const char *key, const char *val);
 char	*expand_tilde(char *arg, t_env *env_list);
 void	update_pwd_and_oldpwd(char *old_pwd, char *new_pwd, t_env **env_list);
-
+int		ew_handle_backslash(void *ctx);
+int		ew_handle_quote_toggles(void *ctx);
+int		ew_handle_dollar(void *ctx);
+int		ew_is_name_start(char c);
+int		ew_is_name_char(char c);
+char	*ew_append_char(char *dst, char c);
+char	*ew_append_str(char *dst, const char *s);
 #endif

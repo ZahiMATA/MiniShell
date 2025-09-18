@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_make_tab.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zmata <zmata@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 16:37:41 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/04 19:37:07 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/18 11:34:39 by zmata            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 char	*get_env_string(char *key, char *val)
 {
 	char	*s;
+
 	if (key == NULL || val == NULL)
 		return (NULL);
 	s = ft_strjoin_with_char(key, '=', val);
@@ -59,5 +60,5 @@ char	**env_list_to_tab(t_minishell *m, t_env *env)
 		i++;
 	}
 	env_tab[i] = NULL;
-	return env_tab;
+	return (env_tab);
 }
