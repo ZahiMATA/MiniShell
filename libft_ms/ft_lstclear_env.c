@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 17:04:11 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/03 14:15:37 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/17 19:08:56 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 static void	ft_lstdelone_env(t_env *env, void (*del)(void *))
 {
 	if (env == NULL || del == NULL)
-		return;
+		return ;
 	del(env->key);
 	del(env->val);
 	mem_free(env, "ft_lstdelone_env", NULL);

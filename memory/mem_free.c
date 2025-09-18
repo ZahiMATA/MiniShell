@@ -15,17 +15,16 @@
 
 void	mem_free(void *p, const char *key, const char *val)
 {
-		if (p)
-		{
-			if (DEBUG_MALLOC)
-				ft_printf_fd(STDERR_FILENO, "FREE  [%d][%s][%s]\n", p, key, val);
-			free(p);
-		}
+	if (p)
+	{
+		if (DEBUG_MALLOC)
+			ft_printf_fd(STDERR_FILENO, "FREE  [%d][%s][%s]\n", p, key, val);
+		free(p);
+	}
 }
 
 void	mem_free_null(char	**p, char *mes)
 {
-	//ft_printf_fd(STDERR_FILENO, "SPECIAL[%d][%s]\n", p, mes);
 	if (p == NULL || *p == NULL)
 		return ;
 	mem_free(*p, mes, *p);
@@ -44,30 +43,12 @@ void	mem_free_array(char	***tab, char *mes)
 	mem_free(*tab, mes, **tab);
 	*tab = NULL;
 }
-/*
-static void	mem_free_cmds(t_minishell **m)
-{
-	int	i;
-
-	i = 0;
-	if (m == NULL || *m == NULL || (*m)->cmds == NULL)
-		return ;
-	while (i < (*m)->nb_cmd)
-	{
-		mem_free_array((*m)->cmds[i].args);
-		mem_free_null(&(*m)->cmds[i].path);
-		i++;
-	}
-	free((*m)->cmds);
-	(*m)->cmds = NULL;
-}*/
 
 void	mem_free_all(t_minishell *m)
 {
 	if (m == NULL)
 		return ;
 	mem_close_fds(m);
-	//mem_free_cmds(&m);
 	prs_lstclear(&m->cmds);
 	mem_free_null(&m->limiter, "limiter");
 	mem_free_array(&m->path, "path");
@@ -88,11 +69,9 @@ void	mem_reset_m(t_minishell *m)
 	prs_lstclear(&m->cmds);
 	mem_free_null(&m->limiter, "limiter");
 	mem_free_array(&m->path, "path");
-	//ft_lstclear_env(&m->env_list, del_env_content);
 	lex_lstclear(&m->token_list);
 	mem_free_null(&m->line, "line");
 	mem_free_null(&m->dummy, "error");
-	//free(m);
 	m->status_echo = m->last_status;
 	m->last_status = 0;
 }

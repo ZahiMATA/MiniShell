@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zmata <zmata@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 13:05:00 by zmata             #+#    #+#             */
-/*   Updated: 2025/09/17 13:33:30 by zmata            ###   ########.fr       */
+/*   Updated: 2025/09/17 15:40:38 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	cd_get_road_oldpwd(t_minishell *m, char **road)
 	return (0);
 }
 
-int	cd_apply_chdir_update(char *road, char old_pwd[PATH_MAX],
+int	cd_apply_chdir_update(char *road, char old_pwd[],
 	t_env **penv)
 {
 	char	*new_pwd;

@@ -6,14 +6,14 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 16:31:02 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/02 18:36:36 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/17 19:07:38 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "lexer.h"
 
-char *ft_substring(const char *s, int start, int len)
+char	*ft_substring(const char *s, int start, int len)
 {
 	char	*ret;
 	int		i;

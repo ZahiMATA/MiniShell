@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 12:50:08 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/17 15:26:56 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/17 20:31:43 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ char	*exec_find_command(t_minishell *m, char *cmd)
 	if (cmd == NULL || *cmd == 0 || ft_strcmp(cmd, "..") == 0)
 		return (NULL);
 	cmd_abs = NULL;
-	if (((!m->path || !m->path[0]) && access(cmd, X_OK) == 0) || ft_strchr(cmd, '/'))
+	if (((!m->path || !m->path[0]) && \
+		access(cmd, X_OK) == 0) || ft_strchr(cmd, '/'))
 	{
 		cmd_abs = ft_strdup(cmd);
 		if (cmd_abs == NULL)
@@ -56,13 +57,12 @@ char	*exec_find_command(t_minishell *m, char *cmd)
 	i = 0;
 	while (m->path && m->path[i])
 	{
-		cmd_abs = ft_strjoin_with_char(m->path[i], '/', cmd);
+		cmd_abs = ft_strjoin_with_char(m->path[i++], '/', cmd);
 		if (cmd_abs == NULL)
 			ft_exit_fail_status(m, NULL, EXIT_ALLOC_ERROR);
 		if (access(cmd_abs, X_OK) == 0)
 			break ;
 		mem_free_null(&cmd_abs, "cmd_abs");
-		i++;
 	}
 	return (cmd_abs);
 }

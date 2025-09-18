@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 11:23:17 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/14 17:57:52 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/17 18:15:29 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 // -> **token  [<][makefile][tr a A][|][tr b B][>][ficout]
 #include "minishell.h"
 
-static void	add_token(t_param *_, t_token token, char *val, int len)
+int	do_lexer(t_minishell *m, t_param *_);
+
+void	add_token(t_param *_, t_token token, char *val, int len)
 {
 	t_token_list	*tmp;
 
@@ -25,22 +27,10 @@ static void	add_token(t_param *_, t_token token, char *val, int len)
 	_->i += len;
 }
 
-static void	lexer_subquote(t_param *_)
-{
-	_->i++;
-	while (_->m->line[_->i] &&  _->m->line[_->i] != '\'')
-	{
-		if (ft_strncmp(_->m->line + _->i, "\\\"", 2) == 0)
-			_->i++;
-		_->i++;
-	}
-}
-
-static void lexer_subword(t_param *_)
+void	lexer_subword(t_param *_)
 {
 	_->open_q = 0;
 	_->open_s = 0;
-	//_->i ++;
 	while (_->m->line[_->i])
 	{
 		if (_->m->line[_->i] == '"' && _->open_q == 0)
@@ -51,50 +41,14 @@ static void lexer_subword(t_param *_)
 			_->i++;
 		else if (ft_strncmp(_->m->line + _->i, "\\'", 2) == 0)
 			_->i++;
-		else if (_->open_q == 0 && _->open_s == 0 && ft_issublexer(_->m->line[_->i]))
-			break;
+		else if (_->open_q == 0 && _->open_s == 0 && \
+			ft_issublexer(_->m->line[_->i]))
+			break ;
 		_->i++;
 	}
 }
 
-static void	lexer_quote(t_param *_)
-{
-	char	*s;
-
-	_->open_q = 0;
-	_->open_s = 0;
-	_->start = _->i;
-	while (_->m->line[_->i])
-	{
-		lexer_subquote(_);
-		if (_->m->line[_->i] == '\0')
-		{
-			ft_return_error(_->m, ERROR_SYNTAX, ERROR_QUOTENOTCLOSED, EXIT_FAILURE);
-			lex_lstclear(&_->m->token_list);
-			return;
-		}
-		if (_->m->line[_->i + 1] == 0)
-		{
-			_->i++;
-			break;
-		}
-		_->i++;
-		lexer_subword(_);
-		if (ft_issublexer(_->m->line[_->i]))
-		{
-			if (ft_isspace(_->m->line[_->i] - 1) != 0)
-				_->i--;
-			break;
-		}
-	}
-	s = ft_substring(_->m->line, _->start , (_->i - _->start));
-	if (s == NULL)
-		ft_exit_fail_status(_->m, NULL, EXIT_ALLOC_ERROR);
-	add_token(_, T_WORD, s, 0);
-	mem_free(s, "lexer_string.s", s);
-}
-
-static void lexer_word(t_param *_)
+static void	lexer_word(t_param *_)
 {
 	char	*s;
 
@@ -104,7 +58,8 @@ static void lexer_word(t_param *_)
 	lexer_subword(_);
 	if (_->open_q != 0 || _->open_s != 0)
 	{
-		ft_return_error(_->m, ERROR_SYNTAX, ERROR_STRINGNOTCLOSED, EXIT_FAILURE);
+		ft_return_error(\
+			_->m, ERROR_SYNTAX, ERROR_STRINGNOTCLOSED, EXIT_FAILURE);
 		lex_lstclear(&_->m->token_list);
 		return ;
 	}
@@ -127,33 +82,43 @@ void	lexer(t_minishell *m)
 			_.i++;
 		if (m->line[_.i] == '\0')
 			break ;
-		else if (m->line[_.i] == '|')
-		{
-			if ( _.i == 0 || m->line[_.i + 1] == '|')
-			{
-				ft_return_err(_.m, EXIT_FAILURE, ft_perror(MINISHELL, ERROR_SE_PIPE, NULL));
-				lex_lstclear(&m->token_list);
-				return;
-			}
-			add_token(&_, T_PIPE, "|", 1);
-		}
-		else if (m->line[_.i] == '<' && m->line[_.i + 1] == '<')
-			add_token(&_, T_DOUBLE_REDIRECT_LEFT, "<<", 2);
-		else if (m->line[_.i] == '>' && m->line[_.i + 1] == '>')
-			add_token(&_, T_DOUBLE_REDIRECT_RIGHT, ">>", 2);
-		else if (m->line[_.i] == '<')
-			add_token(&_, T_REDIRECT_LEFT, "<", 1);
-		else if (m->line[_.i] == '>')
-			add_token(&_, T_REDIRECT_RIGHT, ">", 1);
-		else if (m->line[_.i] == '\'')
-			lexer_quote(&_);
 		else
-			lexer_word(&_);
+			if (do_lexer(m, &_) == KO)
+				return ;
 	}
 	if (_.i - 1 >= 0 && m->line[_.i - 1] == '|')
 	{
-		ft_return_err(_.m, EXIT_FAILURE, ft_perror(MINISHELL, ERROR_SE_PIPE, NULL));
+		ft_return_err(_.m, EXIT_FAILURE, \
+			ft_perror(MINISHELL, ERROR_SE_PIPE, NULL));
 		lex_lstclear(&m->token_list);
-		return;
+		return ;
 	}
+}
+
+int	do_lexer(t_minishell *m, t_param *_)
+{
+	if (m->line[_->i] == '|')
+	{
+		if (_->i == 0 || m->line[_->i + 1] == '|')
+		{
+			ft_return_err(_->m, EXIT_FAILURE, \
+				ft_perror(MINISHELL, ERROR_SE_PIPE, NULL));
+			lex_lstclear(&m->token_list);
+			return (KO);
+		}
+		add_token(_, T_PIPE, "|", 1);
+	}
+	else if (m->line[_->i] == '<' && m->line[_->i + 1] == '<')
+		add_token(_, T_DOUBLE_REDIRECT_LEFT, "<<", 2);
+	else if (m->line[_->i] == '>' && m->line[_->i + 1] == '>')
+		add_token(_, T_DOUBLE_REDIRECT_RIGHT, ">>", 2);
+	else if (m->line[_->i] == '<')
+		add_token(_, T_REDIRECT_LEFT, "<", 1);
+	else if (m->line[_->i] == '>')
+		add_token(_, T_REDIRECT_RIGHT, ">", 1);
+	else if (m->line[_->i] == '\'')
+		lexer_quote(_);
+	else
+		lexer_word(_);
+	return (OK);
 }

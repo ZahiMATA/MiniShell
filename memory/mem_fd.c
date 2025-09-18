@@ -18,7 +18,7 @@ void	mem_close_fd(int fd)
 		close(fd);
 }
 
-void mem_close_fds(t_minishell *m)
+void	mem_close_fds(t_minishell *m)
 {
 	t_cmd	*cmd;
 

@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 10:50:18 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/17 12:59:59 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/17 20:28:11 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,10 @@ char	*ms_unquote(char *s)
 
 int	ms_heredoc(t_minishell *m, char *limiter, int nop)
 {
-	int		fd[2];
-	int		expand;
-	char	*new_limiter;
+	int				fd[2];
+	int				expand;
+	char			*new_limiter;
+	struct termios	config;
 
 	(void)nop;
 	setup_signals_for_heredoc();
@@ -67,7 +68,10 @@ int	ms_heredoc(t_minishell *m, char *limiter, int nop)
 	new_limiter = ms_unquote(limiter);
 	if (pipe(fd) == -1)
 		ft_exit_fail(m, ERROR_PIPE);
+	tcgetattr(STDIN_FILENO, &config);
+	disable_ctr_backslash();
 	ms_launch_read(m, fd, new_limiter, expand);
+	enable_ctr_backslash(&config);
 	close(fd[1]);
 	mem_free_null(&m->line, "ms_launch_child.line");
 	mem_free(new_limiter, "ms_heredoc", new_limiter);

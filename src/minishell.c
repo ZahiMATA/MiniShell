@@ -1,44 +1,20 @@
-/*
-	TODO
-		revoir doc et verif la correction
-		finir built in
-		parsing relire sujet et lexer
-		finir exec
-		dispatcheur built in ou exec et redirection
-		faire historique commande
-		signaux
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/17 16:55:44 by ybouroga          #+#    #+#             */
+/*   Updated: 2025/09/17 16:55:44 by ybouroga         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-*/
 #include "minishell.h"
 
-void	test0(char **env)
+void	minishell(char **env)
 {
-	t_minishell *m;
-	char *line;
-
-	m = NULL;
-	(void)env;
-	while (1)
-	{
-		exec_init_minishell(&m);
-		ft_putstr_fd(PROMPT, STDOUT_FILENO);
-		line = read_input(m, PROMPT/*, STDIN_FILENO*/);
-		if (line == NULL)
-			continue;
-		if (*line == '\0')
-		{
-			free(line);
-			continue;
-		}
-		ft_putstr_fd("Texte entré : ", STDOUT_FILENO);
-		ft_putstr_fd(line, STDERR_FILENO);
-		free(line);
-	}
-}
-
-void	test1(char **env)
-{
-	t_minishell *m;
+	t_minishell	*m;
 
 	m = NULL;
 	setup_signals();
@@ -56,23 +32,12 @@ void	test1(char **env)
 		if (m->last_status == 0)
 		{
 			m->last_status = m->status_echo;
-			//if (m->cmds && m->cmds->args)
-			//ms_expand_all_cmds(m);
 			exec_feed_minishell(&m, env);
 			dispatch(m);
 			debug_show_args(m);
 		}
-		// debug_show_args(m);
 		mem_reset_m(m);
 	}
-}
-
-
-void	minishell(char **env)
-{
-	int i = 1;
-	if (i ==0) test0(env);
-	if (i ==1) test1(env);
 }
 
 int	main(int argc, char *argv[], char *env[])

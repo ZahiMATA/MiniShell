@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 11:46:06 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/04 13:36:39 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/17 18:57:47 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,3 @@ char	**prs_realloc_args(t_minishell *m, char **tab, int size, char *insert)
 	ret[i + 1] = NULL;
 	return (ret);
 }
-
-
-

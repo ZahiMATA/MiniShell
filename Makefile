@@ -6,7 +6,7 @@
 #    By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/28 10:35:37 by ybouroga          #+#    #+#              #
-#    Updated: 2025/09/17 15:13:35 by ybouroga         ###   ########.fr        #
+#    Updated: 2025/09/17 19:45:38 by ybouroga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -93,6 +93,7 @@ SRCS = \
 	lexer/lex_lstadd_back.c \
 	lexer/lex_lstclear.c \
 	lexer/lexer.c \
+	lexer/lexer_quote.c \
 	parser/parser.c \
 	parser/parsing/prs_string.c \
 	parser/parsing/prs_redir.c \
@@ -105,10 +106,12 @@ SRCS = \
 	parser/list/redir/prs_lstnew_redir.c \
 	parser/prs_getcmd.c \
 	ft_printf/ft_printf.c \
-	ft_printf/ft_printf_2.c \
+	ft_printf/ft_printf_2/ft_printf_2.c \
+	ft_printf/ft_printf_2/ft_printf_2_utils.c \
 	heredoc/heredoc.c \
 	heredoc/heredoc_2.c \
 	signals/signals.c \
+	signals/signal_hd.c \
 	signals/ft_g_signal.c \
 	get_next_line/get_next_line.c \
 	get_next_line/get_next_line_utils.c \

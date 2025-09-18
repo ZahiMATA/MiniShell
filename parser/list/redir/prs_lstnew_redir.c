@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prs_lstnew.c                                       :+:      :+:    :+:   */
+/*   prs_lstnew_redir.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 15:25:52 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/08/10 16:21:22 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/17 18:57:21 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,6 @@ t_redir	*prs_lstnew_redir(t_red_t type, char *file)
 		if (list->file == NULL)
 			return (free(list), NULL);
 	}
-	list-> next = NULL;
+	list->next = NULL;
 	return (list);
 }

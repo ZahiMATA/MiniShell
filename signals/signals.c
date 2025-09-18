@@ -27,11 +27,6 @@ static void	sigint_handler(int sig)
 	}
 }
 
-static void	sigint_handler_hd(int sig)
-{
-	(void)sig;
-}
-
 void	setup_signals(void)
 {
 	signal(SIGINT, sigint_handler);
@@ -48,24 +43,4 @@ void	setup_signals_for_children(void)
 {
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
-}
-
-void	setup_signals_for_heredoc(void)
-{
-	struct sigaction	sa;
-	sa.sa_handler = sigint_handler_hd;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = 0*SA_RESTART;//0;
-	sigaction(SIGINT, &sa, NULL);
-	signal(SIGQUIT, SIG_IGN);
-	sa.sa_handler = sigint_handler_hd;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = 0*SA_RESTART;//0;	struct sigaction sa;
-	sa.sa_handler = sigint_handler_hd;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = 0*SA_RESTART;//0;
-	sigaction(SIGINT, &sa, NULL);
-	signal(SIGQUIT, SIG_IGN);
-	sigaction(SIGINT, &sa, NULL);
-	signal(SIGQUIT, SIG_IGN);
 }

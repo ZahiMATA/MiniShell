@@ -6,7 +6,7 @@
 /*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:27:44 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/17 15:15:36 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/17 20:25:39 by ybouroga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # include <readline/history.h>
 # include <limits.h>
 # include <sys/stat.h>
+# include <termios.h>
 
 # ifndef DEBUG
 #  define DEBUG 0
@@ -51,7 +52,8 @@
 # define PROMPT "minishell$ "
 # define CTRL_C "^C"
 # define PROMPT_HEREDOC "> "
-# define WARNING_HEREDOC "\nminishell: warning: here-document delimited by end-of-file (wanted `%s')\n"
+# define WARNING_HEREDOC "\nminishell: warning: here-document \
+delimited by end-of-file (wanted `%s')\n"
 # define EXIT_ALLOC_ERROR 2
 // raccourci pour EXIT_FAILURE
 # define EXIT_1 1
@@ -68,7 +70,7 @@
 # define EXIT "exit"
 # define ERROR "Error"
 # define PERROR "perror"
-# define ERROR_WRONGARGS "Error: Wrong arguments"
+# define ERROR_WRONGARGS "Error: too many arguments"
 # define ERROR_NOENV "Error: No environment"
 # define ERROR_NOPATH "Error: No PATH"
 # define ERROR_NOCOMS "Error: No commands"
@@ -87,7 +89,8 @@
 # define ERROR_DIR "Is a directory"
 # define ERROR_NOT_DIR "Not a directory"
 # define ERROR_NOSUCH "No such file or directory"
-# define ERROR_FILE "filename argument required\n.: usage: . filename [arguments]"
+# define ERROR_FILE "filename argument required\n.: usage: . filename [arg\
+uments]"
 # define S_QUIT "Quit (core dumped)"
 # define S_PATH "PATH"
 # define S_EMPTY ""
@@ -99,29 +102,26 @@
 # define OA O_APPEND
 # define FLAG_FIC 0644
 # define SIG_N_ZERO 0
-#define SIG_FLAG 0x1
-#define RDL_FLAG 0x2
-#define WITH_QUOTES 1
-#define WITHOUT_QUOTES 0
+# define SIG_FLAG 0x1
+# define RDL_FLAG 0x2
+# define WITH_QUOTES 1
+# define WITHOUT_QUOTES 0
 
-extern volatile sig_atomic_t g_signal;
-//volatile sig_atomic_t	g_signal;
+extern volatile sig_atomic_t	g_signal;
 
 typedef struct s_err
 {
 	char	*mes1;
 	char	*mes2;
 	char	*mes3;
-	//int		status;
-
-} t_err;
+}	t_err;
 
 typedef struct s_env
 {
 	char			*key;
 	char			*val;
-	struct	s_env	*next;
-} t_env;
+	struct s_env	*next;
+}	t_env;
 
 typedef struct s_minishell
 {
@@ -149,11 +149,10 @@ void	mem_free(void *p, const char *key, const char *val);
 void	mem_close_fd(int fd);
 void	mem_close_fds(t_minishell *m);
 void	*mem_malloc(size_t size, const char *key, const char *val);
-void 	exec_init_minishell(t_minishell **m/*, t_env *last_env_list*/);
+void	exec_init_minishell(t_minishell **m);
 void	exec_feed_minishell(t_minishell **m, char **env);
 void	exec_init_path(t_minishell **p);
-void	exec_init_cmds_and_cmd_args(t_minishell **p, char **cmd, int nbcom);
-void	exec_init_cmd_path(t_minishell **p/*, int nbcom*/);
+void	exec_init_cmd_path(t_minishell **p);
 char	*exec_find_command(t_minishell *m, char *cmd);
 void	exec_execve(t_minishell *m);
 int		exec_set_last_status(t_minishell *m);
@@ -180,12 +179,11 @@ void	ft_exit_fail_status(t_minishell *m, char *message, int status);
 void	ft_exit_perror(t_minishell *m, char *message);
 void	ft_exit_error(t_minishell *m, char *mes1, char *mes2, int status);
 void	ft_exit_err(t_minishell *m, int status, void *nop);
-void	ft_exit_with_status(t_minishell *m, char *message, int status);
-char 	*ft_substring(const char *s, int start, int len);
-char	*read_input(t_minishell *m, char * prompt);
+char	*ft_substring(const char *s, int start, int len);
+char	*read_input(t_minishell *m, char *prompt);
 char	*get_input(void);
 char	**env_list_to_tab(t_minishell *m, t_env *env);
-void	 debug_pointer(void *p);
+void	debug_pointer(void *p);
 void	debug_var(const char *s);
 void	debug_var_i(int i);
 void	dispatch(t_minishell *m);
@@ -202,8 +200,7 @@ int		ft_colon(t_minishell *m);
 char	*ms_env_get(t_env *env, const char *key);
 void	ms_expand_all_cmds(t_minishell *m);
 char	*ms_expand_word(t_minishell *m, const char *s, int x);
-void	ft_print_perror(char *message, char *pmessage);
-void	*ft_perror(char *mes1, char *mes2, char * mes3);
+void	*ft_perror(char *mes1, char *mes2, char *mes3);
 int		ft_stat(const char *path);
 int		ft_is_dir(const char *path);
 int		ft_not_dir_but_file(char *path);
@@ -214,6 +211,8 @@ void	setup_signals(void);
 void	setup_signals_off(void);
 void	setup_signals_for_children(void);
 void	setup_signals_for_heredoc(void);
+void	disable_ctr_backslash(void);
+void	enable_ctr_backslash(struct termios *config);
 int		exec_builtin(t_minishell *m, t_cmd *cmd);
 int		is_builin_parent(char *s);
 int		is_builin_child(char *s);
@@ -224,14 +223,14 @@ void	run_heredoc(t_minishell *m);
 int		atoll_overflow(const char *s, long long *out);
 int		ft_is_numeric(char *str);
 int		handle_export_arg(char *arg, t_env **env_list);
-char    *dup_or_null(const char *val);
-int     env_insert_front(t_env **lst, const char *key, const char *val);
+char	*dup_or_null(const char *val);
+int		env_insert_front(t_env **lst, const char *key, const char *val);
 int		args_count(char **av);
 int		cd_print_err(const char *path);
 int		cd_get_road_home(t_minishell *m, char **road);
 int		cd_get_road_tilde(t_minishell *m, t_cmd *cmd, char **road);
 int		cd_get_road_oldpwd(t_minishell *m, char **road);
-int		cd_apply_chdir_update(char *road, char old_pwd[PATH_MAX], t_env **penv);
+int		cd_apply_chdir_update(char *road, char old_pwd[], t_env **penv);
 char	*get_env_value(char *key, t_env *env_list);
 void	set_env_kv(t_env **lst, const char *key, const char *val);
 char	*expand_tilde(char *arg, t_env *env_list);

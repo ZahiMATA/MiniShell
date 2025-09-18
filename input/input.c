@@ -12,22 +12,18 @@
 
 #include "minishell.h"
 
-
-
 char	*get_input(void)
 {
 	char	*line;
 
 	if (isatty(STDIN_FILENO))
 	{
-		//debug_var("1");
 		line = readline("minishell$ ");
 		if (line && *line)
 			add_history(line);
 	}
 	else
 	{
-		//debug_var("2");
 		line = get_next_line(STDIN_FILENO);
 		if (line && *line && line[ft_strlen(line) - 1] == '\n')
 			line[ft_strlen(line) - 1] = '\0';
@@ -48,7 +44,6 @@ char	*read_line(t_minishell *m, char *prompt)
 		n = read(STDIN_FILENO, buffer, BUFFER_SIZE);
 		if (n < 0)
 		{
-			//ft_return_perror(m, NULL, EXIT_FAILURE);
 			m->status_heredoc = EXIT_1;
 			return (NULL);
 		}
@@ -60,11 +55,11 @@ char	*read_line(t_minishell *m, char *prompt)
 			return (m->line);
 	}
 	if (m->line[0] == '\0')
-		return NULL;
-	return m->line;
+		return (NULL);
+	return (m->line);
 }
 
-static void	*readinput(t_minishell *m, char * prompt)
+static void	*readinput(t_minishell *m, char *prompt)
 {
 	if (DEBUG_TEST)
 		m->line = get_input();
@@ -72,15 +67,14 @@ static void	*readinput(t_minishell *m, char * prompt)
 		m->line = readline(prompt);
 	else
 	{
-		//printf("%s", prompt);
 		m->line = read_line(m, prompt);
 		if (m->line && *m->line && m->line[ft_strlen(m->line) - 1] == '\n')
-		 	m->line[ft_strlen(m->line) - 1] = '\0';
+			m->line[ft_strlen(m->line) - 1] = '\0';
 	}
 	return (m->line);
 }
 
-char	*read_input(t_minishell *m, char * prompt)
+char	*read_input(t_minishell *m, char *prompt)
 {
 	if (ft_strcmp(prompt, PROMPT) == 0)
 	{
@@ -91,6 +85,6 @@ char	*read_input(t_minishell *m, char * prompt)
 			ft_add_history(m, m->line);
 	}
 	else
-	 	readinput(m, prompt);
-	return m->line;
+		readinput(m, prompt);
+	return (m->line);
 }
