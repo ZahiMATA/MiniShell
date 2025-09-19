@@ -6,14 +6,13 @@
 /*   By: zmata <zmata@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 16:10:05 by zmata             #+#    #+#             */
-/*   Updated: 2025/09/17 16:36:27 by zmata            ###   ########.fr       */
+/*   Updated: 2025/09/19 10:54:15 by zmata            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stdlib.h>
 
-/* forward decls (impl. dans expand_args_3.c) */
 int		ea_count_words(const char *s);
 int		ea_fill_words(const char *s, char **tab);
 char	*ea_dup_range(const char *s, int a, int b);

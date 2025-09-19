@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybouroga <ybouroga@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zmata <zmata@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 16:37:41 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/18 16:37:31 by ybouroga         ###   ########.fr       */
+/*   Updated: 2025/09/19 11:01:14 by zmata            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	add_or_update_env_var(t_env **env_list, const char *key
 		if (value)
 			var->val = strdup(value);
 		else
-			var->val = NULL;
+			var->val = strdup("");
 	}
 	else
 	{
@@ -73,7 +73,7 @@ void	add_or_update_env_var(t_env **env_list, const char *key
 		if (value)
 			new_node->val = strdup(value);
 		else
-			new_node->val = NULL;
+			new_node->val = strdup("");
 		new_node->next = *env_list;
 		*env_list = new_node;
 	}

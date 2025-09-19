@@ -6,7 +6,7 @@
 /*   By: zmata <zmata@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 16:37:41 by ybouroga          #+#    #+#             */
-/*   Updated: 2025/09/17 12:15:18 by zmata            ###   ########.fr       */
+/*   Updated: 2025/09/19 10:53:19 by zmata            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,27 +17,6 @@
 #include <unistd.h>
 #include <errno.h>
 #include <string.h>
-
-/*
-typedef struct s_env { //TODO supp
-    char *key;
-    char *value;
-    struct s_env *next;
-} t_env;*/
-/*
-void	ft_putstr_fd(char *s, int fd)
-{
-	int	i;
-
-	i = 0;
-	if(!s)
-		return;
-	while (s[i])
-	{
-		write(fd, &s[i], 1);
-		i++;
-	}
-}*/
 
 int	ft_env(t_minishell *m, t_cmd *cmd)
 {

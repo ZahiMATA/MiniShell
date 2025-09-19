@@ -6,21 +6,18 @@
 /*   By: zmata <zmata@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 16:10:00 by zmata             #+#    #+#             */
-/*   Updated: 2025/09/18 10:19:35 by zmata            ###   ########.fr       */
+/*   Updated: 2025/09/19 10:53:03 by zmata            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stdlib.h>
 
-/* ---- helpers (impl. dans expand_args_2.c) -------------------------------- */
 int		ea_has_dollar(const char *s);
 int		ea_has_any_quote(const char *s);
 char	**ea_split_ifs_words(const char *s);
 int		ea_inject_tokens(t_cmd *cmd, int i, char **tok);
 void	ea_free_container_only(char **t);
-
-/* ---- petits helpers locaux pour raccourcir ea_process_one ---------------- */
 
 static int	ea_try_split_inject(t_cmd *cmd, int i, char *expanded)
 {

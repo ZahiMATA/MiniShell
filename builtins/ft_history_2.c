@@ -6,14 +6,13 @@
 /*   By: zmata <zmata@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 14:28:00 by zmata             #+#    #+#             */
-/*   Updated: 2025/09/17 14:43:58 by zmata            ###   ########.fr       */
+/*   Updated: 2025/09/19 10:53:46 by zmata            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <limits.h>
 
-/* forward decls (implémentées dans ft_history_3.c) */
 int		history_is_meta(const char *s);
 void	history_usage(void);
 int		history_scan_argc(char **tok);
