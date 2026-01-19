@@ -1,97 +1,89 @@
-nishell — Shell Unix simplifié (École 42)
-🎯 Objectif du projet
+# Minishell
 
-Développer un shell Unix simplifié en C, permettant de comprendre en profondeur le fonctionnement d’un système Linux : processus, exécution de commandes, redirections, pipes et signaux.
+> Shell Unix simplifié — Projet École 42
 
-Ce projet vise à reproduire le comportement de base d’un shell (bash), sans utiliser de bibliothèques externes complexes.
+---
 
-🧠 Compétences techniques mises en œuvre
+## 🎯 Objectif
 
-Gestion des processus (fork, execve, wait)
+Reproduire le fonctionnement de base d’un shell Unix afin de comprendre
+le cycle d’exécution des commandes, la gestion des processus et les mécanismes
+internes d’un système Linux.
 
-Communication inter-processus via pipes
+---
 
-Gestion des redirections (>, >>, <, <<)
+## 🧠 Ce que fait le programme
 
-Manipulation des signaux (SIGINT, SIGQUIT)
+Minishell permet :
+- d’exécuter des commandes système
+- de gérer les pipes et redirections
+- d’interpréter l’entrée utilisateur
+- de gérer l’environnement et les signaux
 
-Gestion de l’environnement système (variables d’environnement)
+---
 
-Parsing et interprétation de commandes utilisateur
+## ⚙️ Fonctionnalités
 
-Gestion des erreurs et des cas limites
+- Exécution de commandes (`ls`, `cat`, `echo`, etc.)
+- Pipes (`|`)
+- Redirections (`>`, `>>`, `<`, `<<`)
+- Variables d’environnement
+- Builtins :
+  - `cd`
+  - `echo`
+  - `pwd`
+  - `export`
+  - `unset`
+  - `env`
+  - `exit`
+- Gestion des signaux (`Ctrl+C`, `Ctrl+\`)
 
-Programmation bas niveau en C (rigueur mémoire et logique)
+---
 
-⚙️ Fonctionnalités principales
+## 🛠️ Notions techniques abordées
 
-Exécution de commandes simples (ls, echo, pwd, etc.)
+- Processus (`fork`, `execve`, `wait`)
+- Communication inter-processus (pipes)
+- Signaux Unix
+- Parsing de commandes
+- Gestion mémoire et erreurs en C
+- Interaction avec le système d’exploitation
 
-Gestion des pipes (cmd1 | cmd2)
+---
 
-Redirections d’entrée et de sortie
+## 🖥️ Exemple
 
-Variables d’environnement ($PATH, $HOME, etc.)
-
-Commandes intégrées (builtins) :
-
-cd
-
-echo
-
-pwd
-
-export
-
-unset
-
-env
-
-exit
-
-Gestion correcte des signaux pendant l’exécution des commandes
-
-🖥️ Pourquoi ce projet est important
-
-Minishell permet de comprendre ce qui se passe réellement sous le capot lorsqu’une commande est exécutée sur un système Linux.
-
-Il apporte une vision concrète de :
-
-la gestion des processus
-
-la communication entre programmes
-
-la manière dont un système d’exploitation orchestre l’exécution des tâches
-
-Ces notions sont directement utiles pour :
-
-l’administration systèmes
-
-la production IT
-
-la compréhension des logs et incidents système
-
-les environnements SOC et sécurité
-
-🧪 Exemple d’utilisation
+```bash
 $ echo "hello world" | grep hello > output.txt
 $ cat output.txt
 hello world
+🚀 Apports du projet
 
-🚀 Ce que j’ai appris grâce à ce projet
+Ce projet m’a permis de :
 
-Lire et comprendre des logs et erreurs système
+comprendre le fonctionnement interne d’un shell
 
-Diagnostiquer des comportements anormaux liés aux processus
+mieux appréhender les processus et les flux système
 
-Appliquer une logique rigoureuse proche des environnements de production
+développer une logique proche des environnements de production
 
-Développer une forte autonomie et une méthodologie de résolution de problèmes
+renforcer ma capacité à diagnostiquer des comportements système
 
 📌 Contexte
 
-Projet réalisé dans le cadre du cursus de l’École 42, formation basée sur l’autonomie, la pratique et la compréhension approfondie des systèmes.
+Projet réalisé dans le cadre du cursus de l’École 42
+Formation orientée autonomie, rigueur et compréhension des systèmes.
 
-⭐ Note pour les recruteurs
+🔍 Pourquoi ce projet est pertinent
 
-Ce projet met en avant ma compréhension des systèmes Unix/Linux, des processus et de la logique bas niveau, compétences essentielles pour des rôles en administration systèmes, infrastructure, production IT ou sécurité.
+Minishell est directement lié aux métiers de :
+
+l’administration systèmes
+
+l’infrastructure IT
+
+la production
+
+la sécurité et l’analyse d’incidents
+
+Il démontre une compréhension concrète du fonctionnement d’un système Unix.
