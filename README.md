@@ -1,89 +1,112 @@
-# Minishell
+🐚 Minishell
 
-> Shell Unix simplifié — Projet École 42
+Implémentation d’un shell Unix minimaliste en C — projet École 42.
 
----
+📌 Description
 
-## 🎯 Objectif
+Minishell est un projet dont l’objectif est de recréer un shell simplifié inspiré de bash.
+Il permet de comprendre concrètement comment un interpréteur de commandes fonctionne, depuis la lecture de l’entrée utilisateur jusqu’à l’exécution des processus.
 
-Reproduire le fonctionnement de base d’un shell Unix afin de comprendre
-le cycle d’exécution des commandes, la gestion des processus et les mécanismes
-internes d’un système Linux.
+⚙️ Fonctionnalités
 
----
+Exécution de commandes externes
 
-## 🧠 Ce que fait le programme
+Gestion des pipes (|)
 
-Minishell permet :
-- d’exécuter des commandes système
-- de gérer les pipes et redirections
-- d’interpréter l’entrée utilisateur
-- de gérer l’environnement et les signaux
+Redirections :
 
----
+entrée (<)
 
-## ⚙️ Fonctionnalités
+sortie (>, >>)
 
-- Exécution de commandes (`ls`, `cat`, `echo`, etc.)
-- Pipes (`|`)
-- Redirections (`>`, `>>`, `<`, `<<`)
-- Variables d’environnement
-- Builtins :
-  - `cd`
-  - `echo`
-  - `pwd`
-  - `export`
-  - `unset`
-  - `env`
-  - `exit`
-- Gestion des signaux (`Ctrl+C`, `Ctrl+\`)
+Gestion des variables d’environnement
 
----
+Built-ins implémentés :
 
-## 🛠️ Notions techniques abordées
+echo
 
-- Processus (`fork`, `execve`, `wait`)
-- Communication inter-processus (pipes)
-- Signaux Unix
-- Parsing de commandes
-- Gestion mémoire et erreurs en C
-- Interaction avec le système d’exploitation
+cd
 
----
+pwd
 
-## 🖥️ Exemple
+export
 
-```bash
-$ echo "hello world" | grep hello > output.txt
-$ cat output.txt
-hello world
-🚀 Apports du projet
+unset
 
-Ce projet m’a permis de :
+env
 
-comprendre le fonctionnement interne d’un shell
+exit
 
-mieux appréhender les processus et les flux système
+Gestion des signaux (SIGINT, SIGQUIT)
 
-développer une logique proche des environnements de production
+Comportement proche de bash dans les cas standards
 
-renforcer ma capacité à diagnostiquer des comportements système
+🧠 Notions abordées
 
-📌 Contexte
+Création et gestion des processus (fork, execve, wait)
 
-Projet réalisé dans le cadre du cursus de l’École 42
-Formation orientée autonomie, rigueur et compréhension des systèmes.
+Manipulation des descripteurs de fichiers
 
-🔍 Pourquoi ce projet est pertinent
+Communication inter-processus
 
-Minishell est directement lié aux métiers de :
+Parsing de commandes et gestion des erreurs
 
-l’administration systèmes
+Gestion de la mémoire en C
 
-l’infrastructure IT
+Gestion des signaux Unix
 
-la production
+🧩 Ce que ce projet m’a apporté
 
-la sécurité et l’analyse d’incidents
+Une meilleure compréhension du fonctionnement interne d’un système Unix
 
-Il démontre une compréhension concrète du fonctionnement d’un système Unix.
+Une approche plus rigoureuse de la gestion des erreurs et des ressources
+
+Une vision concrète de la chaîne complète : entrée utilisateur → parsing → exécution
+
+Une amélioration de la structuration du code sur un projet de taille conséquente
+
+⚠️ Difficultés rencontrées
+
+La gestion correcte des signaux en fonction du contexte (shell / processus enfant)
+
+Le parsing des commandes complexes avec redirections et pipes
+
+La gestion fine des descripteurs de fichiers pour éviter les fuites
+
+La reproduction fidèle de certains comportements de bash
+
+Ces points ont nécessité de nombreux tests et itérations.
+
+🏗️ Structure du projet
+minishell/
+├── src/
+│   ├── parsing/
+│   ├── execution/
+│   ├── builtins/
+│   ├── signals/
+│   └── utils/
+├── include/
+│   └── minishell.h
+├── Makefile
+└── README.md
+
+▶️ Compilation et exécution
+make
+./minishell
+
+🧪 Tests
+
+Comparaison manuelle avec le comportement de bash
+
+Vérification de la gestion mémoire avec Valgrind
+
+Tests des cas d’erreur et des signaux
+
+📚 Contexte
+
+Projet réalisé dans le cadre du cursus de l’École 42.
+
+👤 Auteur
+
+Zahi Mata
+École 42
