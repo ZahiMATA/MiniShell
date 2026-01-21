@@ -1,0 +1,72 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   dispatcher.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zmata <zmata@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/20 19:27:46 by ybouroga          #+#    #+#             */
+/*   Updated: 2025/09/18 11:32:08 by zmata            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
+
+int	is_builin_parent(char *s)
+{
+	return (ft_strcmp(s, "cd") == 0
+		|| ft_strcmp(s, "exit") == 0
+		|| ft_strcmp(s, "export") == 0
+		|| ft_strcmp(s, "unset") == 0);
+}
+
+int	is_builin_child(char *s)
+{
+	return (ft_strcmp(s, "cd") == 0
+		|| ft_strcmp(s, "exit") == 0
+		|| ft_strcmp(s, "export") == 0
+		|| ft_strcmp(s, "unset") == 0
+		|| ft_strcmp(s, "echo") == 0
+		|| ft_strcmp(s, "env") == 0
+		|| ft_strcmp(s, "pwd") == 0
+		|| ft_strcmp(s, "history") == 0
+		|| ft_strcmp(s, ":") == 0);
+}
+
+int	exec_builtin(t_minishell *m, t_cmd *cmd)
+{
+	int	ret;
+
+	ret = 0;
+	if (ft_strcmp(cmd->args[0], "cd") == 0)
+		ret = ft_cd(m, cmd);
+	else if (ft_strcmp(cmd->args[0], "echo") == 0)
+		ret = ft_echo(m, cmd);
+	else if (ft_strcmp(cmd->args[0], "env") == 0)
+		ret = ft_env(m, cmd);
+	else if (ft_strcmp(cmd->args[0], "exit") == 0)
+		ret = ft_exit(m, cmd);
+	else if (ft_strcmp(cmd->args[0], "export") == 0)
+		ret = ft_export(m->cmds->args, &m->env_list);
+	else if (ft_strcmp(cmd->args[0], "pwd") == 0)
+		ret = ft_pwd();
+	else if (ft_strcmp(cmd->args[0], "unset") == 0)
+		ret = ft_unset(m->cmds->args, &m->env_list);
+	else if (ft_strcmp(cmd->args[0], "history") == 0)
+		ret = ft_history(m);
+	else if (ft_strcmp(cmd->args[0], ":") == 0)
+		ret = ft_colon(m);
+	return (ret);
+}
+
+void	dispatch(t_minishell *m)
+{
+	if (m->cmds && m->cmds->args && m->nb_cmd == 1
+		&& is_builin_parent(m->cmds->args[0]))
+	{
+		m->cmds->status = exec_builtin(m, m->cmds);
+		m->last_status = m->cmds->status;
+	}
+	else if (m->cmds)
+		exec_execve(m);
+}

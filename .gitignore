@@ -1,0 +1,6 @@
+# ignore this directories and files
+OBJ/
+minishell
+ficout
+tester/
+test2/
